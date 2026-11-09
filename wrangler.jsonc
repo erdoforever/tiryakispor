@@ -1,0 +1,11 @@
+{
+  // TiryakiSPOR — statik site (derleme yok, Worker betiği yok).
+  // Cloudflare bu dosyayı "npx wrangler deploy" ile okuyup "assets.directory"
+  // altındaki dosyaları doğrudan servis eder.
+  "name": "tiryakispor",
+  "compatibility_date": "2025-01-01",
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "single-page-application"
+  }
+}
