@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Paneli — TiryakiSPOR</title>
+  <!-- Arama motorlarından gizle -->
+  <meta name="robots" content="noindex, nofollow"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- ===== GİRİŞ EKRANI ===== -->
+  <div class="giris-ekrani" id="girisEkrani">
+    <div class="giris-kutu">
+      <div class="giris-logo">Tiryaki<span>SPOR</span> 🏆</div>
+      <p class="giris-alt">Admin Paneli — Yetkisiz erişim yasaktır</p>
+
+      <div class="hata-mesaj" id="hataMesaj">❌ Yanlış şifre! Lütfen tekrar deneyin.</div>
+
+      <label for="sifreInput">🔐 Admin Şifresi</label>
+      <div class="sifre-wrap">
+        <input type="password" id="sifreInput" placeholder="••••••••" maxlength="20"
+               autocomplete="off" />
+        <button class="goz-btn" id="gozBtn" title="Göster/Gizle">👁️</button>
+      </div>
+      <button class="giris-btn" id="girisBtn">Giriş Yap →</button>
+      <p class="deneme-uyari" id="denemeUyari"></p>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN PANELİ ===== -->
+  <div class="panel" id="adminPanel">
+
+    <nav class="panel-navbar">
+      <div class="panel-logo">Tiryaki<span>SPOR</span> — Admin</div>
+      <div class="panel-navbar-sag">
+        <span class="panel-badge" id="okunmamisSayi">0 Yeni</span>
+        <button class="yenile-btn" id="yenileBtn">🔄 Yenile</button>
+        <button class="cikis-btn" id="cikisBtn">Çıkış Yap</button>
+      </div>
+    </nav>
+
+    <div class="panel-icerik">
+
+      <!-- İstatistikler -->
+      <div class="istat-grid">
+        <div class="istat-kart">
+          <div class="ik-label">📬 Toplam Mesaj</div>
+          <div class="ik-deger" id="statToplam">0</div>
+        </div>
+        <div class="istat-kart">
+          <div class="ik-label">🔔 Okunmamış</div>
+          <div class="ik-deger turuncu" id="statOkunmamis">0</div>
+        </div>
+        <div class="istat-kart">
+          <div class="ik-label">✅ Okundu</div>
+          <div class="ik-deger yesil" id="statYanit">0</div>
+        </div>
+        <div class="istat-kart">
+          <div class="ik-label">📅 Bugün</div>
+          <div class="ik-deger" id="statBugun">0</div>
+        </div>
+      </div>
+
+      <!-- Mesajlar -->
+      <div class="mesajlar-baslik">
+        <h2>📨 Bu Tarayıcıdaki Mesajlar</h2>
+        <div style="display:flex;gap:10px;">
+          <button class="temizle-btn" id="hepsiniOku">✔️ Tümünü Okundu İşaretle</button>
+          <button class="temizle-btn" id="hepsiniSil">🗑️ Tümünü Sil</button>
+        </div>
+      </div>
+
+      <p class="panel-not">ℹ️ Bu panel yalnızca <b>bu tarayıcıda</b> kaydedilen mesajları gösterir. Müşteri mesajları size WhatsApp (veya Formspree bağlanınca e-posta) ile ulaşır.</p>
+
+      <div id="mesajListesi"></div>
+
+    </div>
+  </div>
+
+  <!-- ===== SİLME ONAYI =====
+       Tarayıcının confirm() penceresi bazı ortamlarda (ör. yayın sayfasının çerçevesi) hiç açılmaz ve hep "hayır" döner;
+       bu yüzden onay, sayfanın kendi penceresiyle alınır (js/admin.js → onayIste). -->
+  <dialog class="onay-kutu" id="onayKutu" aria-labelledby="onayMetin">
+    <div>
+      <p class="onay-metin" id="onayMetin"></p>
+      <div class="onay-butonlar">
+        <button type="button" class="mk-btn onay-iptal" value="hayir" autofocus>Vazgeç</button>
+        <button type="button" class="mk-btn mk-btn-sil" value="evet">🗑️ Evet, sil</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/ortak.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

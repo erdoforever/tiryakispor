@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TiryakiSPOR — Top Tamir &amp; Bakım Servisi | Kızılay, Ankara</title>
+  <meta name="description" content="Futbol, basketbol ve voleybol topları için panel dikişi, iç lastik, sibop ve yüzey onarımı. Kızılay/Ankara. WhatsApp ile hızlıca bilgi alın." />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Giriş animasyonu için: hero öğeleri JS hazır olana dek gizlenir (CSS'te 3 sn'lik yedek var) -->
+  <script>if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("giris-bekle");</script>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">Tiryaki<span>SPOR</span></a>
+
+      <button class="hamburger" id="hamburger" aria-label="Menü" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#kategoriler">Hizmetler</a></li>
+        <li><a href="#one-cikanlar">Paketler</a></li>
+        <li><a href="#sss">SSS</a></li>
+        <li><a href="#iletisim">İletişim</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Hizmet ara..." aria-label="Hizmet ara" />
+          <span class="search-icon">🔍</span>
+        </div>
+
+        <!-- Renk teması seçici: turuncu (varsayılan) / beyaz / mor. Hatırlanmaz, sayfa yenilenince turuncuya döner. -->
+        <div class="renk-secici" id="renkSecici">
+          <button class="renk-dugme" id="renkDugme" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Renk teması seç" title="Renk teması">🎨</button>
+          <ul class="renk-menu" id="renkMenu" role="menu" hidden>
+            <li role="none"><button type="button" role="menuitemradio" data-renk="" aria-current="true"><span class="renk-ornek renk-ornek-turuncu" aria-hidden="true"></span>Turuncu (varsayılan)</button></li>
+            <li role="none"><button type="button" role="menuitemradio" data-renk="beyaz" aria-current="false"><span class="renk-ornek renk-ornek-beyaz" aria-hidden="true"></span>Beyaz</button></li>
+            <li role="none"><button type="button" role="menuitemradio" data-renk="mor" aria-current="false"><span class="renk-ornek renk-ornek-mor" aria-hidden="true"></span>Mor</button></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO BANNER ===== -->
+  <section class="hero" id="hero">
+    <!-- Karartma ve şık derin spor degrade katmanı (arka plandaki şema/bina kaldırıldı) -->
+    <div class="hero-overlay"></div>
+
+    <!-- Dönen futbol topları (arka planda - gerçek şeffaf toplar & scroll dönme efektli).
+         Süs amaçlıdır: alt boş bırakıldı, ekran okuyucu 8 kez "top" diye okumasın. -->
+    <div class="hero-balls-bg">
+      <div class="spin-ball sb1"><img src="images/ucl-ball.png" alt="" /></div>
+      <div class="spin-ball sb2"><img src="images/ucl-ball.png" alt="" /></div>
+      <div class="spin-ball sb3"><img src="images/ucl-ball.png" alt="" /></div>
+      <div class="spin-ball sb4"><img src="images/ucl-ball.png" alt="" /></div>
+      <div class="spin-ball sb5"><img src="images/ucl-ball.png" alt="" /></div>
+      <div class="spin-ball sb6"><img src="images/ucl-ball.png" alt="" /></div>
+      <div class="spin-ball sb7"><img src="images/ucl-ball.png" alt="" /></div>
+      <div class="spin-ball sb8"><img src="images/ucl-ball.png" alt="" /></div>
+    </div>
+
+    <!-- Ana içerik -->
+    <div class="hero-content">
+      <div class="hero-sol">
+      <p class="hero-tag">🔧 TiryakiSPOR · Top Tamir &amp; Bakım Servisi</p>
+
+      <div class="hero-isim-kutu">
+        <h1 class="hero-isim">KEMAL<br/><span>ÖZDEMİR</span></h1>
+        <div class="hero-isim-cizgi"></div>
+      </div>
+
+      <p class="hero-subtitle">Her nevi top tamiri yapılır.</p>
+      <div class="hero-btns">
+        <a href="#urunler" class="btn btn-primary">Hizmetleri Gör</a>
+        <a href="https://wa.me/905314315560?text=Merhaba%20TiryakiSPOR%2C%20top%20tamiri%20i%C3%A7in%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" class="btn btn-secondary">💬 WhatsApp'tan Sor</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong data-sayi="tumu">12</strong><span>Hizmet</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong data-marka-sayi>9</strong><span>Marka</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>1–3</strong><span>İş Günü Teslim*</span></div>
+      </div>
+      <p class="hero-dipnot">*Basit işlemler aynı gün; hasara göre değişir.</p>
+      </div>
+
+      <aside class="hero-hakkinda" aria-labelledby="hakkindaBaslik">
+        <h2 id="hakkindaBaslik">Hakkımda</h2>
+
+        <h3>Topunuz emin ellerde</h3>
+        <p>Bir top yalnızca bir malzeme değil; maçın, antrenmanın ve çocukluk anılarının parçası. Ben Kemal Özdemir, 40 yılı aşkın süredir topları kendi ellerimle onarıyorum.</p>
+
+        <h3>Her top için çözüm</h3>
+        <p>Futbol, basketbol, voleybol ve profesyonel maç topları için panel dikişi, iç lastik ve sibop değişimi, yüzey yenileme ve basınç testi dahil 12 farklı hizmet sunuyorum. Dokuz markanın toplarıyla çalışıyorum. Her onarımda hasarın asıl nedenini bulur, topun orijinal formunu ve sertliğini korumaya özen gösteririm.</p>
+
+        <h3>Neden bana güvenebilirsiniz?</h3>
+        <p>Dikişleri el işçiliğiyle atar, hasarı sizinle birlikte inceler, ne yapılacağını sade bir dille anlatırım. Onayınız olmadan işleme başlamam. Basit işler aynı gün, diğerleri çoğunlukla 1–3 iş günü içinde hazırdır. Gizli hava kaçaklarını su altı testiyle bulur, maç standardına göre basıncı ayarlarım.</p>
+
+        <h3>Sporcuya, aileye, kulübe</h3>
+        <p>Yüz binlerce müşteriye hizmet verdim; sporcular, çocuğunun topunu emanet eden aileler ve kulüpler hep geri geldi. Kızılay'daki dükkânıma uğrayın ya da topunuzun fotoğrafını WhatsApp'tan gönderin.</p>
+
+        <p class="hakkinda-kapanis">Topunuz elimden çıktığında memnun kalmanız, işimin tek ölçüsüdür.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== ONARIM TÜRLERİ (KATEGORİLER) ===== -->
+  <section class="kategoriler atolye-bolum" id="kategoriler">
+    <div class="hazard-serit"></div>
+    <div class="container">
+      <div class="bolum-baslik">
+        <span class="bolum-etiket">01 — Onarım Türleri</span>
+        <h2 class="section-title">Topunuz İçin Doğru Servisi Seçin</h2>
+        <p class="section-sub">Hasar türüne göre uzman onarım — her marka, her model.</p>
+      </div>
+      <div class="kategori-grid">
+        <button class="kategori-kart aktif" data-kategori="tumu">
+          <span class="kategori-icon">🛠️</span>
+          <strong>Tüm Hizmetler</strong>
+          <small><span data-sayi="tumu">0</span> HİZMET</small>
+        </button>
+        <button class="kategori-kart" data-kategori="futbol">
+          <span class="kategori-icon"><img src="images/ucl-ball.png" alt="" /></span>
+          <strong>Futbol Topu Tamiri</strong>
+          <small><span data-sayi="futbol">0</span> HİZMET</small>
+        </button>
+        <button class="kategori-kart" data-kategori="basketbol">
+          <span class="kategori-icon"><img src="images/delta-basketball.png" alt="" /></span>
+          <strong>Basketbol Topu Bakımı</strong>
+          <small><span data-sayi="basketbol">0</span> HİZMET</small>
+        </button>
+        <button class="kategori-kart" data-kategori="voleybol">
+          <span class="kategori-icon"><img src="images/mikasa-ball.png" alt="" /></span>
+          <strong>Voleybol Topu Paneli Değişimi</strong>
+          <small><span data-sayi="voleybol">0</span> HİZMET</small>
+        </button>
+        <button class="kategori-kart" data-kategori="profesyonel">
+          <span class="kategori-icon">🏅</span>
+          <strong>Özel / Profesyonel Maç Topu Onarımı</strong>
+          <small><span data-sayi="profesyonel">0</span> HİZMET</small>
+        </button>
+        <button class="kategori-kart" data-kategori="sss">
+          <span class="kategori-icon">❓</span>
+          <strong>Sıkça Sorulan Sorular</strong>
+          <small>MERAK EDİLENLER →</small>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== POPÜLER TAMİR PAKETLERİ ===== -->
+  <section class="one-cikanlar atolye-bolum" id="one-cikanlar">
+    <div class="container">
+      <div class="bolum-baslik">
+        <span class="bolum-etiket">02 — Popüler Paketler</span>
+        <h2 class="section-title">Popüler Tamir Paketlerimiz</h2>
+        <p class="section-sub">En çok tercih edilen bakım hizmetlerimiz.</p>
+      </div>
+      <div class="paket-grid" id="paketGrid">
+        <!-- JS ile doldurulur -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HİZMET LİSTESİ ===== -->
+  <section class="urunler atolye-bolum" id="urunler">
+    <div class="container">
+      <div class="bolum-baslik">
+        <span class="bolum-etiket">03 — Hizmet Listesi</span>
+        <h2 class="section-title">Topunuza Uygun Onarımı Bulun</h2>
+        <p class="section-sub">Topunuzun markasını ve hasar durumunu seçin, size uygun hizmetleri anında listeleyelim.</p>
+      </div>
+
+      <!-- Filtreler -->
+      <div class="filtre-panel">
+        <div class="filtre-satir">
+          <div class="filtre-grup filtre-arama">
+            <label for="searchInput2">🔍 Hizmet Ara</label>
+            <input type="text" id="searchInput2" placeholder="Örn: dikiş, sibop, basketbol..." />
+          </div>
+          <div class="filtre-grup">
+            <label for="onarimSelect">🔧 Onarım Türü</label>
+            <select id="onarimSelect">
+              <option value="tumu">Tüm Onarım Türleri</option>
+              <option value="futbol">Futbol Topu Tamiri</option>
+              <option value="basketbol">Basketbol Topu Bakımı</option>
+              <option value="voleybol">Voleybol Topu Paneli Değişimi</option>
+              <option value="profesyonel">Özel / Profesyonel Maç Topu</option>
+            </select>
+          </div>
+          <div class="filtre-grup">
+            <label for="markaSelect">🏷️ Top Markası</label>
+            <select id="markaSelect">
+              <option value="tumu">Tüm Markalar</option>
+              <option value="Adidas">Adidas</option>
+              <option value="Nike">Nike</option>
+              <option value="Puma">Puma</option>
+              <option value="Select">Select</option>
+              <option value="Molten">Molten</option>
+              <option value="Mikasa">Mikasa</option>
+              <option value="Wilson">Wilson</option>
+              <option value="Spalding">Spalding</option>
+              <option value="Delta">Delta</option>
+              <option value="Diğer">Diğer / Bilmiyorum</option>
+            </select>
+          </div>
+          <button class="btn btn-outline" id="filtreTemizle">✕ Temizle</button>
+        </div>
+        <div class="hasar-satir">
+          <span class="hasar-baslik">⚠️ Hasar Durumu</span>
+          <div class="hasar-chipler" id="hasarChipler">
+            <button class="hasar-chip aktif" data-hasar="tumu">Tümü</button>
+            <button class="hasar-chip" data-hasar="Dikiş Patlağı">🧵 Dikiş Patlağı</button>
+            <button class="hasar-chip" data-hasar="Hava Kaçırma">💨 Hava Kaçırma</button>
+            <button class="hasar-chip" data-hasar="Deri Soyulması">🩹 Deri Soyulması</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="urun-sayisi" id="urunSayisi"></p>
+
+      <!-- Hizmet Grid -->
+      <div class="hizmet-yigin yigin-acik" id="hizmetYigin">
+        <div class="hizmet-grid" id="hizmetGrid">
+          <!-- JS ile doldurulur -->
+        </div>
+        <div class="yigin-ipucu" id="yiginIpucu" aria-hidden="true">
+          👆 <b data-n>12</b> hizmeti görmek için üzerine gelin
+        </div>
+      </div>
+<div class="bos-mesaj" id="bosMesaj" style="display:none;">
+        <div class="bos-icon">🔍</div>
+        <p>Seçtiğiniz kriterlere uygun hizmet bulunamadı.<br/>Topunuzun durumunu WhatsApp'tan yazın, size özel çözüm üretelim.</p>
+        <div class="bos-btnler">
+          <button class="btn btn-outline" id="filtreTemizle2">Filtreleri Temizle</button>
+          <a class="tamir-btn" id="bosWaBtn" href="#" target="_blank" rel="noopener">💬 WhatsApp'tan Sor</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SIKÇA SORULAN SORULAR ===== -->
+  <section class="sss atolye-bolum" id="sss">
+    <div class="container">
+      <div class="bolum-baslik">
+        <span class="bolum-etiket">04 — SSS</span>
+        <h2 class="section-title">Sıkça Sorulan Sorular</h2>
+        <p class="section-sub">Tamir süreciyle ilgili merak ettikleriniz.</p>
+      </div>
+      <div class="sss-liste">
+        <details class="sss-item" open>
+          <summary>Tamir işlemi ne kadar sürer?</summary>
+          <p>Sibop değişimi ve basınç testi gibi basit işlemler genellikle aynı gün yapılır. Dikiş ve panel onarımları, hasarın durumuna göre 1–3 iş günü içinde tamamlanır.</p>
+        </details>
+        <details class="sss-item">
+          <summary>Fiyatı nasıl öğrenirim?</summary>
+          <p>Topunuzun veya hasarlı bölgenin fotoğrafını WhatsApp'tan gönderin ya da dükkânımıza getirin; inceleyip size bilgi verelim. Onayınız olmadan işleme başlamayız.</p>
+        </details>
+        <details class="sss-item">
+          <summary>Hangi marka topları tamir ediyorsunuz?</summary>
+          <p>Adidas, Nike, Puma, Select, Molten, Mikasa, Wilson, Spalding, Delta ve diğer markaların futbol, basketbol ve voleybol toplarını onarıyoruz.</p>
+        </details>
+        <details class="sss-item">
+          <summary>Topumu nasıl teslim ederim?</summary>
+          <p>Topunuzu dükkânımıza getirebilirsiniz: İzmir Cad. Menekşe Sok. Menekşe Pasajı Kızılay/ANKARA. Gelmeden önce WhatsApp'tan bilgi alabilirsiniz.</p>
+        </details>
+        <details class="sss-item">
+          <summary>Topumun tamir edilip edilemeyeceğini nasıl anlarım?</summary>
+          <p>Topunuzun hasarlı bölgesinin fotoğrafını WhatsApp'tan gönderin; inceleyip size en kısa sürede dönüş yapalım.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== İLETİŞİM BÖLÜMÜ ===== -->
+  <section class="iletisim" id="iletisim">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">📬 Bizimle İletişime Geçin</h2>
+        <p class="section-sub">Sorularınız için formu doldurun veya WhatsApp'tan ulaşın — en kısa sürede dönüş yaparız!</p>
+      </div>
+
+      <div class="iletisim-grid">
+
+        <!-- Sol: Form -->
+        <div class="iletisim-form-kutu">
+          <form id="iletisimForm" novalidate>
+            <div class="form-grup">
+              <label for="musAd">👤 Adınız Soyadınız</label>
+              <input type="text" id="musAd" placeholder="Örn: Ahmet Yılmaz" required />
+            </div>
+            <div class="form-grup">
+              <label for="musTel">📞 Telefon Numaranız</label>
+              <input type="tel" id="musTel" placeholder="05XX XXX XX XX" required />
+            </div>
+            <div class="form-grup">
+              <label for="musMesaj">💬 Mesajınız</label>
+              <textarea id="musMesaj" rows="5" placeholder="Topunuzun markası, hasarı ve hangi hizmeti istediğinizi yazabilirsiniz..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              ✉️ Mesaj Gönder
+            </button>
+          </form>
+          <div class="form-basari" id="formBasari" style="display:none;">
+            <div class="basari-icon">✅</div>
+            <h3 id="basariBaslik">Mesajınız İletildi!</h3>
+            <p id="basariMetin">En kısa sürede sizinle iletişime geçeceğiz.</p>
+            <a class="btn btn-secondary" id="waGonderLink" href="#" target="_blank" rel="noopener" style="display:none">💬 WhatsApp'ta Gönder</a>
+            <button class="btn btn-outline" id="yeniMesaj">Yeni Mesaj Gönder</button>
+          </div>
+        </div>
+
+        <!-- Sağ: İletişim Bilgileri + WA -->
+        <div class="iletisim-bilgi">
+          <div class="iletisim-kart">
+            <div class="ik-icon">📍</div>
+            <div>
+              <h4>Adres</h4>
+              <p>İzmir Cad. Menekşe Sok.<br/>Menekşe Pasajı Kızılay/ANKARA</p>
+              <!-- Bağlantı js/ayarlar.js (ADRES_SORGU / HARITA_LINK) ile güncellenir; buradaki adres JS çalışmazsa kullanılan yedektir -->
+              <a class="btn btn-outline yol-tarifi" data-yol-tarifi href="https://www.google.com/maps/dir/?api=1&amp;destination=Menek%C5%9Fe%20Pasaj%C4%B1%2C%20K%C4%B1z%C4%B1lay%2C%20Ankara" target="_blank" rel="noopener">🧭 Yol tarifi al</a>
+            </div>
+          </div>
+          <div class="iletisim-kart">
+            <div class="ik-icon">🕐</div>
+            <div>
+              <h4>Çalışma Saatleri</h4>
+              <!-- Satırlar ve rozet js/ayarlar.js (CALISMA) ile üretilir; JS çalışmazsa buradaki yazı kalır -->
+              <div id="saatListe"><p>Hafta içi 09:00 – 18:00</p></div>
+              <span class="acik-rozet" id="acikRozet" hidden></span>
+            </div>
+          </div>
+          <div class="iletisim-kart">
+            <div class="ik-icon">📞</div>
+            <div>
+              <h4>Telefon</h4>
+              <p><a class="tel-link" href="tel:+905314315560">0531 431 55 60</a></p>
+            </div>
+          </div>
+
+          <!-- WhatsApp Butonu -->
+          <a
+            class="wa-btn"
+            href="https://wa.me/905314315560?text=Merhaba%2C%20TiryakiSPOR%27dan%20bilgi%20almak%20istiyorum."
+            target="_blank"
+            rel="noopener">
+            <span class="wa-icon">💬</span>
+            <div>
+              <strong>WhatsApp ile Yaz</strong>
+              <small>Hızlı yanıt için WhatsApp'ı tercih edin</small>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3 class="logo">Tiryaki<span>SPOR</span></h3>
+          <p>Kızılay/Ankara'da profesyonel top tamir ve bakım servisi. Futbol, basketbol ve voleybol toplarınız için el işçiliğiyle onarım.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Hizmetler</h4>
+          <ul>
+            <li><a href="#urunler" data-nav-kategori="futbol">Futbol Topu Tamiri</a></li>
+            <li><a href="#urunler" data-nav-kategori="basketbol">Basketbol Topu Bakımı</a></li>
+            <li><a href="#urunler" data-nav-kategori="voleybol">Voleybol Topu Paneli</a></li>
+            <li><a href="#urunler" data-nav-kategori="profesyonel">Profesyonel Maç Topu</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Bilgi</h4>
+          <ul>
+            <li><a href="#one-cikanlar">Popüler Paketler</a></li>
+            <li><a href="#sss">Sıkça Sorulan Sorular</a></li>
+            <li><a href="#iletisim">Bize Ulaşın</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>İletişim</h4>
+          <p>📍 İzmir Cad. Menekşe Sok.<br/>Menekşe Pasajı Kızılay/ANKARA</p>
+          <p>🧭 <a class="footer-link" data-yol-tarifi href="https://www.google.com/maps/dir/?api=1&amp;destination=Menek%C5%9Fe%20Pasaj%C4%B1%2C%20K%C4%B1z%C4%B1lay%2C%20Ankara" target="_blank" rel="noopener">Yol tarifi al</a></p>
+          <p>📞 <a class="footer-link" href="tel:+905314315560">0531 431 55 60</a></p>
+          <p id="altbilgiSaat">🕐 Hafta içi 09:00 – 18:00</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 TiryakiSPOR. Tüm hakları saklıdır.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== TELEFONDA ALT SABİT ÇUBUK (yalnızca ≤768px): Ara / WhatsApp ===== -->
+  <nav class="alt-cubuk" id="altCubuk" aria-label="Hızlı iletişim">
+    <a class="btn btn-primary" href="tel:+905314315560">📞 Ara</a>
+    <a class="btn btn-secondary" href="https://wa.me/905314315560?text=Merhaba%20TiryakiSPOR%2C%20top%20tamiri%20i%C3%A7in%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">💬 WhatsApp</a>
+  </nav>
+
+  <!-- ===== TOAST BİLDİRİM ===== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ===== BACK TO TOP ===== -->
+  <button class="back-to-top" id="backToTop" title="Yukarı Çık">↑</button>
+
+  <!-- GSAP + ScrollTrigger (cdnjs) — yüklenemezse site animasyonsuz da tam çalışır -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Site kodu: sıra önemlidir (her dosya öncekilerin hazırladığı TS ad alanını kullanır) -->
+  <script src="js/ortak.js"></script>
+  <script src="js/ayarlar.js"></script>
+  <script src="js/arayuz.js"></script>
+  <script src="js/liste.js"></script>
+  <script src="js/kaydirma.js"></script>
+  <script src="js/deste.js"></script>
+  <script src="js/form.js"></script>
+  <script src="js/iletisim.js"></script>
+  <script src="js/renk.js"></script>
+  <script src="js/baslat.js"></script>
+  <script src="js/hareket.js"></script>
+</body>
+</html>
