@@ -99,8 +99,13 @@
 
     const sigar = () => hero.offsetHeight <= window.innerHeight + 2;
 
-    // Hero tamamen örtüldüğünde gizle: görünmez hero'daki düğmelere Tab ile odaklanılmasın
-    const ortuGuncelle = (self) => { hero.style.visibility = self.progress >= 1 ? "hidden" : ""; };
+    // Hero tamamen örtüldüğünde gizle: görünmez hero'daki düğmelere Tab ile odaklanılmasın.
+    // Aynı anda dönen toplar / parıltı animasyonunu durdurup gereksiz işlemci kullanımını keser.
+    const ortuGuncelle = (self) => {
+      const ortuldu = self.progress >= 1;
+      hero.style.visibility = ortuldu ? "hidden" : "";
+      hero.classList.toggle("hero-gizlendi", ortuldu);
+    };
 
     const tl = gsap.timeline({
       defaults: { ease: "none" },
@@ -120,7 +125,7 @@
     tl.to(icerik, { scale: 0.96, yPercent: -4, transformOrigin: "50% 40%" }, 0)
       .to(karartma, { opacity: 0.7 }, 0);
 
-    return () => { karartma.remove(); hero.style.visibility = ""; };   // koşul bozulursa temizle
+    return () => { karartma.remove(); hero.style.visibility = ""; hero.classList.remove("hero-gizlendi"); };   // koşul bozulursa temizle
   });
 
   // Telefon / tablet (dokunmatik): sabitleme yok, yumuşak yukarı kayma + belirme
