@@ -988,7 +988,9 @@ section[id] { scroll-margin-top: 68px; }
 /* ==========================================================
    HİZMET YIĞINI (kartlar deste gibi, hover'da sırayla açılır)
    ========================================================== */
-.hizmet-yigin { position: relative; transition: height 0.55s cubic-bezier(0.22, 0.9, 0.28, 1); }
+/* contain:layout — height animasyonu sırasında yeniden düzenleme (reflow) hesaplaması yalnızca
+   bu kutuyla sınırlı kalır, sayfanın geri kalanına yayılmaz; kasmayı belirgin şekilde azaltır. */
+.hizmet-yigin { position: relative; contain: layout; transition: height 0.55s cubic-bezier(0.22, 0.9, 0.28, 1); }
 .hizmet-yigin .hizmet-grid { position: relative; grid-auto-rows: 1fr; }   /* tüm kartlar eşit boy */
 .yigin-kapali { cursor: pointer; }
 .yigin-kapali .hizmet-grid { pointer-events: none; }   /* boş grid alanı alttaki içeriği engellemesin */
