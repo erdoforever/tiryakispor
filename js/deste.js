@@ -67,12 +67,13 @@
   const yiginTr = (x, y, r, sc = 1) => `translate(${x}px, ${y}px) rotate(${r}deg) scale(${sc})`;
 
   // Fırlat: desteden kalkar, havada bir tur döner, yerine hafif sekerek oturur
+  // Not: kareler yalnızca transform kullanır (box-shadow animasyonu kasmaya yol açtığı için kaldırıldı —
+  // transform/opacity GPU'da birleştirilir, box-shadow her karede yeniden boyama gerektirir).
   function yiginFirlatKare(b, i) {
     const yon = i % 2 === 0 ? 1 : -1;
     return [
       { offset: 0,    transform: yiginTr(b.dx, b.dy, b.rot, 1) },
-      { offset: 0.42, transform: yiginTr(b.dx * 0.38, b.dy * 0.38 - 80, yon * 190, 1.1),
-                      boxShadow: "0 44px 70px rgba(0,0,0,0.6)" },
+      { offset: 0.42, transform: yiginTr(b.dx * 0.38, b.dy * 0.38 - 80, yon * 190, 1.1) },
       { offset: 0.76, transform: yiginTr(0, 12, yon * 352, 1.02) },
       { offset: 0.9,  transform: yiginTr(0, -5, yon * 362, 1) },
       { offset: 1,    transform: yiginTr(0, 0, yon * 360, 1) },
@@ -84,8 +85,7 @@
     return [
       { offset: 0,    transform: yiginTr(0, 0, 0, 1) },
       { offset: 0.24, transform: yiginTr(0, -5, yon * -8, 1) },
-      { offset: 0.58, transform: yiginTr(b.dx * 0.62, b.dy * 0.62 - 80, yon * -170, 1.1),
-                      boxShadow: "0 44px 70px rgba(0,0,0,0.6)" },
+      { offset: 0.58, transform: yiginTr(b.dx * 0.62, b.dy * 0.62 - 80, yon * -170, 1.1) },
       { offset: 1,    transform: yiginTr(b.dx, b.dy, b.rot - yon * 360, 1) },
     ];
   }
