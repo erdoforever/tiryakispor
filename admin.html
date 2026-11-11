@@ -9,26 +9,51 @@
   <link rel="icon" type="image/svg+xml" href="images/icon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css?v=2.6">
 </head>
 <body>
 
-  <!-- ===== GİRİŞ EKRANI ===== -->
+  <!-- ===== GİRİŞ EKRANI (CYBER / DARK INDUSTRIAL & MINIMALIST) ===== -->
   <div class="giris-ekrani" id="girisEkrani">
     <div class="giris-kutu">
-      <div class="giris-logo">Tiryaki<span>SPOR</span> 🏆</div>
-      <p class="giris-alt">Yönetim &amp; CMS Paneli — Yetkisiz erişim yasaktır</p>
+      <!-- Üst Teknik Çip Etiketi -->
+      <div class="giris-etiket">
+        <span class="etiket-isik" aria-hidden="true"></span>
+        <span class="etiket-metin">GÜVENLİ ERİŞİM // CMS v2.6</span>
+      </div>
+
+      <div class="giris-logo">Tiryaki<span>SPOR</span></div>
+      <p class="giris-alt">Yönetim Paneli <span class="ayrac">/</span> Atölye Yetkili Girişi</p>
 
       <div class="hata-mesaj" id="hataMesaj">❌ Yanlış şifre! Lütfen tekrar deneyin.</div>
 
-      <label for="sifreInput">🔐 Admin Şifresi</label>
+      <label for="sifreInput">
+        <svg class="label-kilit-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        Admin Şifresi
+      </label>
       <div class="sifre-wrap">
         <input type="password" id="sifreInput" placeholder="••••••••" maxlength="30" autocomplete="off" />
-        <button class="goz-btn" id="gozBtn" title="Göster/Gizle">👁️</button>
+        <button class="goz-btn" id="gozBtn" type="button" title="Göster/Gizle" aria-label="Şifreyi Göster veya Gizle">
+          <svg class="goz-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
       </div>
-      <button class="giris-btn" id="girisBtn">Giriş Yap →</button>
+      <button class="giris-btn" id="girisBtn" type="button">
+        <span>Sisteme Giriş Yap</span>
+        <svg class="giris-ok-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
       <p class="deneme-uyari" id="denemeUyari"></p>
+
+      <a href="/" class="giris-siteye-don">← Ana Siteye Dön</a>
     </div>
   </div>
 
