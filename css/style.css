@@ -47,15 +47,55 @@
    RENK TEMASI: turuncu (varsayılan) / beyaz / mor
    js/renk.js ile <html data-renk="..."> üzerinden değişir; sayfa yenilenince turuncuya döner.
    =========================== */
-:root[data-renk="beyaz"] {
-  --accent: #FFFFFF; --accent2: #FFFFFF; --amber: #FFFFFF;
-  --accent-rgb: 255,255,255; --accent2-rgb: 255,255,255; --amber-rgb: 255,255,255;
+/* ===========================
+   RENK TEMALARI: 8 Palet (Turuncu, Mono, Yeşil, Mavi, Kırmızı, Sarı, Mor, Turkuaz)
+   =========================== */
+:root[data-renk="mono"], :root[data-renk="beyaz"] {
+  --accent: #F8FAFC; --accent2: #E2E8F0; --amber: #CBD5E1;
+  --accent-rgb: 248,250,252; --accent2-rgb: 226,232,240; --amber-rgb: 203,213,225;
+  --on-accent: var(--white);
+}
+:root[data-renk="yesil"] {
+  --accent: #10B981; --accent2: #059669; --amber: #34D399;
+  --accent-rgb: 16,185,129; --accent2-rgb: 5,150,105; --amber-rgb: 52,211,153;
+  --on-accent: #fff;
+}
+:root[data-renk="mavi"] {
+  --accent: #3B82F6; --accent2: #2563EB; --amber: #60A5FA;
+  --accent-rgb: 59,130,246; --accent2-rgb: 37,99,235; --amber-rgb: 96,165,250;
+  --on-accent: #fff;
+}
+:root[data-renk="kirmizi"] {
+  --accent: #EF4444; --accent2: #DC2626; --amber: #F87171;
+  --accent-rgb: 239,68,68; --accent2-rgb: 220,38,38; --amber-rgb: 248,113,113;
+  --on-accent: #fff;
+}
+:root[data-renk="sari"] {
+  --accent: #F59E0B; --accent2: #D97706; --amber: #FBBF24;
+  --accent-rgb: 245,158,11; --accent2-rgb: 217,119,6; --amber-rgb: 251,191,36;
   --on-accent: var(--white);
 }
 :root[data-renk="mor"] {
-  --accent: #9333EA; --accent2: #9333EA; --amber: #9333EA;
-  --accent-rgb: 147,51,234; --accent2-rgb: 147,51,234; --amber-rgb: 147,51,234;
+  --accent: #A855F7; --accent2: #9333EA; --amber: #C084FC;
+  --accent-rgb: 168,85,247; --accent2-rgb: 147,51,234; --amber-rgb: 192,132,252;
   --on-accent: #fff;
+}
+:root[data-renk="turkuaz"] {
+  --accent: #06B6D4; --accent2: #0891B2; --amber: #22D3EE;
+  --accent-rgb: 6,182,212; --accent2-rgb: 8,145,178; --amber-rgb: 34,211,238;
+  --on-accent: #fff;
+}
+
+/* ===========================
+   STİL MODU: Minimal
+   data-stil="minimal" durumunda neon parıltılar, süs topları ve derin gölgeler sadeleştirilir.
+   =========================== */
+:root[data-stil="minimal"] .hero-balls-bg,
+:root[data-stil="minimal"] .hazard-serit {
+  display: none !important;
+}
+:root[data-stil="minimal"] {
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
 html { scroll-behavior: smooth; }
@@ -129,45 +169,169 @@ body {
 }
 
 /* ===========================
-   RENK TEMASI SEÇİCİ: arama kutusunun yanındaki küçük açılır menü
-   js/renk.js — turuncu / beyaz / mor arasında geçiş yapar (sayfa yenilenince turuncuya döner)
+   RENK & GÖRÜNÜM POPOVER (Modern & Minimal Segmentli Seçici)
+   js/renk.js — 8 farklı tema rengi ve Modern/Minimal stil geçişi
    =========================== */
 .renk-secici { position: relative; }
 .renk-dugme {
   display: flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-  background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.15);
-  cursor: pointer; font-size: 1rem; line-height: 1; transition: all var(--transition);
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15);
+  cursor: pointer; font-size: 1.1rem; line-height: 1; transition: all var(--transition);
   color: #fff; padding: 0;
 }
-.renk-dugme:hover { background: rgba(255,255,255,0.18); border-color: var(--accent); }
+.renk-dugme:hover {
+  background: rgba(255,255,255,0.18); border-color: var(--accent);
+  transform: scale(1.05);
+}
 .renk-dugme:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 
+/* Açılır Menü Kartı */
 .renk-menu {
-  position: absolute; top: calc(100% + 10px); right: 0; margin: 0;
-  background: var(--nav-bg); border: 1px solid rgba(255,255,255,0.12);
-  border-radius: var(--radius-sm); padding: 6px; min-width: 170px;
-  list-style: none; box-shadow: 0 14px 34px rgba(0,0,0,0.55);
-  z-index: 50;
+  position: absolute; top: calc(100% + 12px); right: 0; margin: 0;
+  background: rgba(18, 22, 30, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 18px;
+  width: 290px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
 }
-.renk-menu li + li { margin-top: 2px; }
-.renk-menu button {
-  display: flex; align-items: center; gap: 10px; width: 100%;
-  background: none; border: none; color: rgba(255,255,255,0.85);
-  font-size: 0.88rem; padding: 8px 10px; border-radius: 6px;
-  cursor: pointer; text-align: left; transition: background var(--transition);
-}
-.renk-menu button:hover, .renk-menu button:focus-visible { background: rgba(255,255,255,0.10); }
-.renk-menu button[aria-current="true"] { color: #fff; font-weight: 700; }
-.renk-menu button[aria-current="true"]::after { content: "✓"; margin-left: auto; color: var(--accent2); }
 
-.renk-ornek {
-  display: inline-block; width: 15px; height: 15px; border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.35); flex-shrink: 0;
+/* Fade-in & Slide-up animasyonu */
+.renk-menu:not([hidden]) {
+  display: flex;
+  animation: themeFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.renk-ornek-turuncu { background: linear-gradient(135deg, #FF6B00, #FFB020); }
-.renk-ornek-beyaz   { background: #FFFFFF; }
-.renk-ornek-mor     { background: #9333EA; }
+
+@keyframes themeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Üst Segment Toggle: Modern vs Minimal */
+.tema-stil-secici {
+  display: flex;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+}
+.stil-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.stil-btn:hover { color: #fff; }
+.stil-btn.aktif {
+  background: rgba(255, 255, 255, 0.20);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Alt Başlık */
+.tema-alt-baslik {
+  font-size: 0.74rem;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 16px 0 12px 2px;
+}
+
+/* 4x2 Renk Grid'i */
+.tema-renk-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px 8px;
+}
+.tema-renk-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 2px;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+.tema-renk-btn:hover { transform: translateY(-2px); }
+.tema-renk-btn:hover .tema-ad { color: #FFFFFF; }
+
+/* Yuvarlak Bölünmüş Çemberler (Split Discs) */
+.tema-cember {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Seçili halka (İkinci görseldeki gibi parlak beyaz çift halka) */
+.tema-renk-btn[aria-current="true"] .tema-cember {
+  box-shadow: 0 0 0 2.5px rgba(18, 22, 30, 0.98), 0 0 0 5px #FFFFFF, 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* Renk Gradientleri */
+.tema-cember-turuncu { background: linear-gradient(135deg, #FF6B00 50%, #200f04 50%); }
+.tema-cember-mono    { background: linear-gradient(135deg, #FFFFFF 50%, #05070a 50%); }
+.tema-cember-yesil   { background: linear-gradient(135deg, #10B981 50%, #031c13 50%); }
+.tema-cember-mavi    { background: linear-gradient(135deg, #3B82F6 50%, #08162f 50%); }
+.tema-cember-kirmizi { background: linear-gradient(135deg, #EF4444 50%, #240808 50%); }
+.tema-cember-sari    { background: linear-gradient(135deg, #F59E0B 50%, #241604 50%); }
+.tema-cember-mor     { background: linear-gradient(135deg, #A855F7 50%, #190726 50%); }
+.tema-cember-turkuaz { background: linear-gradient(135deg, #06B6D4 50%, #031d22 50%); }
+
+/* Renk İsimleri */
+.tema-ad {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.70);
+  transition: color 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+}
+.tema-renk-btn[aria-current="true"] .tema-ad {
+  color: #FFFFFF;
+  font-weight: 800;
+}
+
+@media (max-width: 480px) {
+  .renk-menu {
+    width: calc(100vw - 32px);
+    right: -8px;
+    padding: 14px;
+  }
+  .tema-cember {
+    width: 38px;
+    height: 38px;
+  }
+}
 
 /* ===========================
    HERO
