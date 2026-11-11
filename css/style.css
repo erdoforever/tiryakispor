@@ -201,10 +201,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.28;
-  filter: drop-shadow(0 10px 22px rgba(0,0,0,0.6));
+  opacity: 0.22;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.35));
   animation: spinFloat var(--dur, 14s) linear infinite;
   will-change: transform;
+  contain: layout style paint;
 }
 
 .spin-ball img {
@@ -1147,19 +1148,11 @@ section[id] { scroll-margin-top: 68px; }
    HAREKET (GSAP) — giriş animasyonu + katman geçişi
    js/hareket.js ile birlikte çalışır
    ========================================================== */
-/* Giriş: JS hazır olana kadar hero öğeleri gizli. JS/CDN çalışmazsa
-   3 sn sonra CSS tek başına hepsini gösterir (sayfa asla görünmez kalmaz). */
+/* Giriş: Akıcı tek parça Fade-In */
 .giris-bekle #navbar,
-.giris-bekle .hero-balls-bg,
-.giris-bekle .hero-tag,
-.giris-bekle .hero-isim-kutu,
-.giris-bekle .hero-subtitle,
-.giris-bekle .hero-btns,
-.giris-bekle .hero-stats,
-.giris-bekle .hero-dipnot,
-.giris-bekle .hero-hakkinda {
+.giris-bekle .hero {
   opacity: 0;
-  animation: girisYedek 0s 3s forwards;
+  animation: girisYedek 0s 1.5s forwards;
 }
 @keyframes girisYedek { to { opacity: 1; } }
 
