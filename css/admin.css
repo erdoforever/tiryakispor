@@ -36,222 +36,200 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ---- GİRİŞ EKRANI (APPLE LIQUID GLASS & AMBIENT LED GLOW) ---- */
+/* ============================================================
+   GİRİŞ EKRANI (APPLE VISION & OBSIDIAN GLASS // EXECUTIVE STUDIO)
+   ============================================================ */
 .giris-ekrani {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 32px 24px;
   position: relative;
   overflow: hidden;
-  background-color: #060911;
+  background-color: #070A0F;
   background-image: 
-    radial-gradient(circle at 50% 50%, #0d1527 0%, #060911 75%, #030508 100%);
+    radial-gradient(1200px 700px at 50% -10%, rgba(255, 107, 0, 0.08) 0%, transparent 65%),
+    radial-gradient(1000px 600px at 50% 115%, rgba(14, 165, 233, 0.04) 0%, transparent 60%),
+    linear-gradient(180deg, #090D15 0%, #05070B 100%);
 }
 
-/* Sıvı camın arkasından süzülen 3D Apple Ambiyans LED Işıkları */
+/* Arka plan sofistike stüdyo mikromesh dokusu */
 .giris-ekrani::before {
   content: "";
   position: absolute;
-  top: 18%;
-  left: calc(50% - 250px);
-  width: 340px;
-  height: 340px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 107, 0, 0.26) 0%, rgba(255, 107, 0, 0.06) 50%, transparent 75%);
-  filter: blur(55px);
+  inset: 0;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.28;
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 50%, #000 30%, transparent 80%);
   pointer-events: none;
-  animation: siviIsik1 10s ease-in-out infinite alternate;
 }
+
+/* Kartın arkasında çok hafif, asil stüdyo aurası */
 .giris-ekrani::after {
   content: "";
   position: absolute;
-  bottom: 18%;
-  right: calc(50% - 250px);
-  width: 320px;
-  height: 320px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 520px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.20) 0%, rgba(14, 165, 233, 0.06) 50%, transparent 75%);
-  filter: blur(55px);
+  background: radial-gradient(circle, rgba(255, 107, 0, 0.07) 0%, rgba(255, 107, 0, 0.015) 45%, transparent 70%);
+  filter: blur(60px);
   pointer-events: none;
-  animation: siviIsik2 12s ease-in-out infinite alternate;
-}
-@keyframes siviIsik1 {
-  0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
-  100% { transform: translate(40px, 30px) scale(1.15); opacity: 1; }
-}
-@keyframes siviIsik2 {
-  0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
-  100% { transform: translate(-30px, -25px) scale(1.2); opacity: 0.95; }
 }
 
+/* ---- OBSIDIAN GLASS KART ---- */
 .giris-kutu {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.14) 0%,
-    rgba(255, 255, 255, 0.04) 30%,
-    rgba(14, 21, 35, 0.65) 60%,
-    rgba(8, 12, 22, 0.88) 100%
-  );
-  backdrop-filter: blur(35px) saturate(200%) contrast(108%);
-  -webkit-backdrop-filter: blur(35px) saturate(200%) contrast(108%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 28px;
-  padding: 42px 38px 34px;
   width: 100%;
   max-width: 420px;
+  background: linear-gradient(
+    180deg,
+    rgba(22, 29, 44, 0.72) 0%,
+    rgba(13, 18, 29, 0.82) 50%,
+    rgba(8, 12, 19, 0.92) 100%
+  );
+  backdrop-filter: blur(40px) saturate(190%) contrast(105%);
+  -webkit-backdrop-filter: blur(40px) saturate(190%) contrast(105%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
+  padding: 42px 38px 32px;
   text-align: center;
-  box-shadow: 
-    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.55),
-    inset 0 2px 10px 0 rgba(255, 255, 255, 0.08),
-    inset 0 -2px 3px 0 rgba(0, 0, 0, 0.45),
-    0 30px 80px -15px rgba(0, 0, 0, 0.90),
-    0 0 45px -10px rgba(255, 107, 0, 0.20);
   position: relative;
   z-index: 10;
+  box-shadow: 
+    0 0 0 1px rgba(0, 0, 0, 0.8),
+    0 24px 60px -12px rgba(0, 0, 0, 0.85),
+    0 12px 28px -6px rgba(0, 0, 0, 0.60),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
 }
 
-/* Üst Sıvı Cam Yansıma Parlaması & Neon LED */
+/* Jilet gibi 0.5px Apple üst kenar prizma parlaması */
 .giris-kutu::before {
   content: "";
   position: absolute;
   top: 0;
-  left: 45px;
-  right: 45px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9) 30%, var(--accent) 70%, transparent);
-  box-shadow: 0 0 16px var(--accent), 0 0 30px var(--accent);
-  border-radius: 2px;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.5) 45%, rgba(255, 107, 0, 0.8) 55%, transparent 100%);
+  box-shadow: 0 0 10px rgba(255, 107, 0, 0.45);
 }
 
-/* Üst Apple Liquid Glass Çip Etiketi */
+/* ---- ÜST GÜVENLİK ROZETİ ---- */
 .giris-etiket {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.04) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 9999px;
-  padding: 5px 16px;
+  padding: 4px 12px;
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.73rem;
+  font-size: 0.69rem;
   font-weight: 600;
-  color: #d1d8e5;
+  color: #94A3B8;
   letter-spacing: 0.8px;
   margin-bottom: 22px;
-  box-shadow: 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.50),
-    0 4px 14px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 .etiket-isik {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
-  animation: isikNabiz 2s ease-in-out infinite;
+  background: #10B981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.9);
+  animation: isikNabiz 2.4s ease-in-out infinite;
 }
 @keyframes isikNabiz {
-  0%, 100% { opacity: 0.55; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.2); }
+  0%, 100% { opacity: 0.6; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 12px rgba(16, 185, 129, 1); }
 }
 
+/* ---- LOGO & BAŞLIK (INTER / APPLE TYPOGRAPHY) ---- */
 .giris-logo {
-  font-family: 'Barlow Condensed', 'Inter', sans-serif;
-  font-size: 2.45rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.95rem;
   font-weight: 800;
-  color: #ffffff;
-  letter-spacing: -0.5px;
+  color: #FFFFFF;
+  letter-spacing: -0.6px;
   margin-bottom: 4px;
-  text-transform: uppercase;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
 }
 .giris-logo span { 
-  color: var(--accent); 
-  font-weight: 900;
-  text-shadow: 0 0 20px rgba(255, 107, 0, 0.55);
+  color: #FF6B00; 
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF8A24 0%, #FF5500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .giris-alt {
-  color: #94a3b8;
-  font-size: 0.86rem;
-  margin-bottom: 26px;
+  color: #8A97AB;
+  font-size: 0.84rem;
   font-weight: 500;
-}
-.giris-alt .ayrac {
-  color: var(--accent);
-  margin: 0 5px;
-  font-weight: 700;
+  margin-bottom: 26px;
+  letter-spacing: -0.1px;
 }
 
+/* ---- FORM ALANI & INPUT ---- */
 .giris-kutu label {
   display: flex;
   align-items: center;
   gap: 7px;
   text-align: left;
-  font-size: 0.80rem;
+  font-size: 0.74rem;
   font-weight: 600;
-  color: #cbd5e1;
+  color: #94A3B8;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  margin-bottom: 9px;
+  margin-bottom: 8px;
 }
 .label-kilit-svg {
-  color: var(--accent);
-  filter: drop-shadow(0 0 4px rgba(255, 107, 0, 0.6));
+  color: #FF6B00;
+  opacity: 0.9;
 }
 
 .sifre-wrap {
   position: relative;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 .sifre-wrap input {
   width: 100%;
-  padding: 14px 48px 14px 20px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(6, 10, 18, 0.70) 35%,
-    rgba(4, 7, 13, 0.85) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 9999px;
-  color: #ffffff;
+  padding: 13px 46px 13px 16px;
+  background: rgba(7, 10, 16, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 12px;
+  color: #F8FAFC;
   font-size: 1.05rem;
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   outline: none;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  letter-spacing: 4px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 3px;
   box-shadow: 
-    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.30),
-    inset 0 2px 6px rgba(0, 0, 0, 0.60);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+    inset 0 1.5px 2px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 .sifre-wrap input::placeholder {
-  color: rgba(255, 255, 255, 0.30);
+  color: rgba(255, 255, 255, 0.22);
   letter-spacing: 2px;
 }
 .sifre-wrap input:focus {
-  border-color: rgba(255, 107, 0, 0.85);
-  background: rgba(7, 12, 22, 0.90);
+  border-color: rgba(255, 107, 0, 0.7);
+  background: rgba(9, 13, 22, 0.85);
   box-shadow: 
-    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.40),
-    inset 0 2px 4px rgba(0, 0, 0, 0.50),
-    0 0 0 3.5px rgba(255, 107, 0, 0.25),
-    0 0 24px rgba(255, 107, 0, 0.40);
+    0 0 0 3px rgba(255, 107, 0, 0.16),
+    0 8px 20px -4px rgba(255, 107, 0, 0.20),
+    inset 0 1.5px 2px rgba(0, 0, 0, 0.5);
 }
 
 .goz-btn {
   position: absolute;
-  right: 14px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -261,113 +239,105 @@ body {
   align-items: center;
   justify-content: center;
   padding: 6px;
-  color: #94a3b8;
+  color: #64748B;
   transition: color 0.2s, transform 0.2s;
 }
 .goz-btn:hover {
-  color: #ffffff;
-  transform: translateY(-50%) scale(1.15);
+  color: #F8FAFC;
+  transform: translateY(-50%) scale(1.08);
 }
 .goz-svg {
   stroke-width: 2;
 }
 
-/* Giriş Butonu: Birebir Apple Liquid Glass + LED Glow */
+/* ---- EXECUTIVE ACTION GİRİŞ BUTONU ---- */
 .giris-btn {
   width: 100%;
-  padding: 14px 24px;
-  border-radius: 9999px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.34) 0%,
-    rgba(255, 255, 255, 0.08) 45%,
-    rgba(255, 107, 0, 0.20) 100%
-  ), linear-gradient(135deg, #FF7700 0%, #E65500 50%, #C94200 100%);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.38);
+  padding: 13px 20px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #FF7614 0%, #EA580C 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.24);
   font-family: 'Inter', sans-serif;
-  font-size: 0.98rem;
-  font-weight: 700;
-  letter-spacing: 0.3px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  letter-spacing: 0.1px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  backdrop-filter: blur(28px) saturate(190%) contrast(108%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%) contrast(108%);
+  gap: 8px;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 
-    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.85),
-    inset 0 2px 8px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.40),
-    0 8px 28px 0 rgba(255, 107, 0, 0.65);
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 4px 16px -2px rgba(234, 88, 12, 0.45),
+    0 1px 2px rgba(0, 0, 0, 0.25);
 }
 .giris-btn:hover {
-  transform: translateY(-2px) scale(1.015);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.42) 0%,
-    rgba(255, 255, 255, 0.12) 45%,
-    rgba(255, 107, 0, 0.25) 100%
-  ), linear-gradient(135deg, #FF831A 0%, #F55F00 50%, #D44800 100%);
+  transform: translateY(-1.5px);
+  background: linear-gradient(180deg, #FF8325 0%, #F06114 100%);
   box-shadow: 
-    inset 0 1.5px 1.5px 0 rgba(255, 255, 255, 0.95),
-    inset 0 2px 10px 0 rgba(255, 255, 255, 0.30),
-    inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.40),
-    0 12px 36px 0 rgba(255, 107, 0, 0.85);
+    inset 0 1px 0 rgba(255, 255, 255, 0.50),
+    0 8px 24px -2px rgba(234, 88, 12, 0.60);
 }
 .giris-btn:active {
-  transform: scale(0.975);
+  transform: translateY(0.5px);
   box-shadow: 
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.60),
-    0 4px 16px 0 rgba(255, 107, 0, 0.50);
+    inset 0 1px 2px rgba(0, 0, 0, 0.35),
+    0 2px 8px rgba(234, 88, 12, 0.35);
 }
 .giris-btn:hover .giris-ok-svg {
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 .giris-ok-svg {
-  transition: transform 0.25s ease;
+  transition: transform 0.2s ease;
 }
 
+/* ---- LİNKLER & GÜVENLİK ALT BİLGİSİ ---- */
+.giris-alt-linkler {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+}
 .giris-siteye-don {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  margin-top: 24px;
-  padding: 8px 20px;
-  border-radius: 9999px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(255, 255, 255, 0.02) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  color: #94a3b8;
-  font-size: 0.82rem;
-  font-weight: 500;
-  text-decoration: none;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
-  transition: all 0.25s ease;
-}
-.giris-siteye-don:hover {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.30);
-  background: rgba(255, 255, 255, 0.12);
-  transform: translateY(-1px);
-  box-shadow: 
-    inset 0 1px 1px rgba(255, 255, 255, 0.45),
-    0 6px 18px rgba(0, 0, 0, 0.40);
-}
+  gap: 6px;
+  color: #718096;
+  font-size: 0.80rem;
   font-weight: 500;
   text-decoration: none;
   transition: all 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.giris-siteye-don svg {
+  transition: transform 0.2s ease;
 }
 .giris-siteye-don:hover {
-  color: #ffffff;
+  color: #E2E8F0;
+}
+.giris-siteye-don:hover svg {
   transform: translateX(-3px);
+}
+
+.giris-guvenlik-bilgi {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  width: 100%;
+  color: #556275;
+  font-size: 0.70rem;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.2px;
+}
+.giris-guvenlik-bilgi svg {
+  color: #10B981;
+  opacity: 0.8;
 }
 
 .hata-mesaj {
