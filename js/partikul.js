@@ -50,17 +50,17 @@
     return;
   }
 
-  // Pin-Point Keskin Yıldız Dokusu (Referans görseldeki minik kristal parıltı)
+  // Pin-Point Hafif Gri/Gümüş Kristal Yıldız Dokusu
   function parcaDokusuOlustur() {
     const c = document.createElement("canvas");
     c.width = 32;
     c.height = 32;
     const ctx = c.getContext("2d");
     const rad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-    rad.addColorStop(0, "rgba(255, 255, 255, 1)");
-    rad.addColorStop(0.25, "rgba(255, 255, 255, 0.85)");
-    rad.addColorStop(0.60, "rgba(255, 255, 255, 0.20)");
-    rad.addColorStop(1, "rgba(255, 255, 255, 0)");
+    rad.addColorStop(0, "rgba(218, 224, 232, 0.96)");
+    rad.addColorStop(0.25, "rgba(195, 203, 214, 0.82)");
+    rad.addColorStop(0.60, "rgba(160, 170, 184, 0.18)");
+    rad.addColorStop(1, "rgba(140, 150, 165, 0)");
     ctx.fillStyle = rad;
     ctx.fillRect(0, 0, 32, 32);
     return new THREE.CanvasTexture(c);
@@ -75,7 +75,6 @@
   let tsPointsMesh = null;
   let lineSegmentsMesh = null;
   let lineMaterial = null;
-  let lightningMesh = null;
   let tsBasePos = null;
   let tsCount = 0;
 
@@ -199,18 +198,17 @@
     // Önceki nesneleri temizle
     if (tsPointsMesh) tsGroup.remove(tsPointsMesh);
     if (lineSegmentsMesh) tsGroup.remove(lineSegmentsMesh);
-    if (lightningMesh) tsGroup.remove(lightningMesh);
 
-    // 3. Parçacık BufferGeometry
+    // 3. Parçacık BufferGeometry (Hafif griletilmiş platin/gümüş tonu)
     tsGeometry = new THREE.BufferGeometry();
     tsGeometry.setAttribute("position", new THREE.BufferAttribute(curPos, 3));
 
     const tsMaterial = new THREE.PointsMaterial({
-      color: 0xFFFFFF,
+      color: 0xD0D5DD,
       size: 2.3,
       map: particleTexture,
       transparent: true,
-      opacity: 0.95,
+      opacity: 0.88,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
@@ -274,36 +272,15 @@
       const lineGeometry = new THREE.BufferGeometry();
       lineGeometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(cizgiNoktalari), 3));
       lineMaterial = new THREE.LineBasicMaterial({
-        color: 0xFFFFFF,
+        color: 0xA4ACB9,
         transparent: true,
-        opacity: 0.32,
+        opacity: 0.25,
         blending: THREE.AdditiveBlending,
         depthWrite: false
       });
       lineSegmentsMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
       tsGroup.add(lineSegmentsMesh);
     }
-
-    // 5. Orta Zikzak Yıldırım Çatlağı (Referans görseldeki morumsu/gümüş merkez yarık)
-    const yarıkNoktalar = [
-      2,  135,  0,
-      -3,  95,  2,
-       4,  50, -1,
-      -2,   5,  3,
-       5, -45, -2,
-      -4, -90,  1,
-       2,-135,  0
-    ];
-    const lightGeom = new THREE.BufferGeometry();
-    lightGeom.setAttribute("position", new THREE.BufferAttribute(new Float32Array(yarıkNoktalar), 3));
-    const lightMat = new THREE.LineBasicMaterial({
-      color: 0x9D9FC9,
-      transparent: true,
-      opacity: 0.50,
-      blending: THREE.AdditiveBlending
-    });
-    lightningMesh = new THREE.Line(lightGeom, lightMat);
-    tsGroup.add(lightningMesh);
   }
 
   // İlk Geometrik Üretim
@@ -472,10 +449,7 @@
 
     // Constellation Çizgileri: Yakınlaştıkça zarifçe eriyerek kaybolur
     if (lineMaterial) {
-      lineMaterial.opacity = Math.max(0, (1 - zoomCurrent * 1.6) * 0.32);
-    }
-    if (lightningMesh) {
-      lightningMesh.material.opacity = Math.max(0, (1 - zoomCurrent * 1.6) * 0.50);
+      lineMaterial.opacity = Math.max(0, (1 - zoomCurrent * 1.6) * 0.25);
     }
 
     // Uzay Yıldızlarının Yavaş Kozmik Dönüşü
