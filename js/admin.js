@@ -688,13 +688,6 @@
       });
     });
   }
-      btn.addEventListener("click", () => {
-        const idx = parseInt(btn.getAttribute("data-index"), 10);
-        cmsData.sss.splice(idx, 1);
-        sssCiz();
-      });
-    });
-  }
 
   if (btnSssEkle) {
     btnSssEkle.addEventListener("click", () => {
