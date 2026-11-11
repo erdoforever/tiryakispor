@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bgGlow" cx="20%" cy="20%" r="80%">
+      <stop offset="0%" stop-color="#1A2C4D"/>
+      <stop offset="60%" stop-color="#0B1320"/>
+      <stop offset="100%" stop-color="#070C14"/>
+    </radialGradient>
+    <radialGradient id="ballGlow" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FFE4A0"/>
+      <stop offset="35%" stop-color="#FFB300"/>
+      <stop offset="70%" stop-color="#FF8C00"/>
+      <stop offset="100%" stop-color="#B24700"/>
+    </radialGradient>
+    <filter id="ogShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="30" flood-color="#000000" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bgGlow)"/>
+  
+  <!-- Sağ Taraf: İkon / Altın Top -->
+  <g transform="translate(850, 315)">
+    <circle cx="0" cy="0" r="180" fill="url(#ballGlow)" filter="url(#ogShadow)"/>
+    <polygon points="0,-70 50,-30 30,35 -30,35 -50,-30" fill="#803300" opacity="0.35"/>
+    <circle cx="0" cy="0" r="180" fill="none" stroke="#FFE7BA" stroke-width="6" opacity="0.4"/>
+    <path d="M0,-70 L0,-140 M50,-30 L115,-55 M30,35 L90,95 M-30,35 -90,95 M-50,-30 -115,-55" stroke="#FFE4A0" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+    <text x="0" y="20" font-family="'Inter', sans-serif" font-weight="900" font-size="80" fill="#FFFFFF" text-anchor="middle">TS</text>
+  </g>
+  
+  <!-- Sol Taraf: Marka & Hizmet Metinleri -->
+  <g transform="translate(100, 150)">
+    <rect x="0" y="0" width="310" height="42" rx="21" fill="rgba(255, 140, 0, 0.15)" stroke="rgba(255, 140, 0, 0.4)" stroke-width="1.5"/>
+    <text x="20" y="27" font-family="'Inter', sans-serif" font-weight="700" font-size="16" fill="#FF8C00" letter-spacing="1">🔧 TOP TAMİR &amp; BAKIM SERVİSİ</text>
+    
+    <text x="0" y="140" font-family="'Inter', sans-serif" font-weight="900" font-size="74" fill="#FFFFFF" letter-spacing="-1">TİRYAKİ<tspan fill="#FF8C00">SPOR</tspan></text>
+    
+    <text x="0" y="210" font-family="'Inter', sans-serif" font-weight="800" font-size="34" fill="#E2E8F0">Kemal Özdemir · 40 Yıllık Tecrübe</text>
+    
+    <text x="0" y="275" font-family="'Inter', sans-serif" font-weight="500" font-size="22" fill="#94A3B8">Futbol · Basketbol · Voleybol · Profesyonel Maç Topları</text>
+    <text x="0" y="315" font-family="'Inter', sans-serif" font-weight="500" font-size="22" fill="#94A3B8">Dikiş, İç Lastik, Sibop ve Yüzey Onarımı</text>
+    
+    <g transform="translate(0, 360)">
+      <rect x="0" y="0" width="460" height="52" rx="12" fill="rgba(255, 255, 255, 0.06)" stroke="rgba(255, 255, 255, 0.12)"/>
+      <text x="24" y="33" font-family="'Inter', sans-serif" font-weight="600" font-size="18" fill="#F8FAFC">📍 Menekşe Pasajı Kızılay/ANKARA · 📞 0531 431 55 60</text>
+    </g>
+  </g>
+</svg>
