@@ -311,9 +311,11 @@
   scene.add(tozParticles);
 
   // ---- ETKİLEŞİMLİ YAKINLAŞMA (ZOOM-TO-LOGIN) MOTORU ----
+  const girisEkrani = document.getElementById("girisEkrani");
   let isZoomed = azHareket;
   let zoomCurrent = azHareket ? 1 : 0;
   let zoomTarget = azHareket ? 1 : 0;
+  let sonGecisZamani = 0;
 
   if (azHareket && girisKutu) {
     girisKutu.classList.add("aktif");
@@ -322,19 +324,28 @@
 
   function zoomGiris() {
     if (isZoomed) return;
+    const simdi = Date.now();
+    if (simdi - sonGecisZamani < 400) return;
+    sonGecisZamani = simdi;
+
     isZoomed = true;
     zoomTarget = 1;
     if (portalKontrol) portalKontrol.classList.add("gizle");
     if (girisKutu) girisKutu.classList.add("aktif");
     setTimeout(() => {
-      if (sifreInput) sifreInput.focus();
+      if (sifreInput && isZoomed) sifreInput.focus();
     }, 400);
   }
 
   function zoomCikis() {
     if (!isZoomed) return;
+    const simdi = Date.now();
+    if (simdi - sonGecisZamani < 400) return;
+    sonGecisZamani = simdi;
+
     isZoomed = false;
     zoomTarget = 0;
+    if (sifreInput) sifreInput.blur();
     if (girisKutu) girisKutu.classList.remove("aktif");
     if (portalKontrol) portalKontrol.classList.remove("gizle");
   }
@@ -346,16 +357,30 @@
     zoomCikis();
   });
 
+  // Canvas'a tıklandığında: Zoomed değilse giriş yap, zoomed ise TS'e geri dön
   canvas.addEventListener("click", () => {
-    if (!isZoomed) zoomGiris();
+    if (!isZoomed) {
+      zoomGiris();
+    } else {
+      zoomCikis();
+    }
   });
 
-  // Fare Tekerleği (Scroll)
+  // Giriş kutusu dışına (arka plana) tıklandığında TS'e geri dön
+  if (girisEkrani) {
+    girisEkrani.addEventListener("click", (e) => {
+      if (isZoomed && girisKutu && !girisKutu.contains(e.target)) {
+        zoomCikis();
+      }
+    });
+  }
+
+  // Fare Tekerleği (Scroll): Aşağı = Giriş ekranına yakınlaş, Yukarı = TS ekranına geri dön
   window.addEventListener("wheel", (e) => {
-    if (e.deltaY > 16 && !isZoomed) {
-      zoomGiris();
-    } else if (e.deltaY < -16 && isZoomed && document.activeElement !== sifreInput) {
-      zoomCikis();
+    if (e.deltaY > 15) {
+      if (!isZoomed) zoomGiris();
+    } else if (e.deltaY < -15) {
+      if (isZoomed) zoomCikis();
     }
   }, { passive: true });
 
