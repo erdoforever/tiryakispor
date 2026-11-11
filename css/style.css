@@ -973,15 +973,16 @@ section[id] { scroll-margin-top: 68px; }
 }
 /* Yazının arkasında çok yavaş kayan, yumuşak ışık şeridi */
 .hero-hakkinda::before {
-  content: ''; position: absolute; z-index: -1; inset: -20% -30%;
+  content: ''; position: absolute; z-index: -1; inset: -10% -15%;
   background: linear-gradient(115deg,
-    transparent 22%,
-    rgba(var(--accent2-rgb), 0.20) 36%,
-    rgba(var(--accent-rgb), 0.12) 46%,
-    rgba(60,120,255,0.16) 58%,
-    transparent 72%);
-  filter: blur(22px);
-  animation: isikKay 16s ease-in-out infinite alternate;
+    transparent 30%,
+    rgba(var(--accent2-rgb), 0.08) 45%,
+    rgba(var(--accent-rgb), 0.05) 55%,
+    rgba(60,120,255,0.06) 65%,
+    transparent 75%);
+  filter: blur(40px);
+  opacity: 0.6;
+  animation: isikKay 18s ease-in-out infinite alternate;
   will-change: transform;
 }
 /* Hero kaydırılıp tamamen örtüldüğünde (js/hareket.js), sürekli dönen toplar ve parıltı
@@ -1177,3 +1178,15 @@ body > footer { position: relative; z-index: 2; }
 }
 
 
+
+
+/* SSS öğelerinde LED kutunun arkasında kalsın ve minimum parlaklıkta olsun */
+.sss-item { position: relative; z-index: 1; }
+.sss-item > summary, .sss-item > p { position: relative; z-index: 2; }
+.sss-item .led-cerceve-svg { z-index: 0; }
+.sss-item .led-isik {
+  stroke-width: 1.2;
+  filter: drop-shadow(0 0 1px var(--accent));
+  opacity: 0;
+}
+.sss-item:hover .led-isik { opacity: 0.35; }
