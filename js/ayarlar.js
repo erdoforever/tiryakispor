@@ -8,9 +8,9 @@
   "WA_NUMARA": "905314315560",
   "FORM_ENDPOINT": "",
   "ADRES_SORGU": "Kızılay Mahallesi, İzmir 1 Caddesi, Sümer 1 Sokak, Menekşe Pasajı, No: 5, İç Kapı No: 46, Çankaya / Ankara",
+  "ADRES_METIN": "İzmir 1 Cad. Sümer 1 Sok. Menekşe Pasajı No: 5 D: 46 Çankaya / Ankara",
   "HARITA_LINK": "",
-  "calismaSaatleri": "Hafta içi 10:00 – 18:00 Cumartesi 10:00 - 16:00 | Pazar Kapalı",
-  "ADRES_METIN": "İzmir 1 Cad. Sümer 1 Sok. Menekşe Pasajı No: 5 D: 46 Çankaya / Ankara"
+  "calismaSaatleri": "Hafta içi 10:00 – 18:00 Cumartesi 10:00 - 16:00 | Pazar Kapalı"
 };
 
   const CALISMA = {
