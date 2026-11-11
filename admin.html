@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Paneli — TiryakiSPOR</title>
+  <title>Admin &amp; CMS Paneli — TiryakiSPOR</title>
   <!-- Arama motorlarından gizle -->
   <meta name="robots" content="noindex, nofollow"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
@@ -15,14 +17,13 @@
   <div class="giris-ekrani" id="girisEkrani">
     <div class="giris-kutu">
       <div class="giris-logo">Tiryaki<span>SPOR</span> 🏆</div>
-      <p class="giris-alt">Admin Paneli — Yetkisiz erişim yasaktır</p>
+      <p class="giris-alt">Yönetim &amp; CMS Paneli — Yetkisiz erişim yasaktır</p>
 
       <div class="hata-mesaj" id="hataMesaj">❌ Yanlış şifre! Lütfen tekrar deneyin.</div>
 
       <label for="sifreInput">🔐 Admin Şifresi</label>
       <div class="sifre-wrap">
-        <input type="password" id="sifreInput" placeholder="••••••••" maxlength="20"
-               autocomplete="off" />
+        <input type="password" id="sifreInput" placeholder="••••••••" maxlength="30" autocomplete="off" />
         <button class="goz-btn" id="gozBtn" title="Göster/Gizle">👁️</button>
       </div>
       <button class="giris-btn" id="girisBtn">Giriş Yap →</button>
@@ -34,66 +35,150 @@
   <div class="panel" id="adminPanel">
 
     <nav class="panel-navbar">
-      <div class="panel-logo">Tiryaki<span>SPOR</span> — Admin</div>
+      <div class="panel-logo">Tiryaki<span>SPOR</span> — Admin &amp; CMS</div>
       <div class="panel-navbar-sag">
-        <span class="panel-badge" id="okunmamisSayi">0 Yeni</span>
-        <button class="yenile-btn" id="yenileBtn">🔄 Yenile</button>
+        <span class="panel-badge" id="okunmamisSayi">0 Yeni Mesaj</span>
+        <button class="yayinla-btn" id="btnCanliyaYayinla" title="Değişiklikleri GitHub ve Cloudflare üzerinden anında yayına alır">🚀 Değişiklikleri Canlıya Al</button>
         <button class="cikis-btn" id="cikisBtn">Çıkış Yap</button>
       </div>
     </nav>
 
     <div class="panel-icerik">
 
-      <!-- İstatistikler -->
-      <div class="istat-grid">
-        <div class="istat-kart">
-          <div class="ik-label">📬 Toplam Mesaj</div>
-          <div class="ik-deger" id="statToplam">0</div>
+      <!-- CMS Sekmeleri -->
+      <div class="cms-nav">
+        <button class="cms-tab-btn aktif" data-tab="tabMesajlar">📬 Gelen Mesajlar</button>
+        <button class="cms-tab-btn" data-tab="tabGenel">⚙️ İletişim &amp; Genel Ayarlar</button>
+        <button class="cms-tab-btn" data-tab="tabHizmetler">⚽ Hizmet Yönetimi</button>
+        <button class="cms-tab-btn" data-tab="tabPaketler">🎁 Paketler</button>
+        <button class="cms-tab-btn" data-tab="tabSss">❓ SSS (Sıkça Sorulanlar)</button>
+      </div>
+
+      <!-- ================= SEKME 1: MESAJLAR ================= -->
+      <div class="tab-icerik aktif" id="tabMesajlar">
+        <!-- İstatistikler -->
+        <div class="istat-grid">
+          <div class="istat-kart">
+            <div class="ik-label">📬 Toplam Mesaj</div>
+            <div class="ik-deger" id="statToplam">0</div>
+          </div>
+          <div class="istat-kart">
+            <div class="ik-label">🔔 Okunmamış</div>
+            <div class="ik-deger turuncu" id="statOkunmamis">0</div>
+          </div>
+          <div class="istat-kart">
+            <div class="ik-label">✅ Okundu</div>
+            <div class="ik-deger yesil" id="statYanit">0</div>
+          </div>
+          <div class="istat-kart">
+            <div class="ik-label">📅 Bugün</div>
+            <div class="ik-deger" id="statBugun">0</div>
+          </div>
         </div>
-        <div class="istat-kart">
-          <div class="ik-label">🔔 Okunmamış</div>
-          <div class="ik-deger turuncu" id="statOkunmamis">0</div>
-        </div>
-        <div class="istat-kart">
-          <div class="ik-label">✅ Okundu</div>
-          <div class="ik-deger yesil" id="statYanit">0</div>
-        </div>
-        <div class="istat-kart">
-          <div class="ik-label">📅 Bugün</div>
-          <div class="ik-deger" id="statBugun">0</div>
+
+        <div class="bolum-kutusu">
+          <div class="bolum-ust">
+            <h2>📨 Gelen Müşteri Mesajları</h2>
+            <div style="display:flex;gap:10px;">
+              <button class="btn-action yenile-btn" id="yenileBtn">🔄 Yenile</button>
+              <button class="btn-action yenile-btn" id="hepsiniOku">✔️ Tümünü Okundu Say</button>
+              <button class="btn-action temizle-btn" id="hepsiniSil">🗑️ Tümünü Sil</button>
+            </div>
+          </div>
+          <p class="panel-not">ℹ️ Bu mesajlar tarayıcıda kayıtlı olan müşteri form iletileridir. Müşteriler form gönderdiğinde aynı zamanda doğrudan WhatsApp üzerinden de size iletilir.</p>
+          <div id="mesajListesi"></div>
         </div>
       </div>
 
-      <!-- Mesajlar -->
-      <div class="mesajlar-baslik">
-        <h2>📨 Bu Tarayıcıdaki Mesajlar</h2>
-        <div style="display:flex;gap:10px;">
-          <button class="temizle-btn" id="hepsiniOku">✔️ Tümünü Okundu İşaretle</button>
-          <button class="temizle-btn" id="hepsiniSil">🗑️ Tümünü Sil</button>
+      <!-- ================= SEKME 2: GENEL & İLETİŞİM AYARLARI ================= -->
+      <div class="tab-icerik" id="tabGenel">
+        <div class="bolum-kutusu">
+          <div class="bolum-ust">
+            <h2>⚙️ İletişim, WhatsApp ve Çalışma Saatleri</h2>
+            <button class="yayinla-btn" id="btnGenelKaydet">💾 Ayarları Kaydet</button>
+          </div>
+          <div class="cms-grid">
+            <div class="cms-form-grup">
+              <label for="inpWaNumara">📱 WhatsApp / İletişim Numarası (Başında 90, boşluksuz)</label>
+              <input type="text" id="inpWaNumara" placeholder="905314315560" />
+            </div>
+            <div class="cms-form-grup">
+              <label for="inpFormEndpoint">📧 Formspree Endpoint (İsteğe Bağlı e-posta entegrasyonu)</label>
+              <input type="text" id="inpFormEndpoint" placeholder="https://formspree.io/f/..." />
+            </div>
+          </div>
+          <div class="cms-grid">
+            <div class="cms-form-grup">
+              <label for="inpAdresSorgu">📍 Adres Metni</label>
+              <input type="text" id="inpAdresSorgu" placeholder="İzmir Cad. Menekşe Sok. Menekşe Pasajı Kızılay/ANKARA" />
+            </div>
+            <div class="cms-form-grup">
+              <label for="inpHaritaLink">🗺️ Google Haritalar Konum Bağlantısı</label>
+              <input type="text" id="inpHaritaLink" placeholder="https://maps.google.com/..." />
+            </div>
+          </div>
+          <div class="cms-form-grup">
+            <label for="inpCalismaSaatleri">🕒 Çalışma Saatleri Özeti (Örn: Hafta içi 10:00 – 18:00)</label>
+            <input type="text" id="inpCalismaSaatleri" placeholder="Hafta içi 10:00 – 18:00 | Hafta sonu Kapalı" />
+          </div>
         </div>
       </div>
 
-      <p class="panel-not">ℹ️ Bu panel yalnızca <b>bu tarayıcıda</b> kaydedilen mesajları gösterir. Müşteri mesajları size WhatsApp (veya Formspree bağlanınca e-posta) ile ulaşır.</p>
+      <!-- ================= SEKME 3: HİZMETLER ================= -->
+      <div class="tab-icerik" id="tabHizmetler">
+        <div class="bolum-kutusu">
+          <div class="bolum-ust">
+            <h2>⚽ Tamir &amp; Bakım Hizmetleri (12 Hizmet)</h2>
+            <button class="yayinla-btn" id="btnHizmetKaydet">💾 Hizmetleri Kaydet</button>
+          </div>
+          <div class="cms-liste" id="hizmetlerListesi"></div>
+        </div>
+      </div>
 
-      <div id="mesajListesi"></div>
+      <!-- ================= SEKME 4: PAKETLER ================= -->
+      <div class="tab-icerik" id="tabPaketler">
+        <div class="bolum-kutusu">
+          <div class="bolum-ust">
+            <h2>🎁 Popüler Paketler</h2>
+            <button class="yayinla-btn" id="btnPaketKaydet">💾 Paketleri Kaydet</button>
+          </div>
+          <div class="cms-liste" id="paketlerListesi"></div>
+        </div>
+      </div>
+
+      <!-- ================= SEKME 5: SSS ================= -->
+      <div class="tab-icerik" id="tabSss">
+        <div class="bolum-kutusu">
+          <div class="bolum-ust">
+            <h2>❓ Sıkça Sorulan Sorular</h2>
+            <div style="display:flex;gap:10px;">
+              <button class="btn-action yenile-btn" id="btnSssEkle">➕ Yeni Soru Ekle</button>
+              <button class="yayinla-btn" id="btnSssKaydet">💾 Soruları Kaydet</button>
+            </div>
+          </div>
+          <div class="cms-liste" id="sssListesi"></div>
+        </div>
+      </div>
 
     </div>
   </div>
 
-  <!-- ===== SİLME ONAYI =====
-       Tarayıcının confirm() penceresi bazı ortamlarda (ör. yayın sayfasının çerçevesi) hiç açılmaz ve hep "hayır" döner;
-       bu yüzden onay, sayfanın kendi penceresiyle alınır (js/admin.js → onayIste). -->
+  <!-- ===== SİLME ONAYI ===== -->
   <dialog class="onay-kutu" id="onayKutu" aria-labelledby="onayMetin">
     <div>
       <p class="onay-metin" id="onayMetin"></p>
       <div class="onay-butonlar">
         <button type="button" class="mk-btn onay-iptal" value="hayir" autofocus>Vazgeç</button>
-        <button type="button" class="mk-btn mk-btn-sil" value="evet">🗑️ Evet, sil</button>
+        <button type="button" class="mk-btn mk-btn-sil" value="evet">🗑️ Evet, Onayla</button>
       </div>
     </div>
   </dialog>
 
+  <!-- Bildirim Toast -->
+  <div class="admin-toast" id="adminToast"></div>
+
   <script src="js/ortak.js"></script>
+  <script src="js/ayarlar.js"></script>
   <script src="js/admin.js"></script>
 </body>
 </html>
