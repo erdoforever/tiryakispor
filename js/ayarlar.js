@@ -17,10 +17,9 @@
 
     // "Yol tarifi" düğmeleri: bu adres metni Google Haritalar'da aratılır.
     ADRES_SORGU: "Menekşe Pasajı, Kızılay, Ankara",
+    ADRES_METIN: "İzmir Cad. Menekşe Sok.\nMenekşe Pasajı Kızılay/ANKARA",
     // Google Haritalar'da dükkânınızı açıp "Paylaş" ile aldığınız bağlantıyı buraya yapıştırırsanız düğmeler
     // doğrudan o konumu açar (adres metninden daha kesin olur). Boşken yukarıdaki adres aranır.
-    // Not: bu alanı değiştirirseniz index.html'deki "Yol tarifi" bağlantılarını da (data-yol-tarifi) aynı adrese çevirin;
-    //      JS çalışırken bağlantılar buradan üretilir, HTML'dekiler yalnızca JS çalışmazsa kullanılan yedektir.
     HARITA_LINK: "",
   };
 
