@@ -58,17 +58,22 @@ if (new Set(hizmetler.map((h) => h.id)).size !== hizmetler.length) hata("hizmetl
 if (!paketler.length) hata("paket listesi boş");
 
 // 4) Dosyalar: HTML'in çağırdığı her dosya var mı, js/ klasöründeki her dosya bir sayfada kullanılıyor mu?
+const temizleUrl = (u) => u.split("?")[0];
 const kaynaklar = (s) => [...s.matchAll(/(?:src|href)="((?:js|css|images)\/[^"]+)"/g)].map((m) => m[1]);
-for (const f of [...kaynaklar(html), ...kaynaklar(admin), ...Object.values(KATEGORI_GORSEL)]) if (!fs.existsSync(path.join(KOK, f))) hata(`Dosya yok: ${f}`);
-const kullanilan = new Set([...kaynaklar(html), ...kaynaklar(admin)]);
+for (const f of [...kaynaklar(html), ...kaynaklar(admin), ...Object.values(KATEGORI_GORSEL)]) if (!fs.existsSync(path.join(KOK, temizleUrl(f)))) hata(`Dosya yok: ${f}`);
+const kullanilan = new Set([...kaynaklar(html), ...kaynaklar(admin)].map(temizleUrl));
 for (const f of jsDosyalari) if (!kullanilan.has("js/" + f)) uyari(`js/${f} hiçbir sayfada çağrılmıyor`);
 
 // 5) JS'in aradığı id'ler HTML'de var mı?
 const idler = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
 const adminIdler = new Set([...admin.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]));
+// Dinamik oluşturulan veya isteğe bağlı script id'leri
+const dinamikIdler = new Set(["turnstileScript"]);
 for (const f of jsDosyalari) {
   const kod = oku("js/" + f), hedef = f === "admin.js" ? adminIdler : idler;
-  for (const m of kod.matchAll(/(?:\$|getElementById)\("([\w-]+)"\)/g)) if (!hedef.has(m[1])) hata(`js/${f}: #${m[1]} sayfada yok`);
+  for (const m of kod.matchAll(/(?:\$|getElementById)\("([\w-]+)"\)/g)) {
+    if (!hedef.has(m[1]) && !dinamikIdler.has(m[1])) hata(`js/${f}: #${m[1]} sayfada yok`);
+  }
 }
 for (const m of html.matchAll(/\sid="([^"]+)"/g)) if ([...html.matchAll(new RegExp(`\\sid="${m[1]}"`, "g"))].length > 1) hata(`index.html: tekrar eden id "${m[1]}"`);
 
