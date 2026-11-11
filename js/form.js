@@ -12,7 +12,33 @@
     const form = $("iletisimForm"), basari = $("formBasari"), yeni = $("yeniMesaj");
     if (!form) return;
     const gonder = form.querySelector("button[type=submit]");
-    const { FORM_ENDPOINT, WA_NUMARA } = ayar;
+    const { FORM_ENDPOINT, WA_NUMARA, TURNSTILE_SITE_KEY } = ayar;
+
+    // Cloudflare Turnstile Dinamik Entegrasyonu
+    let turnstileToken = "";
+    if (TURNSTILE_SITE_KEY) {
+      const kutu = $("turnstileKutu");
+      if (kutu) {
+        kutu.hidden = false;
+        if (!document.getElementById("turnstileScript")) {
+          const s = document.createElement("script");
+          s.id = "turnstileScript";
+          s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+          s.async = true;
+          s.defer = true;
+          s.onload = () => {
+            if (window.turnstile) {
+              window.turnstile.render(kutu, {
+                sitekey: TURNSTILE_SITE_KEY,
+                callback: (token) => { turnstileToken = token; },
+                theme: "dark"
+              });
+            }
+          };
+          document.head.appendChild(s);
+        }
+      }
+    }
 
     // Bu tarayıcıda kayıt (admin paneli için yedek)
     function yerelKaydet(ad, tel, mesaj) {
@@ -68,6 +94,16 @@
         return;
       }
 
+      // Hız Sınırı (Rate-Limiting): 30 saniye içinde mükerrer gönderimleri engelle
+      const SON_GONDERIM_KEY = "sz_son_form_zamani";
+      const sonGonderim = parseInt(sessionStorage.getItem(SON_GONDERIM_KEY) || "0", 10);
+      const simdiMs = Date.now();
+      const beklemeSuresi = 30000; // 30 saniye
+      if (sonGonderim && (simdiMs - sonGonderim) < beklemeSuresi) {
+        const kalanSn = Math.ceil((beklemeSuresi - (simdiMs - sonGonderim)) / 1000);
+        return toast(`⏳ Lütfen yeni bir mesaj göndermeden önce ${kalanSn} saniye bekleyin.`, 4000);
+      }
+
       const ad = $("musAd").value.trim();
       const tel = $("musTel").value.trim();
       const mesaj = $("musMesaj").value.trim();
@@ -75,6 +111,13 @@
       if (!ad || !tel || !mesaj) return toast("⚠️ Lütfen tüm alanları doldurun!");
       if (!telGecerli(tel)) return toast("⚠️ Geçerli bir telefon numarası girin (05XX XXX XX XX).");
 
+      // Turnstile anahtarı tanımlıysa token kontrolü
+      if (TURNSTILE_SITE_KEY && !turnstileToken) {
+        return toast("⚠️ Lütfen güvenlik doğrulamasını tamamlayın.");
+      }
+
+      // Gönderim zamanını kaydet
+      sessionStorage.setItem(SON_GONDERIM_KEY, String(simdiMs));
       yerelKaydet(ad, tel, mesaj);
 
       if (FORM_ENDPOINT) {
