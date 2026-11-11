@@ -83,6 +83,18 @@ body {
   z-index: 1;
 }
 
+/* ---- 3D INTERACTIVE THREE.JS PARTICLE CANVAS ---- */
+.admin-partikul-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.92;
+}
+
 /* ---- OBSIDIAN MONO KART & ÇERÇEVE BEYAZ LED ---- */
 .giris-kutu {
   width: 100%;
