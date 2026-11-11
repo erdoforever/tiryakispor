@@ -71,7 +71,9 @@
   const inpAdresSorgu     = document.getElementById("inpAdresSorgu");
   const inpAdresMetin     = document.getElementById("inpAdresMetin");
   const inpHaritaLink     = document.getElementById("inpHaritaLink");
-  const inpCalismaSaatleri= document.getElementById("inpCalismaSaatleri");
+  const inpHaftaIci       = document.getElementById("inpHaftaIci");
+  const inpCumartesi      = document.getElementById("inpCumartesi");
+  const inpPazar          = document.getElementById("inpPazar");
 
   const hizmetlerListesi  = document.getElementById("hizmetlerListesi");
   const paketlerListesi   = document.getElementById("paketlerListesi");
@@ -302,7 +304,13 @@
       ADRES_SORGU: ayar.ADRES_SORGU || "Menekşe Pasajı, Kızılay, Ankara",
       ADRES_METIN: ayar.ADRES_METIN || "İzmir Cad. Menekşe Sok.\nMenekşe Pasajı Kızılay/ANKARA",
       HARITA_LINK: ayar.HARITA_LINK || "",
-      calismaSaatleri: ayar.calismaSaatleri || "Hafta içi 10:00 – 18:00 | Hafta sonu Kapalı"
+      haftaIci: "10:00 – 18:00",
+      cumartesi: "Kapalı",
+      pazar: "Kapalı"
+    },
+    calismaGunler: {
+      1: ["10:00", "18:00"], 2: ["10:00", "18:00"], 3: ["10:00", "18:00"], 4: ["10:00", "18:00"], 5: ["10:00", "18:00"],
+      6: null, 0: null,
     },
     hizmetler: JSON.parse(JSON.stringify(hizmetler)),
     paketler: JSON.parse(JSON.stringify(paketler)),
@@ -314,10 +322,24 @@
     ]
   };
 
-  // En güncel TS.ayar nesnesinden form alanlarını her zaman canlı doldur
+  function saatleriCoz(v) {
+    if (!v || !Array.isArray(v)) return "Kapalı";
+    return v[0] + " – " + v[1];
+  }
+
+  function saatAyraci(metin) {
+    if (!metin || metin.toLowerCase().includes("kapal")) return null;
+    const m = metin.match(/(\d{1,2}:\d{2})\s*[–\-]\s*(\d{1,2}:\d{2})/);
+    return m ? [m[1], m[2]] : null;
+  }
+
+  // En güncel TS.ayar ve TS.CALISMA nesnesinden form alanlarını her zaman canlı doldur
   function cmsVerileriniSenkronizeEt() {
     if (window.TS && window.TS.ayar) {
       cmsData.ayar = { ...cmsData.ayar, ...window.TS.ayar };
+    }
+    if (window.TS && window.TS.CALISMA && window.TS.CALISMA.gunler) {
+      cmsData.calismaGunler = window.TS.CALISMA.gunler;
     }
     if (window.TS && window.TS.hizmetler && window.TS.hizmetler.length) {
       cmsData.hizmetler = JSON.parse(JSON.stringify(window.TS.hizmetler));
@@ -336,7 +358,11 @@
     inpAdresSorgu.value      = cmsData.ayar.ADRES_SORGU || "";
     if (inpAdresMetin) inpAdresMetin.value = cmsData.ayar.ADRES_METIN || "";
     inpHaritaLink.value      = cmsData.ayar.HARITA_LINK || "";
-    inpCalismaSaatleri.value = cmsData.ayar.calismaSaatleri || "";
+
+    const gunler = cmsData.calismaGunler || {};
+    inpHaftaIci.value  = saatleriCoz(gunler[1] || gunler[2]);
+    inpCumartesi.value = saatleriCoz(gunler[6]);
+    inpPazar.value     = saatleriCoz(gunler[0]);
 
     // 2. Hizmetler Listesi
     hizmetlerListesi.innerHTML = cmsData.hizmetler.map((h, i) => `
@@ -432,7 +458,17 @@
     cmsData.ayar.ADRES_SORGU      = inpAdresSorgu.value.trim();
     if (inpAdresMetin) cmsData.ayar.ADRES_METIN = inpAdresMetin.value.trim();
     cmsData.ayar.HARITA_LINK      = inpHaritaLink.value.trim();
-    cmsData.ayar.calismaSaatleri  = inpCalismaSaatleri.value.trim();
+
+    // Çalışma saatleri
+    const hSaat = saatAyraci(inpHaftaIci.value.trim()) || ["10:00", "18:00"];
+    const cSaat = saatAyraci(inpCumartesi.value.trim());
+    const pSaat = saatAyraci(inpPazar.value.trim());
+
+    cmsData.calismaGunler = {
+      1: hSaat, 2: hSaat, 3: hSaat, 4: hSaat, 5: hSaat,
+      6: cSaat,
+      0: pSaat
+    };
 
     // Hizmetler
     const hKartlar = hizmetlerListesi.querySelectorAll(".cms-kart");
@@ -507,10 +543,7 @@
 
   const CALISMA = {
     saatDilimi: "Europe/Istanbul",
-    gunler: {
-      1: ["10:00", "18:00"], 2: ["10:00", "18:00"], 3: ["10:00", "18:00"], 4: ["10:00", "18:00"], 5: ["10:00", "18:00"],
-      6: null, 0: null,
-    },
+    gunler: ${JSON.stringify(cmsData.calismaGunler || {}, null, 6)},
   };
 
   const KATEGORI_GORSEL = {
