@@ -1207,3 +1207,28 @@ body > footer { position: relative; z-index: 2; }
     0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+
+
+/* İletişim Formu ve İletişim Kartları için kayan arka plan LED halesi (WhatsApp hariç) */
+.iletisim-form-kutu, .iletisim-kart {
+  position: relative;
+  transition: border-color var(--transition), box-shadow 0.4s ease, transform 0.25s ease;
+}
+
+/* Mouse kutunun üzerindeyken kutunun arkasında akıcı neon aura */
+.iletisim-form-kutu:hover {
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 1.5px rgba(var(--accent-rgb), 0.6),
+    0 0 25px rgba(var(--accent-rgb), 0.35),
+    0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+.iletisim-kart:hover {
+  transform: translateX(4px);
+  border-color: var(--accent);
+  box-shadow:
+    0 0 0 1.5px rgba(var(--accent-rgb), 0.6),
+    0 0 18px rgba(var(--accent-rgb), 0.35),
+    0 8px 24px rgba(0, 0, 0, 0.4);
+}
