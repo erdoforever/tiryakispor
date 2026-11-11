@@ -83,6 +83,7 @@
     paketlerListesi   = document.getElementById("paketlerListesi");
     yorumlarListesi   = document.getElementById("yorumlarListesi");
     sssListesi        = document.getElementById("sssListesi");
+    mesajListesi      = document.getElementById("mesajListesi");
     cikisBtn          = document.getElementById("cikisBtn");
     yenileBtn         = document.getElementById("yenileBtn");
     hepsiniSil        = document.getElementById("hepsiniSil");
@@ -112,9 +113,15 @@
     }
 
     // Buton Dinleyicileri
-    btnGenelKaydet.addEventListener("click", () => { taslakKaydet(); toast("İletişim ve genel ayarlar kaydedildi."); });
-    btnHizmetKaydet.addEventListener("click", () => { taslakKaydet(); toast("Hizmet bilgileri kaydedildi."); });
-    btnPaketKaydet.addEventListener("click", () => { taslakKaydet(); toast("Paket bilgileri kaydedildi."); });
+    if (btnGenelKaydet) {
+      btnGenelKaydet.addEventListener("click", () => { taslakKaydet(); toast("İletişim ve genel ayarlar kaydedildi."); });
+    }
+    if (btnHizmetKaydet) {
+      btnHizmetKaydet.addEventListener("click", () => { taslakKaydet(); toast("Hizmet bilgileri kaydedildi."); });
+    }
+    if (btnPaketKaydet) {
+      btnPaketKaydet.addEventListener("click", () => { taslakKaydet(); toast("Paket bilgileri kaydedildi."); });
+    }
     if (btnYorumKaydet) {
       btnYorumKaydet.addEventListener("click", () => { taslakKaydet(); toast("Müşteri yorumları kaydedildi."); });
     }
@@ -133,25 +140,36 @@
         yorumlarCiz();
       });
     }
-    btnSssKaydet.addEventListener("click", () => { taslakKaydet(); toast("SSS içerikleri kaydedildi."); });
+    if (btnSssKaydet) {
+      btnSssKaydet.addEventListener("click", () => { taslakKaydet(); toast("SSS içerikleri kaydedildi."); });
+    }
     if (btnSssEkle) {
       btnSssEkle.addEventListener("click", () => {
+        if (!cmsData.sss) cmsData.sss = [];
         cmsData.sss.push({ soru: "Yeni Soru?", cevap: "Cevabınızı buraya yazın..." });
         sssCiz();
       });
     }
-    yenileBtn.addEventListener("click", () => { mesajlariYukle(); toast("Mesaj listesi güncellendi."); });
-    hepsiniSil.addEventListener("click", async () => {
-      const onay = await onayIste("TÜM mesajları silmek istediğinize emin misiniz? Bu işlem geri alınamaz.");
-      if (onay) { mesajlariKaydet([]); mesajlariYukle(); toast("Tüm mesajlar silindi."); }
-    });
-    hepsiniOku.addEventListener("click", () => {
-      let list = mesajlariAl();
-      list = list.map(x => ({ ...x, okundu: true }));
-      mesajlariKaydet(list); mesajlariYukle();
-      toast("Tüm mesajlar okundu olarak işaretlendi.");
-    });
-    btnCanliyaYayinla.addEventListener("click", canliyaYayinlaHandler);
+    if (yenileBtn) {
+      yenileBtn.addEventListener("click", () => { mesajlariYukle(); toast("Mesaj listesi güncellendi."); });
+    }
+    if (hepsiniSil) {
+      hepsiniSil.addEventListener("click", async () => {
+        const onay = await onayIste("TÜM mesajları silmek istediğinize emin misiniz? Bu işlem geri alınamaz.");
+        if (onay) { mesajlariKaydet([]); mesajlariYukle(); toast("Tüm mesajlar silindi."); }
+      });
+    }
+    if (hepsiniOku) {
+      hepsiniOku.addEventListener("click", () => {
+        let list = mesajlariAl();
+        list = list.map(x => ({ ...x, okundu: true }));
+        mesajlariKaydet(list); mesajlariYukle();
+        toast("Tüm mesajlar okundu olarak işaretlendi.");
+      });
+    }
+    if (btnCanliyaYayinla) {
+      btnCanliyaYayinla.addEventListener("click", canliyaYayinlaHandler);
+    }
   }
 
   // Güvenlik: Sayfa yüklendiğinde F12 Console'dan içeriğe doğrudan erişimi engellemek için
@@ -252,8 +270,8 @@
       domElemanlariniBagla();
     }
     if (adminPanel) adminPanel.style.display = "block";
-    mesajlariYukle();
-    cmsVerileriniYukle();
+    try { mesajlariYukle(); } catch (e) { console.error("Mesajlar yüklenirken hata:", e); }
+    try { cmsVerileriniYukle(); } catch (e) { console.error("CMS verileri yüklenirken hata:", e); }
   }
 
   // ================= MESAJLAR BÖLÜMÜ =================
@@ -273,6 +291,9 @@
   }
 
   function mesajlariYukle() {
+    if (!mesajListesi) mesajListesi = document.getElementById("mesajListesi");
+    if (!mesajListesi) return;
+
     const mesajlar = mesajlariAl();
     const statToplam    = document.getElementById("statToplam");
     const statOkunmamis = document.getElementById("statOkunmamis");
@@ -493,65 +514,73 @@
     cmsVerileriniSenkronizeEt();
 
     // 1. Genel Ayarlar Formu
-    inpWaNumara.value        = cmsData.ayar.WA_NUMARA || "";
-    inpFormEndpoint.value    = cmsData.ayar.FORM_ENDPOINT || "";
-    inpAdresSorgu.value      = cmsData.ayar.ADRES_SORGU || "";
+    if (inpWaNumara) inpWaNumara.value = cmsData.ayar.WA_NUMARA || "";
+    if (inpFormEndpoint) inpFormEndpoint.value = cmsData.ayar.FORM_ENDPOINT || "";
+    if (inpAdresSorgu) inpAdresSorgu.value = cmsData.ayar.ADRES_SORGU || "";
     if (inpAdresMetin) inpAdresMetin.value = cmsData.ayar.ADRES_METIN || "";
-    inpHaritaLink.value      = cmsData.ayar.HARITA_LINK || "";
+    if (inpHaritaLink) inpHaritaLink.value = cmsData.ayar.HARITA_LINK || "";
     if (inpTurnstileKey) inpTurnstileKey.value = cmsData.ayar.TURNSTILE_SITE_KEY || "";
 
     const gunler = cmsData.calismaGunler || {};
-    inpHaftaIci.value  = saatleriCoz(gunler[1] || gunler[2]);
-    inpCumartesi.value = saatleriCoz(gunler[6]);
-    inpPazar.value     = saatleriCoz(gunler[0]);
+    if (inpHaftaIci) inpHaftaIci.value  = saatleriCoz(gunler[1] || gunler[2]);
+    if (inpCumartesi) inpCumartesi.value = saatleriCoz(gunler[6]);
+    if (inpPazar) inpPazar.value     = saatleriCoz(gunler[0]);
 
     // 2. Hizmetler Listesi
-    hizmetlerListesi.innerHTML = cmsData.hizmetler.map((h, i) => `
-      <div class="cms-kart" data-index="${i}">
-        <div class="cms-kart-header">
-          <div class="cms-kart-baslik">${i + 1}. ${h.ad}</div>
-          <span class="cms-kart-badge">${h.kategori.toUpperCase()}</span>
-        </div>
-        <div class="cms-grid">
-          <div class="cms-form-grup">
-            <label>Hizmet Başlığı</label>
-            <input type="text" class="hizmet-ad" value="${h.ad || ""}" />
+    if (!hizmetlerListesi) hizmetlerListesi = document.getElementById("hizmetlerListesi");
+    const hDizi = (cmsData.hizmetler && cmsData.hizmetler.length) ? cmsData.hizmetler : ((window.TS && window.TS.hizmetler) || []);
+    if (hizmetlerListesi && hDizi.length) {
+      hizmetlerListesi.innerHTML = hDizi.map((h, i) => `
+        <div class="cms-kart" data-index="${i}">
+          <div class="cms-kart-header">
+            <div class="cms-kart-baslik">${i + 1}. ${h.ad || ""}</div>
+            <span class="cms-kart-badge">${(h.kategori || "").toUpperCase()}</span>
+          </div>
+          <div class="cms-grid">
+            <div class="cms-form-grup">
+              <label>Hizmet Başlığı</label>
+              <input type="text" class="hizmet-ad" value="${h.ad || ""}" />
+            </div>
+            <div class="cms-form-grup">
+              <label>Tahmini Teslim Süresi</label>
+              <input type="text" class="hizmet-sure" value="${h.sure || ""}" />
+            </div>
           </div>
           <div class="cms-form-grup">
-            <label>Tahmini Teslim Süresi</label>
-            <input type="text" class="hizmet-sure" value="${h.sure || ""}" />
+            <label>Açıklama</label>
+            <textarea class="hizmet-aciklama" rows="2">${h.aciklama || ""}</textarea>
           </div>
         </div>
-        <div class="cms-form-grup">
-          <label>Açıklama</label>
-          <textarea class="hizmet-aciklama" rows="2">${h.aciklama || ""}</textarea>
-        </div>
-      </div>
-    `).join("");
+      `).join("");
+    }
 
     // 3. Paketler Listesi
-    paketlerListesi.innerHTML = cmsData.paketler.map((p, i) => `
-      <div class="cms-kart" data-index="${i}">
-        <div class="cms-kart-header">
-          <div class="cms-kart-baslik">${p.ikon || "🎁"} Paket ${p.no}: ${p.ad}</div>
-          ${p.etiket ? `<span class="cms-kart-badge">${p.etiket}</span>` : ""}
-        </div>
-        <div class="cms-grid">
-          <div class="cms-form-grup">
-            <label>Paket Başlığı</label>
-            <input type="text" class="paket-ad" value="${p.ad || ""}" />
+    if (!paketlerListesi) paketlerListesi = document.getElementById("paketlerListesi");
+    const pDizi = (cmsData.paketler && cmsData.paketler.length) ? cmsData.paketler : ((window.TS && window.TS.paketler) || []);
+    if (paketlerListesi && pDizi.length) {
+      paketlerListesi.innerHTML = pDizi.map((p, i) => `
+        <div class="cms-kart" data-index="${i}">
+          <div class="cms-kart-header">
+            <div class="cms-kart-baslik">${p.ikon || "🎁"} Paket ${p.no || (i + 1)}: ${p.ad || ""}</div>
+            ${p.etiket ? `<span class="cms-kart-badge">${p.etiket}</span>` : ""}
+          </div>
+          <div class="cms-grid">
+            <div class="cms-form-grup">
+              <label>Paket Başlığı</label>
+              <input type="text" class="paket-ad" value="${p.ad || ""}" />
+            </div>
+            <div class="cms-form-grup">
+              <label>Öne Çıkan Etiket (İsteğe bağlı)</label>
+              <input type="text" class="paket-etiket" value="${p.etiket || ""}" placeholder="Örn: EN ÇOK TERCİH EDİLEN" />
+            </div>
           </div>
           <div class="cms-form-grup">
-            <label>Öne Çıkan Etiket (İsteğe bağlı)</label>
-            <input type="text" class="paket-etiket" value="${p.etiket || ""}" placeholder="Örn: EN ÇOK TERCİH EDİLEN" />
+            <label>Paket Açıklaması</label>
+            <textarea class="paket-aciklama" rows="2">${p.aciklama || ""}</textarea>
           </div>
         </div>
-        <div class="cms-form-grup">
-          <label>Paket Açıklaması</label>
-          <textarea class="paket-aciklama" rows="2">${p.aciklama || ""}</textarea>
-        </div>
-      </div>
-    `).join("");
+      `).join("");
+    }
 
     // 4. SSS Listesi
     sssCiz();
@@ -561,8 +590,10 @@
   }
 
   function yorumlarCiz() {
+    if (!yorumlarListesi) yorumlarListesi = document.getElementById("yorumlarListesi");
     if (!yorumlarListesi) return;
-    yorumlarListesi.innerHTML = (cmsData.yorumlar || []).map((y, i) => `
+    const yDizi = (cmsData.yorumlar && cmsData.yorumlar.length) ? cmsData.yorumlar : ((window.TS && window.TS.yorumlar) || []);
+    yorumlarListesi.innerHTML = yDizi.map((y, i) => `
       <div class="cms-kart" data-index="${i}">
         <div class="cms-kart-header">
           <div class="cms-kart-baslik">⭐ Yorum ${i + 1}: ${esc ? esc(y.isim || "Müşteri") : (y.isim || "Müşteri")}</div>
@@ -622,6 +653,16 @@
   }
 
   function sssCiz() {
+    if (!sssListesi) sssListesi = document.getElementById("sssListesi");
+    if (!sssListesi) return;
+    if (!Array.isArray(cmsData.sss) || !cmsData.sss.length) {
+      cmsData.sss = [
+        { soru: "Tamir işlemi ne kadar sürer?", cevap: "Sibop değişimi ve basınç testi gibi basit işlemler genellikle aynı gün yapılır. Dikiş ve panel onarımları, hasarın durumuna göre 1–3 iş günü içinde tamamlanır." },
+        { soru: "Hangi top markalarını tamir ediyorsunuz?", cevap: "Adidas, Nike, Puma, Select, Molten, Mikasa, Wilson, Spalding, Delta ve diğer tüm markaların futbol, basketbol ve voleybol toplarını onarıyoruz." },
+        { soru: "Fiyat nasıl belirlenir?", cevap: "Hasarın durumuna (patlak, sibop, dikiş veya deri değişimi) göre işlem öncesi şeffaf fiyat bilgisi verilir. Onayınız olmadan tamire başlanmaz." },
+        { soru: "Dükkâna gelmeden önce bilgi alabilir miyim?", cevap: "Topunuzun fotoğrafını WhatsApp hattımıza göndererek hasar durumu ve tahmini teslim süresi hakkında anında ön bilgi alabilirsiniz." }
+      ];
+    }
     sssListesi.innerHTML = cmsData.sss.map((s, i) => `
       <div class="cms-kart" data-index="${i}">
         <div class="cms-kart-header">
@@ -640,6 +681,13 @@
     `).join("");
 
     sssListesi.querySelectorAll(".btn-sss-sil").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const idx = parseInt(btn.getAttribute("data-index"), 10);
+        cmsData.sss.splice(idx, 1);
+        sssCiz();
+      });
+    });
+  }
       btn.addEventListener("click", () => {
         const idx = parseInt(btn.getAttribute("data-index"), 10);
         cmsData.sss.splice(idx, 1);
