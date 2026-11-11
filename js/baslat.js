@@ -7,6 +7,7 @@
 
   TS.liste.sayilariYaz();
   TS.liste.paketleriDoldur();
+  TS.liste.yorumlariDoldur();
   TS.gorunurlukGozle(document.querySelectorAll(".kategori-kart, .sss-item"));
   TS.liste.hizmetleriGoster();
   TS.kaydirma.topDonmeleriniGuncelle();
