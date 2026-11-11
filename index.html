@@ -12,7 +12,7 @@
 </head>
 <body>
   <!-- Giriş animasyonu için: hero öğeleri JS hazır olana dek gizlenir (CSS'te 3 sn'lik yedek var) -->
-  <script>if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("giris-bekle");</script>
+  <script src="js/giris.js"></script>
 
   <!-- ===== NAVBAR ===== -->
   <nav class="navbar" id="navbar">
@@ -299,16 +299,18 @@
           <form id="iletisimForm" novalidate>
             <div class="form-grup">
               <label for="musAd">👤 Adınız Soyadınız</label>
-              <input type="text" id="musAd" placeholder="Örn: Ahmet Yılmaz" required />
+              <input type="text" id="musAd" placeholder="Örn: Ahmet Yılmaz" maxlength="80" required />
             </div>
             <div class="form-grup">
               <label for="musTel">📞 Telefon Numaranız</label>
-              <input type="tel" id="musTel" placeholder="05XX XXX XX XX" required />
+              <input type="tel" id="musTel" placeholder="05XX XXX XX XX" maxlength="20" required />
             </div>
             <div class="form-grup">
               <label for="musMesaj">💬 Mesajınız</label>
-              <textarea id="musMesaj" rows="5" placeholder="Topunuzun markası, hasarı ve hangi hizmeti istediğinizi yazabilirsiniz..." required></textarea>
+              <textarea id="musMesaj" rows="5" maxlength="1000" placeholder="Topunuzun markası, hasarı ve hangi hizmeti istediğinizi yazabilirsiniz..." required></textarea>
             </div>
+            <!-- Cloudflare Turnstile: ayarlar.js → TURNSTILE_SITE_KEY doluysa js/form.js burayı doldurur -->
+            <div class="turnstile-kutu" id="turnstileKutu" hidden></div>
             <div class="form-grup" style="display:none;" aria-hidden="true">
               <label for="formWebsite">Web Sitesi</label>
               <input type="text" id="formWebsite" name="website" tabindex="-1" autocomplete="off" />
