@@ -52,17 +52,17 @@
     return;
   }
 
-  // Pin-Point Kristal Yıldız Dokusu (Platin/Gümüş pürüzsüz yıldız ışığı)
+  // Pin-Point Kristal Yıldız Dokusu (Saf Parlak Beyaz Kristal Yıldız Işığı)
   function parcaDokusuOlustur() {
     const c = document.createElement("canvas");
     c.width = 32;
     c.height = 32;
     const ctx = c.getContext("2d");
     const rad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-    rad.addColorStop(0, "rgba(235, 240, 248, 1)");
-    rad.addColorStop(0.25, "rgba(210, 218, 228, 0.85)");
-    rad.addColorStop(0.60, "rgba(175, 185, 198, 0.22)");
-    rad.addColorStop(1, "rgba(150, 160, 175, 0)");
+    rad.addColorStop(0, "rgba(255, 255, 255, 1.0)");
+    rad.addColorStop(0.25, "rgba(255, 255, 255, 0.90)");
+    rad.addColorStop(0.60, "rgba(255, 255, 255, 0.25)");
+    rad.addColorStop(1, "rgba(255, 255, 255, 0)");
     ctx.fillStyle = rad;
     ctx.fillRect(0, 0, 32, 32);
     return new THREE.CanvasTexture(c);
@@ -192,10 +192,10 @@
       tumNoktalar3D[i * 3 + 2] = z;
 
       tsSizes[i] = 2.8; // Varsayılan nokta boyutu
-      // Varsayılan platin/gümüş gri renk tonu
-      tsColors[i * 3]     = 0.82;
-      tsColors[i * 3 + 1] = 0.84;
-      tsColors[i * 3 + 2] = 0.87;
+      // Saf Kristal Beyaz (#FFFFFF)
+      tsColors[i * 3]     = 1.0;
+      tsColors[i * 3 + 1] = 1.0;
+      tsColors[i * 3 + 2] = 1.0;
     }
 
     tsBasePos = new Float32Array(tumNoktalar3D);
@@ -268,47 +268,38 @@
   const tozParticles = new THREE.Points(tozGeometri, tozMateryal);
   scene.add(tozParticles);
 
-  // ---- ETKİLEŞİMLİ YAKINLAŞMA (ZOOM-TO-LOGIN) MOTORU ----
+  // ---- ETKİLEŞİMLİ AŞAMALI YAKINLAŞMA (PROGRESSIVE SCROLL ZOOM-TO-LOGIN) MOTORU ----
   let isZoomed = azHareket;
   let zoomCurrent = azHareket ? 1 : 0;
   let zoomTarget = azHareket ? 1 : 0;
   let focusTimer = null;
+  let focusVerildi = false;
 
   if (azHareket && girisKutu) {
     girisKutu.classList.add("aktif");
     if (portalKontrol) portalKontrol.classList.add("gizle");
   }
 
-  function zoomGiris() {
-    if (isZoomed && zoomTarget === 1) return;
-    isZoomed = true;
-    zoomTarget = 1;
-    wheelAccum = 0;
+  function setZoomHedef(val) {
+    if (azHareket) return;
+    zoomTarget = Math.max(0, Math.min(1, val));
+    isZoomed = (zoomTarget >= 0.85);
 
-    if (portalKontrol) portalKontrol.classList.add("gizle");
-    if (girisKutu) girisKutu.classList.add("aktif");
-
-    clearTimeout(focusTimer);
-    focusTimer = setTimeout(() => {
-      if (isZoomed && zoomTarget === 1 && sifreInput) {
-        sifreInput.focus();
+    if (zoomTarget < 0.60) {
+      clearTimeout(focusTimer);
+      focusVerildi = false;
+      if (sifreInput && document.activeElement === sifreInput) {
+        sifreInput.blur();
       }
-    }, 450);
+    }
+  }
+
+  function zoomGiris() {
+    setZoomHedef(1.0);
   }
 
   function zoomCikis() {
-    if (!isZoomed && zoomTarget === 0) return;
-    isZoomed = false;
-    zoomTarget = 0;
-    wheelAccum = 0;
-
-    clearTimeout(focusTimer);
-    if (sifreInput) {
-      sifreInput.blur();
-    }
-
-    if (girisKutu) girisKutu.classList.remove("aktif");
-    if (portalKontrol) portalKontrol.classList.remove("gizle");
+    setZoomHedef(0.0);
   }
 
   // Tıklama Olayları
@@ -323,7 +314,7 @@
   });
 
   window.addEventListener("click", (e) => {
-    if (!isZoomed) {
+    if (zoomTarget < 0.40) {
       if (!girisKutu || !girisKutu.contains(e.target)) {
         zoomGiris();
       }
@@ -334,37 +325,48 @@
     }
   });
 
-  // Kararlı Fare Tekerleği Akümülatörü
-  let wheelAccum = 0;
-  let wheelDecayTimer = null;
-
+  // Her Scroll Kaydırmada T ve S'ye Aşamalı Yaklaşma Motoru
   window.addEventListener("wheel", (e) => {
-    clearTimeout(wheelDecayTimer);
-    wheelDecayTimer = setTimeout(() => {
-      wheelAccum = 0;
-    }, 200);
+    // e.deltaY > 0: İleri/aşağı kaydırma -> T ve S'ye doğru adım adım yaklaşır
+    // e.deltaY < 0: Geri/yukarı kaydırma -> Uzaklaşarak 3D TS'ye geri döner
+    const delta = e.deltaY;
+    let adim = 0;
+    if (Math.abs(delta) >= 50) {
+      // Standart fare tekerleği tıkı (Notch ~100px) -> Her scroll tıkında %18-20 yaklaş
+      adim = Math.sign(delta) * 0.18;
+    } else {
+      // Hassas Touchpad / Magic Mouse kaydırması
+      adim = delta * 0.0028;
+    }
+    setZoomHedef(zoomTarget + adim);
+  }, { passive: true });
 
-    wheelAccum += e.deltaY;
+  // Dokunmatik Ekranlar (Mobil / Tablet Kaydırma Desteği)
+  let touchStartY = 0;
+  window.addEventListener("touchstart", (e) => {
+    if (e.touches && e.touches.length > 0) {
+      touchStartY = e.touches[0].clientY;
+    }
+  }, { passive: true });
 
-    if (wheelAccum > 45) {
-      if (!isZoomed || zoomTarget !== 1) {
-        zoomGiris();
+  window.addEventListener("touchmove", (e) => {
+    if (e.touches && e.touches.length > 0) {
+      const curY = e.touches[0].clientY;
+      const farkY = touchStartY - curY; // Yukarı kaydırma (ileri scroll gibi)
+      if (Math.abs(farkY) > 14) {
+        touchStartY = curY;
+        const adim = Math.sign(farkY) * 0.15;
+        setZoomHedef(zoomTarget + adim);
       }
-      wheelAccum = 0;
-    } else if (wheelAccum < -45) {
-      if (isZoomed || zoomTarget !== 0) {
-        zoomCikis();
-      }
-      wheelAccum = 0;
     }
   }, { passive: true });
 
   // Klavye Kontrolleri
   window.addEventListener("keydown", (e) => {
-    if ((e.key === "Enter" || e.key === " ") && !isZoomed && document.activeElement !== sifreInput) {
+    if ((e.key === "Enter" || e.key === " ") && zoomTarget < 0.40 && document.activeElement !== sifreInput) {
       e.preventDefault();
       zoomGiris();
-    } else if (e.key === "Escape" && isZoomed) {
+    } else if (e.key === "Escape" && zoomTarget > 0.30) {
       zoomCikis();
     }
   });
@@ -454,8 +456,8 @@
       const pos = tsGeometry.attributes.position.array;
       const aSize = tsGeometry.attributes.aSize.array;
       const aColor = tsGeometry.attributes.aColor.array;
-      const warp = Math.pow(zoomCurrent, 2.1) * 320;
-      const hoverAktif = (zoomCurrent < 0.25); // Yalnızca amblem modundayken hover parlaması
+      const warp = Math.pow(zoomCurrent, 2.3) * 360;
+      const hoverAktif = (zoomCurrent < 0.50); // İlk %50'lik dilimde hover her zaman aktif
 
       for (let i = 0; i < tsCount; i++) {
         const bx = tsBasePos[i * 3];
@@ -473,20 +475,18 @@
           }
         }
 
-        // 1. Noktayı Belirginleştir: Hover olunca boyut büyür (2.8 -> 7.8)
-        const hedefBoyut = 2.8 + hoverEtkisi * 5.0;
-        aSize[i] += (hedefBoyut - aSize[i]) * 0.18;
+        // 1. Noktayı Belirginleştir: Hover olunca boyut büyür (2.8 -> 8.2)
+        const hedefBoyut = 2.8 + hoverEtkisi * 5.4;
+        aSize[i] += (hedefBoyut - aSize[i]) * 0.20;
 
-        // 2. Noktayı Belirginleştir: Hover olunca parlak beyaz ışıldama
-        const hedefR = 0.82 + hoverEtkisi * 0.18;
-        const hedefG = 0.84 + hoverEtkisi * 0.16;
-        const hedefB = 0.87 + hoverEtkisi * 0.13;
-        aColor[i * 3]     += (hedefR - aColor[i * 3]) * 0.18;
-        aColor[i * 3 + 1] += (hedefG - aColor[i * 3 + 1]) * 0.18;
-        aColor[i * 3 + 2] += (hedefB - aColor[i * 3 + 2]) * 0.18;
+        // 2. Noktayı Belirginleştir: Saf parlak beyaz (#FFFFFF) ve hover ile süper ışıltı
+        const hedefL = 1.0 + hoverEtkisi * 0.45;
+        aColor[i * 3]     += (hedefL - aColor[i * 3]) * 0.20;
+        aColor[i * 3 + 1] += (hedefL - aColor[i * 3 + 1]) * 0.20;
+        aColor[i * 3 + 2] += (hedefL - aColor[i * 3 + 2]) * 0.20;
 
-        // 3. 3D Manyetik Yükselme (Hover olunca öne doğru süzülür)
-        const hoverZ = hoverEtkisi * 14.0;
+        // 3. 3D Manyetik Yükselme (Hover olunca kameraya doğru öne süzülür)
+        const hoverZ = hoverEtkisi * 16.0;
 
         // 4. Warp & Titreşim
         const angle = Math.atan2(by, bx);
@@ -500,6 +500,51 @@
       tsGeometry.attributes.position.needsUpdate = true;
       tsGeometry.attributes.aSize.needsUpdate = true;
       tsGeometry.attributes.aColor.needsUpdate = true;
+    }
+
+    // Aşamalı UI Senkronizasyonu (Alt Buton & Giriş Kartı)
+    if (portalKontrol) {
+      const hapOpaklik = Math.max(0, 1 - zoomCurrent * 2.5);
+      portalKontrol.style.opacity = hapOpaklik.toFixed(3);
+      portalKontrol.style.pointerEvents = (hapOpaklik > 0.15) ? "auto" : "none";
+      if (hapOpaklik <= 0.02) {
+        portalKontrol.classList.add("gizle");
+      } else {
+        portalKontrol.classList.remove("gizle");
+      }
+    }
+
+    if (girisKutu) {
+      if (zoomCurrent < 0.38) {
+        girisKutu.style.opacity = "0";
+        girisKutu.style.pointerEvents = "none";
+        girisKutu.style.transform = "scale(0.72) translateY(28px)";
+        girisKutu.classList.remove("aktif");
+      } else {
+        const kartProg = Math.min(1, (zoomCurrent - 0.38) / 0.62);
+        girisKutu.style.opacity = kartProg.toFixed(3);
+        const curScale = (0.72 + kartProg * 0.28).toFixed(3);
+        const curY = ((1 - kartProg) * 28).toFixed(1);
+        girisKutu.style.transform = `scale(${curScale}) translateY(${curY}px)`;
+
+        if (kartProg >= 0.88) {
+          girisKutu.style.pointerEvents = "auto";
+          girisKutu.classList.add("aktif");
+          if (zoomTarget >= 0.95 && !focusVerildi && sifreInput) {
+            focusVerildi = true;
+            clearTimeout(focusTimer);
+            focusTimer = setTimeout(() => {
+              if (zoomTarget >= 0.95 && sifreInput) {
+                sifreInput.focus();
+              }
+            }, 100);
+          }
+        } else {
+          girisKutu.style.pointerEvents = "none";
+          girisKutu.classList.remove("aktif");
+          focusVerildi = false;
+        }
+      }
     }
 
     // Uzay Yıldızlarının Yavaş Kozmik Dönüşü
