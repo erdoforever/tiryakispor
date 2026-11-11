@@ -1,4 +1,4 @@
-/* ===========================
+﻿/* ===========================
    TIRYAKISPOR - STYLE.CSS
    Tek koyu tema. Sıra: değişkenler → gezinme/hero → bölümler → form/footer →
    duyarlı kurallar → ek düzeltmeler → etkileşim katmanları (dolum, hakkımda, deste, hareket)
@@ -675,16 +675,20 @@ body {
   transition: opacity 0.2s ease;
 }
 .led-cerceve:hover .led-isik { opacity: 1; }
-.led-cerceve:hover .led-isik-sag { animation: ledSag 1.7s ease-in-out; }
-.led-cerceve:hover .led-isik-sol { animation: ledSol 1.7s ease-in-out; }
+.led-cerceve:hover .led-isik-sag { animation: ledSag 1.8s ease-in-out infinite; }
+.led-cerceve:hover .led-isik-sol { animation: ledSol 1.8s ease-in-out infinite; }
 
 @keyframes ledSag {
-  from { stroke-dashoffset: 176.3; }
-  to   { stroke-dashoffset: 76.3; }
+  0%   { stroke-dashoffset: 175; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { stroke-dashoffset: 75; opacity: 0; }
 }
 @keyframes ledSol {
-  from { stroke-dashoffset: 176.3; }
-  to   { stroke-dashoffset: 275; }
+  0%   { stroke-dashoffset: 175; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { stroke-dashoffset: 275; opacity: 0; }
 }
 
 .form-grup { margin-bottom: 20px; }
@@ -1169,3 +1173,4 @@ body > footer { position: relative; z-index: 2; }
   position: absolute; inset: 0; z-index: 5;
   background: #050a12; opacity: 0; pointer-events: none;
 }
+
