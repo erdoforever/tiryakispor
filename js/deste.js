@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    HİZMET YIĞINI (DESTE) — kartlar deste gibi üst üste durur, üzerine gelince dağıtılır
    Kurallar: yalnızca fare olan geniş ekranlarda ve filtre/arama yokken deste kapalı başlar.
    Telefonda ya da filtre seçiliyken kartlar hep açıktır.
@@ -58,10 +58,10 @@
   }
 
   // ---- DAĞITMA EFEKTİ (Web Animations API) ----
-  const YIGIN_AC_TOPLAM = 1800;     // tüm kartların dağıtılma süresi (ms)
-  const YIGIN_AC_KART   = 1000;     // tek kartın uçuş süresi (ms)
-  const YIGIN_KP_TOPLAM = 1300;     // toplanma süresi (ms)
-  const YIGIN_KP_KART   = 800;
+  const YIGIN_AC_TOPLAM = 550;     // tüm kartların dağıtılma süresi (ms)
+  const YIGIN_AC_KART   = 400;     // tek kartın uçuş süresi (ms)
+  const YIGIN_KP_TOPLAM = 450;     // toplanma süresi (ms)
+  const YIGIN_KP_KART   = 350;
   // Çok sayıda kart varken (12 hizmet gibi) hepsi aynı anda uçarsa düşük güçlü cihazlarda kasma olabilir.
   // Yalnızca ilk YIGIN_GORKEMLI kart "uçuşlu" (Web Animations API) açılır/kapanır; geri kalanı
   // .hizmet-kart'ın zaten var olan, çok daha ucuz olan düz CSS transform geçişiyle (0.3s) yerine gider.
@@ -76,21 +76,18 @@
   function yiginFirlatKare(b, i) {
     const yon = i % 2 === 0 ? 1 : -1;
     return [
-      { offset: 0,    transform: yiginTr(b.dx, b.dy, b.rot, 1) },
-      { offset: 0.42, transform: yiginTr(b.dx * 0.38, b.dy * 0.38 - 80, yon * 190, 1.1) },
-      { offset: 0.76, transform: yiginTr(0, 12, yon * 352, 1.02) },
-      { offset: 0.9,  transform: yiginTr(0, -5, yon * 362, 1) },
-      { offset: 1,    transform: yiginTr(0, 0, yon * 360, 1) },
+      { offset: 0,   transform: yiginTr(b.dx, b.dy, b.rot, 0.98), opacity: 0.85 },
+      { offset: 0.5, transform: yiginTr(b.dx * 0.3, b.dy * 0.3 - 15, yon * 6, 1.02), opacity: 1 },
+      { offset: 1,   transform: yiginTr(0, 0, 0, 1), opacity: 1 },
     ];
   }
-  // Topla: aynı hareketin tersi
+  // Topla: zarif toplanma
   function yiginToplaKare(b, i) {
     const yon = i % 2 === 0 ? 1 : -1;
     return [
-      { offset: 0,    transform: yiginTr(0, 0, 0, 1) },
-      { offset: 0.24, transform: yiginTr(0, -5, yon * -8, 1) },
-      { offset: 0.58, transform: yiginTr(b.dx * 0.62, b.dy * 0.62 - 80, yon * -170, 1.1) },
-      { offset: 1,    transform: yiginTr(b.dx, b.dy, b.rot - yon * 360, 1) },
+      { offset: 0,   transform: yiginTr(0, 0, 0, 1), opacity: 1 },
+      { offset: 0.5, transform: yiginTr(b.dx * 0.5, b.dy * 0.5 - 10, yon * 4, 1.01), opacity: 0.95 },
+      { offset: 1,   transform: yiginTr(b.dx, b.dy, b.rot, 0.98), opacity: 0.85 },
     ];
   }
   const yiginIptal = () => {
@@ -250,3 +247,4 @@
 
   TS.deste = { kur: yiginKur };
 })(window.TS = window.TS || {});
+
