@@ -69,6 +69,7 @@
   const inpWaNumara       = document.getElementById("inpWaNumara");
   const inpFormEndpoint   = document.getElementById("inpFormEndpoint");
   const inpAdresSorgu     = document.getElementById("inpAdresSorgu");
+  const inpAdresMetin     = document.getElementById("inpAdresMetin");
   const inpHaritaLink     = document.getElementById("inpHaritaLink");
   const inpCalismaSaatleri= document.getElementById("inpCalismaSaatleri");
 
@@ -299,6 +300,7 @@
       WA_NUMARA: ayar.WA_NUMARA || "905314315560",
       FORM_ENDPOINT: ayar.FORM_ENDPOINT || "",
       ADRES_SORGU: ayar.ADRES_SORGU || "Menekşe Pasajı, Kızılay, Ankara",
+      ADRES_METIN: ayar.ADRES_METIN || "İzmir Cad. Menekşe Sok.\nMenekşe Pasajı Kızılay/ANKARA",
       HARITA_LINK: ayar.HARITA_LINK || "",
       calismaSaatleri: "Hafta içi 10:00 – 18:00 | Hafta sonu Kapalı"
     },
@@ -323,6 +325,7 @@
     inpWaNumara.value        = cmsData.ayar.WA_NUMARA || "";
     inpFormEndpoint.value    = cmsData.ayar.FORM_ENDPOINT || "";
     inpAdresSorgu.value      = cmsData.ayar.ADRES_SORGU || "";
+    if (inpAdresMetin) inpAdresMetin.value = cmsData.ayar.ADRES_METIN || "";
     inpHaritaLink.value      = cmsData.ayar.HARITA_LINK || "";
     inpCalismaSaatleri.value = cmsData.ayar.calismaSaatleri || "";
 
@@ -418,6 +421,7 @@
     cmsData.ayar.WA_NUMARA        = inpWaNumara.value.trim();
     cmsData.ayar.FORM_ENDPOINT    = inpFormEndpoint.value.trim();
     cmsData.ayar.ADRES_SORGU      = inpAdresSorgu.value.trim();
+    if (inpAdresMetin) cmsData.ayar.ADRES_METIN = inpAdresMetin.value.trim();
     cmsData.ayar.HARITA_LINK      = inpHaritaLink.value.trim();
     cmsData.ayar.calismaSaatleri  = inpCalismaSaatleri.value.trim();
 
@@ -474,23 +478,107 @@
   // ================= CANLIYA YAYINLA (Seçenek A: GitHub API) =================
   btnCanliyaYayinla.addEventListener("click", async () => {
     taslakKaydet();
-    const onay = await onayIste("Tüm CMS düzenlemeleriniz canlı web sitenize aktarılacak ve Cloudflare Pages otomatik olarak dağıtacaktır. Onaylıyor musunuz?");
+    const onay = await onayIste("Tüm CMS düzenlemeleriniz GitHub repository'nize işlenecek ve Cloudflare Pages otomatik olarak canlıya aktaracaktır. Onaylıyor musunuz?");
     if (!onay) return;
 
     btnCanliyaYayinla.disabled = true;
     btnCanliyaYayinla.textContent = "⏳ Canlıya Aktarılıyor...";
 
     try {
-      // JS ve Veri Dosyalarını Derleme İşlemi
-      toast("Değişiklikler derleniyor ve canlıya yükleniyor...", "basari");
+      toast("Değişiklikler canlıya aktarılıyor, lütfen bekleyin...", "basari");
 
-      // Not: İstemci tarafında doğrudan GitHub API ile veya sunucu endpoint'i ile güncellenir.
-      // Canlı ortamda ayarlar dosyasını güncel tutmak için depolanan veriler hazırlandı.
-      setTimeout(() => {
-        btnCanliyaYayinla.disabled = false;
-        btnCanliyaYayinla.textContent = "🚀 Değişiklikleri Canlıya Al";
-        toast("Tebrikler! Değişiklikler canlı web sitenize başarıyla yüklendi.", "basari");
-      }, 1200);
+      // ayarlar.js içeriğini üret
+      const yeniAyarlarJs = `/* ============================================================
+   AYARLAR VE VERİ — TiryakiSPOR (CMS Tarafından Otomatik Üretildi)
+   ============================================================ */
+(function (TS) {
+  "use strict";
+
+  const ayar = ${JSON.stringify(cmsData.ayar, null, 2)};
+
+  const CALISMA = {
+    saatDilimi: "Europe/Istanbul",
+    gunler: {
+      1: ["10:00", "18:00"], 2: ["10:00", "18:00"], 3: ["10:00", "18:00"], 4: ["10:00", "18:00"], 5: ["10:00", "18:00"],
+      6: null, 0: null,
+    },
+  };
+
+  const KATEGORI_GORSEL = {
+    futbol:      "images/ucl-ball.png",
+    basketbol:   "images/delta-basketball.png",
+    voleybol:    "images/mikasa-ball.png",
+    profesyonel: "images/ucl-ball.png",
+  };
+  const KATEGORI_EMOJI = { futbol: "⚽", basketbol: "🏀", voleybol: "🏐", profesyonel: "🏅" };
+  const KATEGORI_KISA = {
+    futbol:      "Futbol",
+    basketbol:   "Basketbol",
+    voleybol:    "Voleybol",
+    profesyonel: "Profesyonel Maç Topu",
+  };
+  const HASAR_IKON = {
+    "Dikiş Patlağı":  "🧵",
+    "Hava Kaçırma":   "💨",
+    "Deri Soyulması": "🩹",
+  };
+
+  const hizmetler = ${JSON.stringify(cmsData.hizmetler, null, 2)};
+  const paketler = ${JSON.stringify(cmsData.paketler, null, 2)};
+
+  Object.assign(TS, { ayar, CALISMA, KATEGORI_GORSEL, KATEGORI_EMOJI, KATEGORI_KISA, HASAR_IKON, hizmetler, paketler });
+})(window.TS = window.TS || {});
+`;
+
+      // GitHub API anahtarını local storage veya kullanıcı oturumundan al/sor
+      let token = localStorage.getItem("sz_gh_token");
+      if (!token) {
+        token = prompt("Lütfen GitHub Personal Access Token (repo yetkili) giriniz:");
+        if (token) {
+          localStorage.setItem("sz_gh_token", token.trim());
+        } else {
+          throw new Error("GitHub erişim token'ı olmadan canlıya yükleme yapılamaz.");
+        }
+      }
+      const apiUrl = "https://api.github.com/repos/erdoforever/tiryakispor/contents/js/ayarlar.js";
+      const headers = {
+        "Authorization": "Bearer " + token,
+        "Accept": "application/vnd.github.v3+json",
+        "Content-Type": "application/json"
+      };
+
+      // 1. Mevcut SHA'yı al
+      const getRes = await fetch(apiUrl, { headers });
+      if (!getRes.ok) throw new Error("GitHub bağlantı hatası (" + getRes.status + ")");
+      const getJson = await getRes.json();
+      const currentSha = getJson.sha;
+
+      // 2. Base64 encode
+      const utf8Bytes = new TextEncoder().encode(yeniAyarlarJs);
+      let binStr = "";
+      utf8Bytes.forEach(b => { binStr += String.fromCharCode(b); });
+      const b64Content = btoa(binStr);
+
+      // 3. GitHub API'ye PUT isteği
+      const putRes = await fetch(apiUrl, {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({
+          message: "CMS: Canli icerik guncellemesi (ayarlar.js)",
+          content: b64Content,
+          sha: currentSha,
+          branch: "main"
+        })
+      });
+
+      if (!putRes.ok) {
+        const errData = await putRes.json().catch(() => ({}));
+        throw new Error(errData.message || "Yükleme başarısız (" + putRes.status + ")");
+      }
+
+      btnCanliyaYayinla.disabled = false;
+      btnCanliyaYayinla.textContent = "🚀 Değişiklikleri Canlıya Al";
+      toast("Harika! Değişiklikler GitHub'a gönderildi, 1-2 dakika içinde Cloudflare Pages sitenizi günceller.", "basari");
 
     } catch (err) {
       btnCanliyaYayinla.disabled = false;
