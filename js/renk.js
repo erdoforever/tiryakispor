@@ -1,8 +1,8 @@
 /* ============================================================
-   RENK TEMASI — arama kutusunun yanındaki küçük açılır menü (Turuncu / Beyaz / Mor)
-   Sayfaya <html data-renk="beyaz|mor"> ekler/kaldırır; css/style.css bu öznitelikle
-   --accent / --accent2 / --amber (ve rgb eşleniklerini) değiştirir.
-   Kasıtlı olarak HATIRLANMAZ: hiçbir yerde kaydedilmez, her sayfa yüklemesi turuncu ile başlar.
+   RENK VE GÖRÜNÜM TEMASI — (Modern / Minimal + 8 Renk Seçici)
+   Sayfaya <html data-renk="..." data-stil="..."> ekler/kaldırır;
+   css/style.css bu özniteliklerle renkleri ve efektleri değiştirir.
+   Kasıtlı olarak HATIRLANMAZ: her sayfa yüklemesi turuncu + Modern ile başlar.
    ============================================================ */
 (function (TS) {
   "use strict";
@@ -14,10 +14,24 @@
     });
   }
 
+  function stilGuncelle(stil) {
+    document.querySelectorAll("#renkMenu [data-stil]").forEach((btn) => {
+      const aktif = btn.dataset.stil === stil;
+      btn.classList.toggle("aktif", aktif);
+      btn.setAttribute("aria-selected", aktif ? "true" : "false");
+    });
+  }
+
   function uygula(renk) {
     if (renk) document.documentElement.setAttribute("data-renk", renk);
     else document.documentElement.removeAttribute("data-renk");
     isaretleriGuncelle(renk);
+  }
+
+  function stilUygula(stil) {
+    if (stil === "minimal") document.documentElement.setAttribute("data-stil", "minimal");
+    else document.documentElement.removeAttribute("data-stil");
+    stilGuncelle(stil);
   }
 
   function menuAc(menu, dugme, ac) {
@@ -36,9 +50,15 @@
     });
 
     menu.addEventListener("click", (e) => {
-      const btn = e.target.closest("[data-renk]");
-      if (!btn) return;
-      uygula(btn.dataset.renk);
+      const stilBtn = e.target.closest("[data-stil]");
+      if (stilBtn) {
+        stilUygula(stilBtn.dataset.stil);
+        return;
+      }
+
+      const renkBtn = e.target.closest("[data-renk]");
+      if (!renkBtn) return;
+      uygula(renkBtn.dataset.renk);
       menuAc(menu, dugme, false);
       dugme.focus();
     });
@@ -52,5 +72,5 @@
     });
   }
 
-  TS.renk = { bagla, uygula };
+  TS.renk = { bagla, uygula, stilUygula };
 })(window.TS = window.TS || {});
