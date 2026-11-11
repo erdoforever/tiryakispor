@@ -22,6 +22,7 @@
     kartToplar = [...document.querySelectorAll(".scroll-rotate-ball")];
     scrollGuncelle();
   }
+  const dokunmatik = typeof window !== "undefined" && window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
   function scrollGuncelle() {
     scrollBekliyor = false;
     const y = window.scrollY;
@@ -29,14 +30,21 @@
     backToTop.classList.toggle("goster", y > 400);
     if (azHareket) return;
 
-    const derece = (y * 0.45) % 360;
-    heroToplar.forEach((top, i) => {
-      const faktor = (i % 2 === 0 ? 1 : -1) * (0.35 + (i % 3) * 0.15);
-      top.style.transform = `rotate(${y * faktor}deg)`;
-    });
-    kartToplar.forEach((top, i) => {
-      top.style.transform = `rotate(${(i % 2 === 0 ? 1 : -1) * derece * 0.6}deg)`;
-    });
+    // Yalnızca hero ekrandayken hero toplarını döndür (boşuna CPU/GPU harcamaz)
+    if (y < window.innerHeight + 100) {
+      heroToplar.forEach((top, i) => {
+        const faktor = (i % 2 === 0 ? 1 : -1) * (0.35 + (i % 3) * 0.15);
+        top.style.transform = `rotate(${y * faktor}deg)`;
+      });
+    }
+
+    // Dokunmatik telefonlarda gereksiz kart rotasyonunu kapatarak kaydırma kasmasını tamamen önle
+    if (!dokunmatik && kartToplar.length && y > 200 && y < 3500) {
+      const derece = (y * 0.45) % 360;
+      kartToplar.forEach((top, i) => {
+        top.style.transform = `rotate(${(i % 2 === 0 ? 1 : -1) * derece * 0.6}deg)`;
+      });
+    }
   }
   kaydirmaEkle(() => {
     if (!scrollBekliyor) { scrollBekliyor = true; requestAnimationFrame(scrollGuncelle); }
