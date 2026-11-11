@@ -1180,13 +1180,30 @@ body > footer { position: relative; z-index: 2; }
 
 
 
-/* SSS öğelerinde LED kutunun arkasında kalsın ve minimum parlaklıkta olsun */
-.sss-item { position: relative; z-index: 1; }
-.sss-item > summary, .sss-item > p { position: relative; z-index: 2; }
-.sss-item .led-cerceve-svg { z-index: 0; }
-.sss-item .led-isik {
-  stroke-width: 1.2;
-  filter: drop-shadow(0 0 1px var(--accent));
-  opacity: 0;
+/* SSS kutusu arkadan yanan temiz neon çerçeve aurası */
+.sss-item {
+  position: relative;
+  border-radius: 8px;
+  transition: border-color var(--transition), box-shadow 0.35s ease, transform 0.25s ease;
 }
-.sss-item:hover .led-isik { opacity: 0.35; }
+.sss-item .led-cerceve-svg { display: none !important; }
+
+/* Mouse üzerine gelince kutunun tam arkasından ve dış sınırından parlayan düzgün ışık */
+.sss-item:hover {
+  border-color: var(--accent);
+  box-shadow: 
+    0 0 0 1.5px rgba(var(--accent-rgb), 0.6),
+    0 0 16px rgba(var(--accent-rgb), 0.35),
+    0 8px 24px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Kutu açıkken arkada sabit duran zarif ışık */
+.sss-item[open] {
+  border-color: var(--accent);
+  box-shadow: 
+    0 0 0 1.5px rgba(var(--accent-rgb), 0.7),
+    0 0 20px rgba(var(--accent-rgb), 0.3),
+    0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
