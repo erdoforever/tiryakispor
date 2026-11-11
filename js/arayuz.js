@@ -22,7 +22,7 @@
     if (e.key === "Escape") escIsleyicileri.forEach((fn) => fn());
   });
 
-  // ---- MENÜ & OVAL KAYAN KAPSÜL ----
+  // ---- MENÜ & OVAL KAYAN KAPSÜL (APPLE iOS ULTRA GLASS) ----
   const navLinks = $("navLinks"), hamburger = $("hamburger");
   const kayanKapsul = $("navKayanKapsul");
   const navA = navLinks ? [...navLinks.querySelectorAll("a")] : [];
@@ -37,18 +37,21 @@
   escEkle(() => menuAyarla(false));
 
   function kapsulGuncelle(hedefLink, animasyonlu = true) {
-    if (!kayanKapsul || !hedefLink || window.innerWidth <= 768) {
+    if (!kayanKapsul || !hedefLink || !navLinks || window.innerWidth <= 768) {
       if (kayanKapsul) kayanKapsul.style.opacity = "0";
       return;
     }
-    const sol = hedefLink.offsetLeft;
-    const genislik = hedefLink.offsetWidth;
+    // offsetParent karmaşasını önlemek için getBoundingClientRect ile kesin piksel hesabı
+    const navRect = navLinks.getBoundingClientRect();
+    const linkRect = hedefLink.getBoundingClientRect();
+    const sol = linkRect.left - navRect.left;
+    const genislik = linkRect.width;
     if (genislik === 0) return;
 
     kayanKapsul.style.transition = animasyonlu && !TS.azHareket
-      ? "transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2), width 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.2), opacity 0.2s ease"
+      ? "transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), width 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease"
       : "none";
-    kayanKapsul.style.transform = `translateX(${sol}px)`;
+    kayanKapsul.style.transform = `translate3d(${sol}px, 0, 0)`;
     kayanKapsul.style.width = `${genislik}px`;
     kayanKapsul.style.opacity = "1";
 
@@ -56,10 +59,18 @@
     seciliLink = hedefLink;
   }
 
-  // Tıklanınca kayan saydam kapsülü o bağlantıya yumuşakça kaydır
+  // Tıklama kilidi: Kullanıcı tıkladığında bar hemen kayar ve sayfa hedefe inene kadar scroll-spy ezmez
+  let tiklamaKilidi = false;
+  let tiklamaZamanlayici = null;
+
   navA.forEach((a) => {
     a.addEventListener("click", () => {
       kapsulGuncelle(a, true);
+      tiklamaKilidi = true;
+      clearTimeout(tiklamaZamanlayici);
+      tiklamaZamanlayici = setTimeout(() => {
+        tiklamaKilidi = false;
+      }, 1000);
     });
   });
 
@@ -68,7 +79,7 @@
     if (seciliLink) kapsulGuncelle(seciliLink, false);
   }, { passive: true });
 
-  // Sayfa kaydırıldıkça hangi bölümde olduğumuzu tespit edip kapsülü oraya kaydıran scroll-spy
+  // Sayfa kaydırıldıkça hangi bölümde olduğumuzu viewport'a göre tespit eden akıllı scroll-spy
   const bolumEslesmeleri = navA.map((a) => {
     const id = (a.getAttribute("href") || "").replace("#", "");
     return { a, el: id ? $(id) : null };
@@ -77,16 +88,18 @@
   let scrollSpyBekliyor = false;
   function scrollSpyGuncelle() {
     scrollSpyBekliyor = false;
-    if (window.innerWidth <= 768 || !bolumEslesmeleri.length) return;
-    const y = window.scrollY + 140;
+    if (tiklamaKilidi || window.innerWidth <= 768 || !bolumEslesmeleri.length) return;
+    
     let suanki = null;
     for (let i = bolumEslesmeleri.length - 1; i >= 0; i--) {
       const b = bolumEslesmeleri[i];
-      if (b.el.offsetTop <= y) {
+      const r = b.el.getBoundingClientRect();
+      if (r.top <= 200 && r.bottom >= 120) {
         suanki = b.a;
         break;
       }
     }
+    // En tepedeyken (hero alanı) Hizmetler'i seçili tut
     if (!suanki && window.scrollY < 400 && bolumEslesmeleri.length) {
       suanki = bolumEslesmeleri[0].a;
     }
@@ -96,7 +109,7 @@
   }
 
   window.addEventListener("scroll", () => {
-    if (!scrollSpyBekliyor) {
+    if (!scrollSpyBekliyor && !tiklamaKilidi) {
       scrollSpyBekliyor = true;
       requestAnimationFrame(scrollSpyGuncelle);
     }
@@ -110,6 +123,7 @@
       kapsulGuncelle(seciliLink, false);
     }
     setTimeout(() => kapsulGuncelle(seciliLink, false), 150);
+    setTimeout(() => kapsulGuncelle(seciliLink, false), 500);
   }
 
   // ---- GÖRÜNÜNCE BELİR (inline stil yerine CSS sınıfı: hover efektlerini bozmaz) ----
