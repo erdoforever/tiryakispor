@@ -1,8 +1,8 @@
 /* ============================================================
-   TiryakiSPOR — Admin 3D Cyber-Geometric "TS" Constellation Particle System
-   Referans görseldeki birebir stil: Keskin geometrik "T" ve "S" gövdeleri,
-   içini dolduran binlerce parlak yıldız parçacığı, ince örümcek ağı kafesi (LineSegments)
-   ve ortadaki kırık yıldırım yarığı
+   TiryakiSPOR — Admin 3D Pure Black Interactive "TS" Point Particle System
+   Simsiyah arka plan, sadece noktalardan oluşan "T" ve "S" gövdeleri,
+   fare üzerine gelince o noktayı belirginleştiren (büyüten ve parlatan)
+   interaktif 3D hover sistemi ve warp zoom oturum terminali
    ============================================================ */
 (function () {
   "use strict";
@@ -21,15 +21,16 @@
   const geriBtn       = document.getElementById("tsGeriBtn");
   const girisKutu     = document.getElementById("girisKutu");
   const sifreInput    = document.getElementById("sifreInput");
+  const girisEkrani   = document.getElementById("girisEkrani");
 
   const azHareket = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Geniş açılı kamera mesafesi (Referans görseldeki ferah, tam kadraj)
+  // Geniş açılı kamera mesafesi (Ferah, tam kadraj)
   function hesaplaKameraZ() {
     return window.innerWidth < 768 ? 580 : 460;
   }
 
-  // Sahne, Kamera, Renderer
+  // Sahne, Kamera, Renderer (Simsiyah Zemin)
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 3000);
   let varsayilanKameraZ = hesaplaKameraZ();
@@ -45,37 +46,38 @@
     });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 1); // Simsiyah arka plan
   } catch (err) {
     console.warn("WebGL başlatılamadı:", err);
     return;
   }
 
-  // Pin-Point Hafif Gri/Gümüş Kristal Yıldız Dokusu
+  // Pin-Point Kristal Yıldız Dokusu (Platin/Gümüş pürüzsüz yıldız ışığı)
   function parcaDokusuOlustur() {
     const c = document.createElement("canvas");
     c.width = 32;
     c.height = 32;
     const ctx = c.getContext("2d");
     const rad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-    rad.addColorStop(0, "rgba(218, 224, 232, 0.96)");
-    rad.addColorStop(0.25, "rgba(195, 203, 214, 0.82)");
-    rad.addColorStop(0.60, "rgba(160, 170, 184, 0.18)");
-    rad.addColorStop(1, "rgba(140, 150, 165, 0)");
+    rad.addColorStop(0, "rgba(235, 240, 248, 1)");
+    rad.addColorStop(0.25, "rgba(210, 218, 228, 0.85)");
+    rad.addColorStop(0.60, "rgba(175, 185, 198, 0.22)");
+    rad.addColorStop(1, "rgba(150, 160, 175, 0)");
     ctx.fillStyle = rad;
     ctx.fillRect(0, 0, 32, 32);
     return new THREE.CanvasTexture(c);
   }
   const particleTexture = parcaDokusuOlustur();
 
-  // ---- 3D GEOMETRİK "TS" GRUBU ----
+  // ---- 3D GEOMETRİK "TS" NOKTA GRUBU ----
   const tsGroup = new THREE.Group();
   scene.add(tsGroup);
 
   let tsGeometry = null;
   let tsPointsMesh = null;
-  let lineSegmentsMesh = null;
-  let lineMaterial = null;
   let tsBasePos = null;
+  let tsSizes = null;
+  let tsColors = null;
   let tsCount = 0;
 
   // Poligon İçi Nokta Kontrolü (Ray-Casting Algoritması)
@@ -102,7 +104,6 @@
     return { minX, maxX, minY, maxY };
   }
 
-  // Poligon İçine Yoğun Düzgün Yıldız Örnekleme (Rejection Sampling)
   function poligonIciOrnekle(vs, hedefSayi) {
     const b = poligonSinirlari(vs);
     const pts = [];
@@ -120,7 +121,6 @@
     return pts;
   }
 
-  // Poligon Çevresi Boyunca Keskin Sınır Yıldızları
   function poligonCevresiOrnekle(vs, adimMesafe) {
     const edgePts = [];
     for (let i = 0; i < vs.length; i++) {
@@ -138,156 +138,114 @@
     return edgePts;
   }
 
-  function geometrikTsUret() {
-    // 1. KESKİN GEOMETRİK "T" VE "S" POLİGONLARI (Referans görseldeki açılı silüet)
-    // Sol Parça: Keskin Geometrik "T"
+  function geometrikTsNoktalariUret() {
+    // KESKİN GEOMETRİK "T" VE "S" POLİGONLARI
     const polyT = [
-      [-190, 125], // Sol üst
-      [-15,  125], // Sağ üst (orta yarık tarafı)
-      [-15,   75], // Sağ üst alt kesim
-      [-75,   75], // T gövdesine dönüş
-      [-75, -125], // T sütun alt sağ
-      [-130,-125], // T sütun alt sol
-      [-130,  75], // T sütun sol üst
-      [-190,  75]  // Sol alt kesim
+      [-190, 125],
+      [-15,  125],
+      [-15,   75],
+      [-75,   75],
+      [-75, -125],
+      [-130,-125],
+      [-130,  75],
+      [-190,  75]
     ];
 
-    // Sağ Parça: Keskin Geometrik "S" (Referans görseldeki açılı lightning / sporty dilimler)
     const polyS = [
-      [20,   125], // Sol üst (orta yarık tarafı)
-      [175,  125], // Sağ üst
-      [190,  110], // Sağ üst pah
-      [190,   30], // Sağ üst iniş
-      [85,    30], // Orta raf sol giriş
-      [85,   -10], // Orta raf iniş
-      [190,  -10], // Orta raf sağ dönüş
-      [190, -125], // Sağ alt iniş
-      [35,  -125], // Sol alt
-      [20,  -110], // Sol alt pah
-      [20,   -30], // Sol alt çıkış
-      [125,  -30], // Orta alt raf sağ
-      [125,   10], // Orta alt raf çıkış
-      [20,    10]  // Sol orta raf dönüş
+      [20,   125],
+      [175,  125],
+      [190,  110],
+      [190,   30],
+      [85,    30],
+      [85,   -10],
+      [190,  -10],
+      [190, -125],
+      [35,  -125],
+      [20,  -110],
+      [20,   -30],
+      [125,  -30],
+      [125,   10],
+      [20,    10]
     ];
 
-    // 2. Binlerce Nokta Örnekleme (İç dolgu + Keskin dış sınır)
-    const tIc = poligonIciOrnekle(polyT, 1400);
-    const tKenar = poligonCevresiOrnekle(polyT, 3.2);
+    // Nokta Örnekleme (T ve S sadece noktalardan oluşur)
+    const tIc = poligonIciOrnekle(polyT, 1500);
+    const tKenar = poligonCevresiOrnekle(polyT, 3.0);
 
-    const sIc = poligonIciOrnekle(polyS, 1600);
-    const sKenar = poligonCevresiOrnekle(polyS, 3.2);
+    const sIc = poligonIciOrnekle(polyS, 1700);
+    const sKenar = poligonCevresiOrnekle(polyS, 3.0);
 
     const ham2D = [...tIc, ...tKenar, ...sIc, ...sKenar];
     tsCount = ham2D.length / 2;
 
     const tumNoktalar3D = new Float32Array(tsCount * 3);
+    tsSizes = new Float32Array(tsCount);
+    tsColors = new Float32Array(tsCount * 3);
+
     for (let i = 0; i < tsCount; i++) {
       const x = ham2D[i * 2];
       const y = ham2D[i * 2 + 1];
-      // Hafif 3D derinlik ve yüzey kavisi
       const z = (Math.random() - 0.5) * 16 + Math.cos(x * 0.015) * 6;
 
       tumNoktalar3D[i * 3]     = x;
       tumNoktalar3D[i * 3 + 1] = y;
       tumNoktalar3D[i * 3 + 2] = z;
+
+      tsSizes[i] = 2.8; // Varsayılan nokta boyutu
+      // Varsayılan platin/gümüş gri renk tonu
+      tsColors[i * 3]     = 0.82;
+      tsColors[i * 3 + 1] = 0.84;
+      tsColors[i * 3 + 2] = 0.87;
     }
 
     tsBasePos = new Float32Array(tumNoktalar3D);
     const curPos = new Float32Array(tumNoktalar3D);
 
-    // Önceki nesneleri temizle
     if (tsPointsMesh) tsGroup.remove(tsPointsMesh);
-    if (lineSegmentsMesh) tsGroup.remove(lineSegmentsMesh);
 
-    // 3. Parçacık BufferGeometry (Hafif griletilmiş platin/gümüş tonu)
+    // Her parçacığın boyut ve rengini ayrı yöneten ShaderMaterial
     tsGeometry = new THREE.BufferGeometry();
     tsGeometry.setAttribute("position", new THREE.BufferAttribute(curPos, 3));
+    tsGeometry.setAttribute("aSize", new THREE.BufferAttribute(tsSizes, 1));
+    tsGeometry.setAttribute("aColor", new THREE.BufferAttribute(tsColors, 3));
 
-    const tsMaterial = new THREE.PointsMaterial({
-      color: 0xD0D5DD,
-      size: 2.3,
-      map: particleTexture,
+    const tsShaderMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        pointTexture: { value: particleTexture }
+      },
+      vertexShader: [
+        "attribute float aSize;",
+        "attribute vec3 aColor;",
+        "varying vec3 vColor;",
+        "void main() {",
+        "  vColor = aColor;",
+        "  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);",
+        "  gl_PointSize = aSize * (380.0 / -mvPosition.z);",
+        "  gl_Position = projectionMatrix * mvPosition;",
+        "}"
+      ].join("\n"),
+      fragmentShader: [
+        "uniform sampler2D pointTexture;",
+        "varying vec3 vColor;",
+        "void main() {",
+        "  vec4 tex = texture2D(pointTexture, gl_PointCoord);",
+        "  gl_FragColor = vec4(vColor, tex.a) * tex;",
+        "}"
+      ].join("\n"),
       transparent: true,
-      opacity: 0.88,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
-    tsPointsMesh = new THREE.Points(tsGeometry, tsMaterial);
+
+    tsPointsMesh = new THREE.Points(tsGeometry, tsShaderMaterial);
     tsGroup.add(tsPointsMesh);
-
-    // 4. Yıldız Kümesi Ağı (Constellation Line Segments)
-    // Hızlı Spatial Binning ile referanstaki gibi ince kristalize üçgenler ağı
-    const cellSize = 13;
-    const cellMap = new Map();
-    for (let i = 0; i < tsCount; i++) {
-      const x = tsBasePos[i * 3];
-      const y = tsBasePos[i * 3 + 1];
-      const cx = Math.floor(x / cellSize);
-      const cy = Math.floor(y / cellSize);
-      const key = (cx << 16) ^ cy;
-      if (!cellMap.has(key)) cellMap.set(key, []);
-      cellMap.get(key).push(i);
-    }
-
-    const cizgiNoktalari = [];
-    const minD2 = 4.0 * 4.0;
-    const maxD2 = 12.5 * 12.5;
-
-    for (let i = 0; i < tsCount; i++) {
-      const x1 = tsBasePos[i * 3];
-      const y1 = tsBasePos[i * 3 + 1];
-      const z1 = tsBasePos[i * 3 + 2];
-      const cx = Math.floor(x1 / cellSize);
-      const cy = Math.floor(y1 / cellSize);
-      let baglanti = 0;
-
-      for (let ox = -1; ox <= 1; ox++) {
-        for (let oy = -1; oy <= 1; oy++) {
-          const key = ((cx + ox) << 16) ^ (cy + oy);
-          const bucket = cellMap.get(key);
-          if (bucket) {
-            for (let b = 0; b < bucket.length; b++) {
-              const j = bucket[b];
-              if (j > i) {
-                const x2 = tsBasePos[j * 3];
-                const y2 = tsBasePos[j * 3 + 1];
-                const z2 = tsBasePos[j * 3 + 2];
-                const d2 = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) + (z1 - z2) * (z1 - z2);
-                if (d2 >= minD2 && d2 <= maxD2) {
-                  cizgiNoktalari.push(x1, y1, z1);
-                  cizgiNoktalari.push(x2, y2, z2);
-                  baglanti++;
-                  if (baglanti >= 3) break;
-                }
-              }
-            }
-          }
-          if (baglanti >= 3) break;
-        }
-        if (baglanti >= 3) break;
-      }
-    }
-
-    if (cizgiNoktalari.length > 0) {
-      const lineGeometry = new THREE.BufferGeometry();
-      lineGeometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(cizgiNoktalari), 3));
-      lineMaterial = new THREE.LineBasicMaterial({
-        color: 0xA4ACB9,
-        transparent: true,
-        opacity: 0.25,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-      });
-      lineSegmentsMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
-      tsGroup.add(lineSegmentsMesh);
-    }
   }
 
-  // İlk Geometrik Üretim
-  geometrikTsUret();
+  // İlk Nokta Üretimi
+  geometrikTsNoktalariUret();
 
   // ---- DERİNLİK UZAY YILDIZLARI (COSMIC DUST) ----
-  const TOZ_SAYISI = 450;
+  const TOZ_SAYISI = 400;
   const tozGeometri = new THREE.BufferGeometry();
   const tozPozisyonlar = new Float32Array(TOZ_SAYISI * 3);
 
@@ -299,11 +257,11 @@
   tozGeometri.setAttribute("position", new THREE.BufferAttribute(tozPozisyonlar, 3));
 
   const tozMateryal = new THREE.PointsMaterial({
-    color: 0xEDF2F7,
-    size: 2.2,
+    color: 0x8A92A0,
+    size: 2.0,
     map: particleTexture,
     transparent: true,
-    opacity: 0.40,
+    opacity: 0.35,
     blending: THREE.AdditiveBlending,
     depthWrite: false
   });
@@ -311,7 +269,6 @@
   scene.add(tozParticles);
 
   // ---- ETKİLEŞİMLİ YAKINLAŞMA (ZOOM-TO-LOGIN) MOTORU ----
-  const girisEkrani = document.getElementById("girisEkrani");
   let isZoomed = azHareket;
   let zoomCurrent = azHareket ? 1 : 0;
   let zoomTarget = azHareket ? 1 : 0;
@@ -331,10 +288,8 @@
     if (portalKontrol) portalKontrol.classList.add("gizle");
     if (girisKutu) girisKutu.classList.add("aktif");
 
-    // Eski focus zamanlayıcısını iptal et
     clearTimeout(focusTimer);
     focusTimer = setTimeout(() => {
-      // Yalnızca hala login ekranındaysak focus ver
       if (isZoomed && zoomTarget === 1 && sifreInput) {
         sifreInput.focus();
       }
@@ -347,7 +302,6 @@
     zoomTarget = 0;
     wheelAccum = 0;
 
-    // Tüm bekleyen focus işlemlerini iptal et ve odağı kaldır
     clearTimeout(focusTimer);
     if (sifreInput) {
       sifreInput.blur();
@@ -368,8 +322,6 @@
     zoomCikis();
   });
 
-  // Giriş kutusu dışındaki alana (Canvas veya arka plan) tıklandığında:
-  // Zoomed değilse giriş yap; zoomed ise doğrudan TS ekranına dön!
   window.addEventListener("click", (e) => {
     if (!isZoomed) {
       if (!girisKutu || !girisKutu.contains(e.target)) {
@@ -382,12 +334,11 @@
     }
   });
 
-  // Kararlı Fare Tekerleği Akümülatörü (Flick, Trackpad ve Hızlı Up/Down Emniyeti)
+  // Kararlı Fare Tekerleği Akümülatörü
   let wheelAccum = 0;
   let wheelDecayTimer = null;
 
   window.addEventListener("wheel", (e) => {
-    // 200ms hareketsizlikte birikimi sıfırla
     clearTimeout(wheelDecayTimer);
     wheelDecayTimer = setTimeout(() => {
       wheelAccum = 0;
@@ -395,15 +346,12 @@
 
     wheelAccum += e.deltaY;
 
-    // Aşağı kaydırma eşiği aşıldıysa -> Giriş yap
     if (wheelAccum > 45) {
       if (!isZoomed || zoomTarget !== 1) {
         zoomGiris();
       }
       wheelAccum = 0;
-    }
-    // Yukarı kaydırma eşiği aşıldıysa -> TS ekranına geri dön
-    else if (wheelAccum < -45) {
+    } else if (wheelAccum < -45) {
       if (isZoomed || zoomTarget !== 0) {
         zoomCikis();
       }
@@ -411,7 +359,7 @@
     }
   }, { passive: true });
 
-  // Klavye Kontrolleri (Enter = Gir, Escape = TS'e Dön)
+  // Klavye Kontrolleri
   window.addEventListener("keydown", (e) => {
     if ((e.key === "Enter" || e.key === " ") && !isZoomed && document.activeElement !== sifreInput) {
       e.preventDefault();
@@ -421,17 +369,29 @@
     }
   });
 
-  // ---- FARE & PARALLAX DAMPING ----
+  // ---- FARE & PARALLAX & İNTERAKTİF HOVER HESAPLAMASI ----
   let mouseX = 0;
   let mouseY = 0;
   let targetX = 0;
   let targetY = 0;
 
+  // 3D Düzlem Üzerinde Fare Işınlama (Raycasting)
+  const raycaster = new THREE.Raycaster();
+  const mouseNDC = new THREE.Vector2(-999, -999);
+  const planeZ0 = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+  const mouseWorld = new THREE.Vector3();
+  const localMouse = new THREE.Vector3(-999, -999, 0);
+
   function onPointerMove(e) {
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
     targetX = ((clientX - window.innerWidth / 2) / (window.innerWidth / 2));
     targetY = ((clientY - window.innerHeight / 2) / (window.innerHeight / 2));
+
+    // Normalize Cihaz Koordinatları (-1 to +1)
+    mouseNDC.x = (clientX / window.innerWidth) * 2 - 1;
+    mouseNDC.y = -(clientY / window.innerHeight) * 2 + 1;
   }
   window.addEventListener("pointermove", onPointerMove, { passive: true });
   window.addEventListener("touchmove", onPointerMove, { passive: true });
@@ -452,8 +412,10 @@
     if (animasyonAktif) requestAnimationFrame(render);
   });
 
-  // ---- ANİMASYON DÖNGÜSÜ ----
+  // ---- ANİMASYON DÖNGÜSÜ & NOKTA HOVER PARLAMA MOTORU ----
   let saat = 0;
+  const hoverYaricap = 42; // Fare hover etki alanı yarıçapı
+
   function render() {
     if (!animasyonAktif) return;
 
@@ -478,30 +440,66 @@
     tsGroup.rotation.x = -mouseY * 0.26 * etkiKatsayisi;
     tsGroup.position.y = Math.sin(saat * 1.2) * 5 * etkiKatsayisi;
 
-    // Parçacıkların Yakınlaşırken Dışa Doğru Patlama (Hyper-Speed Warp) Efekti
+    // Farenin 3D Düzlemdeki Kesişim Noktası
+    raycaster.setFromCamera(mouseNDC, camera);
+    if (raycaster.ray.intersectPlane(planeZ0, mouseWorld)) {
+      localMouse.copy(mouseWorld);
+      tsGroup.worldToLocal(localMouse);
+    } else {
+      localMouse.set(-999, -999, 0);
+    }
+
+    // Parçacık Pozisyonları ve İnteraktif Fare Hover (Noktayı Belirginleştirme)
     if (tsGeometry && tsBasePos) {
       const pos = tsGeometry.attributes.position.array;
+      const aSize = tsGeometry.attributes.aSize.array;
+      const aColor = tsGeometry.attributes.aColor.array;
       const warp = Math.pow(zoomCurrent, 2.1) * 320;
+      const hoverAktif = (zoomCurrent < 0.25); // Yalnızca amblem modundayken hover parlaması
 
       for (let i = 0; i < tsCount; i++) {
         const bx = tsBasePos[i * 3];
         const by = tsBasePos[i * 3 + 1];
         const bz = tsBasePos[i * 3 + 2];
 
+        // Fare mesafesi hesapla
+        let hoverEtkisi = 0;
+        if (hoverAktif) {
+          const mdx = bx - localMouse.x;
+          const mdy = by - localMouse.y;
+          const mesafe = Math.hypot(mdx, mdy);
+          if (mesafe < hoverYaricap) {
+            hoverEtkisi = Math.pow(1 - mesafe / hoverYaricap, 1.8);
+          }
+        }
+
+        // 1. Noktayı Belirginleştir: Hover olunca boyut büyür (2.8 -> 7.8)
+        const hedefBoyut = 2.8 + hoverEtkisi * 5.0;
+        aSize[i] += (hedefBoyut - aSize[i]) * 0.18;
+
+        // 2. Noktayı Belirginleştir: Hover olunca parlak beyaz ışıldama
+        const hedefR = 0.82 + hoverEtkisi * 0.18;
+        const hedefG = 0.84 + hoverEtkisi * 0.16;
+        const hedefB = 0.87 + hoverEtkisi * 0.13;
+        aColor[i * 3]     += (hedefR - aColor[i * 3]) * 0.18;
+        aColor[i * 3 + 1] += (hedefG - aColor[i * 3 + 1]) * 0.18;
+        aColor[i * 3 + 2] += (hedefB - aColor[i * 3 + 2]) * 0.18;
+
+        // 3. 3D Manyetik Yükselme (Hover olunca öne doğru süzülür)
+        const hoverZ = hoverEtkisi * 14.0;
+
+        // 4. Warp & Titreşim
         const angle = Math.atan2(by, bx);
         const bireyselWarp = warp * (0.80 + ((i * 13) % 10) * 0.04);
 
-        // İnce organik titreşim + radyal warp patlaması
-        pos[i * 3]     = bx + Math.cos(angle) * bireyselWarp + Math.sin(saat * 1.6 + i) * 0.9;
-        pos[i * 3 + 1] = by + Math.sin(angle) * bireyselWarp + Math.cos(saat * 1.6 + i) * 0.9;
-        pos[i * 3 + 2] = bz + (zoomCurrent * 105);
+        pos[i * 3]     = bx + Math.cos(angle) * bireyselWarp + Math.sin(saat * 1.6 + i) * 0.8;
+        pos[i * 3 + 1] = by + Math.sin(angle) * bireyselWarp + Math.cos(saat * 1.6 + i) * 0.8;
+        pos[i * 3 + 2] = bz + hoverZ + (zoomCurrent * 105);
       }
-      tsGeometry.attributes.position.needsUpdate = true;
-    }
 
-    // Constellation Çizgileri: Yakınlaştıkça zarifçe eriyerek kaybolur
-    if (lineMaterial) {
-      lineMaterial.opacity = Math.max(0, (1 - zoomCurrent * 1.6) * 0.25);
+      tsGeometry.attributes.position.needsUpdate = true;
+      tsGeometry.attributes.aSize.needsUpdate = true;
+      tsGeometry.attributes.aColor.needsUpdate = true;
     }
 
     // Uzay Yıldızlarının Yavaş Kozmik Dönüşü
