@@ -302,7 +302,7 @@
       ADRES_SORGU: ayar.ADRES_SORGU || "Menekşe Pasajı, Kızılay, Ankara",
       ADRES_METIN: ayar.ADRES_METIN || "İzmir Cad. Menekşe Sok.\nMenekşe Pasajı Kızılay/ANKARA",
       HARITA_LINK: ayar.HARITA_LINK || "",
-      calismaSaatleri: "Hafta içi 10:00 – 18:00 | Hafta sonu Kapalı"
+      calismaSaatleri: ayar.calismaSaatleri || "Hafta içi 10:00 – 18:00 | Hafta sonu Kapalı"
     },
     hizmetler: JSON.parse(JSON.stringify(hizmetler)),
     paketler: JSON.parse(JSON.stringify(paketler)),
@@ -314,13 +314,22 @@
     ]
   };
 
-  // Varsa localStorage'daki güncel CMS taslağını çek
-  try {
-    const kayitli = localStorage.getItem(CMS_KEY);
-    if (kayitli) cmsData = JSON.parse(kayitli);
-  } catch {}
+  // En güncel TS.ayar nesnesinden form alanlarını her zaman canlı doldur
+  function cmsVerileriniSenkronizeEt() {
+    if (window.TS && window.TS.ayar) {
+      cmsData.ayar = { ...cmsData.ayar, ...window.TS.ayar };
+    }
+    if (window.TS && window.TS.hizmetler && window.TS.hizmetler.length) {
+      cmsData.hizmetler = JSON.parse(JSON.stringify(window.TS.hizmetler));
+    }
+    if (window.TS && window.TS.paketler && window.TS.paketler.length) {
+      cmsData.paketler = JSON.parse(JSON.stringify(window.TS.paketler));
+    }
+  }
 
   function cmsVerileriniYukle() {
+    cmsVerileriniSenkronizeEt();
+
     // 1. Genel Ayarlar Formu
     inpWaNumara.value        = cmsData.ayar.WA_NUMARA || "";
     inpFormEndpoint.value    = cmsData.ayar.FORM_ENDPOINT || "";
