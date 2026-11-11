@@ -54,9 +54,9 @@
   const onayMetin    = document.getElementById("onayMetin");
 
   // CMS DOM Referansları (Panel enjekte edilince bağlanır)
-  let btnCanliyaYayinla, btnGenelKaydet, btnHizmetKaydet, btnPaketKaydet, btnSssKaydet, btnSssEkle;
+  let btnCanliyaYayinla, btnGenelKaydet, btnHizmetKaydet, btnPaketKaydet, btnYorumKaydet, btnYorumEkle, btnSssKaydet, btnSssEkle;
   let inpWaNumara, inpFormEndpoint, inpAdresSorgu, inpAdresMetin, inpHaritaLink, inpHaftaIci, inpCumartesi, inpPazar, inpTurnstileKey;
-  let hizmetlerListesi, paketlerListesi, sssListesi, cikisBtn, yenileBtn, hepsiniSil, hepsiniOku, adminPanel;
+  let hizmetlerListesi, paketlerListesi, yorumlarListesi, sssListesi, cikisBtn, yenileBtn, hepsiniSil, hepsiniOku, adminPanel;
 
   function domElemanlariniBagla() {
     adminPanel        = document.getElementById("adminPanel");
@@ -64,6 +64,8 @@
     btnGenelKaydet    = document.getElementById("btnGenelKaydet");
     btnHizmetKaydet   = document.getElementById("btnHizmetKaydet");
     btnPaketKaydet    = document.getElementById("btnPaketKaydet");
+    btnYorumKaydet    = document.getElementById("btnYorumKaydet");
+    btnYorumEkle      = document.getElementById("btnYorumEkle");
     btnSssKaydet      = document.getElementById("btnSssKaydet");
     btnSssEkle        = document.getElementById("btnSssEkle");
 
@@ -79,6 +81,7 @@
 
     hizmetlerListesi  = document.getElementById("hizmetlerListesi");
     paketlerListesi   = document.getElementById("paketlerListesi");
+    yorumlarListesi   = document.getElementById("yorumlarListesi");
     sssListesi        = document.getElementById("sssListesi");
     cikisBtn          = document.getElementById("cikisBtn");
     yenileBtn         = document.getElementById("yenileBtn");
@@ -112,6 +115,24 @@
     btnGenelKaydet.addEventListener("click", () => { taslakKaydet(); toast("İletişim ve genel ayarlar kaydedildi."); });
     btnHizmetKaydet.addEventListener("click", () => { taslakKaydet(); toast("Hizmet bilgileri kaydedildi."); });
     btnPaketKaydet.addEventListener("click", () => { taslakKaydet(); toast("Paket bilgileri kaydedildi."); });
+    if (btnYorumKaydet) {
+      btnYorumKaydet.addEventListener("click", () => { taslakKaydet(); toast("Müşteri yorumları kaydedildi."); });
+    }
+    if (btnYorumEkle) {
+      btnYorumEkle.addEventListener("click", () => {
+        if (!cmsData.yorumlar) cmsData.yorumlar = [];
+        cmsData.yorumlar.push({
+          isim: "Yeni Müşteri",
+          puan: 5,
+          kaynak: "Google Haritalar",
+          rozet: "Doğrulanmış",
+          tur: "normal",
+          metin: "Top tamiri konusundaki deneyiminizi buraya yazın...",
+          etiket: "⚽ Top Onarımı"
+        });
+        yorumlarCiz();
+      });
+    }
     btnSssKaydet.addEventListener("click", () => { taslakKaydet(); toast("SSS içerikleri kaydedildi."); });
     if (btnSssEkle) {
       btnSssEkle.addEventListener("click", () => {
@@ -294,6 +315,15 @@
             </div>
           </div>
           <div class="mk-mesaj">${esc ? esc(m.mesaj) : m.mesaj}</div>
+          <div class="mk-sablonlar">
+            <span class="mk-sablon-baslik">⚡ Hızlı Yanıt Şablonları:</span>
+            <div class="mk-sablon-butonlar">
+              <button type="button" class="sablon-btn sablon-hazir" data-sablon="hazir" data-tel="${m.tel}" data-ad="${esc ? esc(m.ad) : m.ad}">✅ Teslime Hazır</button>
+              <button type="button" class="sablon-btn sablon-fiyat" data-sablon="fiyat" data-tel="${m.tel}" data-ad="${esc ? esc(m.ad) : m.ad}">💰 Fiyat &amp; İşlem</button>
+              <button type="button" class="sablon-btn sablon-basladi" data-sablon="basladi" data-tel="${m.tel}" data-ad="${esc ? esc(m.ad) : m.ad}">🛠️ Tamire Başlandı</button>
+              <button type="button" class="sablon-btn sablon-foto" data-sablon="foto" data-tel="${m.tel}" data-ad="${esc ? esc(m.ad) : m.ad}">📸 Fotoğraf İste</button>
+            </div>
+          </div>
           <div class="mk-aksiyonlar">
             <a class="mk-btn mk-btn-wa" href="${waLink}" target="_blank">💬 WhatsApp ile Yanıtla</a>
             <button class="mk-btn mk-btn-ok" data-islem="durum">${m.okundu ? "Yeniden İşaretle (Yeni)" : "Okundu İşaretle"}</button>
@@ -326,6 +356,34 @@
           });
           mesajlariKaydet(list);
           mesajlariYukle();
+        }
+      });
+    });
+
+    // Hızlı WhatsApp Şablonları Dinleyicisi
+    mesajListesi.querySelectorAll("[data-sablon]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const sablon = btn.getAttribute("data-sablon");
+        const tel = btn.getAttribute("data-tel") || "";
+        const ad = btn.getAttribute("data-ad") || "Müşterimiz";
+        const hedefTel = waTel ? waTel(tel) : tel;
+        let metin = "";
+
+        if (sablon === "hazir") {
+          metin = `Merhaba ${ad}, TiryakiSPOR'dan Kemal Usta. Topunuzun onarım ve bakımı başarıyla tamamlandı, testleri yapıldı. Atölyemizden teslim alabilirsiniz.\n📍 Adresimiz: Menekşe Pasajı Kızılay/Ankara.\n📞 İletişim: 0531 431 55 60`;
+        } else if (sablon === "fiyat") {
+          const girilen = prompt(`${ad} için yapılacak işlem ve fiyat bilgisini yazınız (Örn: İç lastik değişimi ve sibop onarımı 400 TL):`);
+          if (!girilen) return;
+          metin = `Merhaba ${ad}, topunuz Kemal Usta tarafından incelenmiştir. Yapılacak işlem ve fiyat bilgisi:\n👉 ${girilen}\n\nOnayınız doğrultusunda hemen tamir işlemine başlıyoruz. Teşekkürler, TiryakiSPOR.`;
+        } else if (sablon === "basladi") {
+          metin = `Merhaba ${ad}, topunuzun onarım işlemine Kemal Usta tarafından başlanmıştır. Tahmini 1-2 iş günü içerisinde hazır olduğunda size bilgi verilecektir.\nTeşekkürler, TiryakiSPOR.`;
+        } else if (sablon === "foto") {
+          metin = `Merhaba ${ad}, mesajınız için teşekkür ederiz. Kemal Usta'nın hasar tespiti yapabilmesi ve net fiyat verebilmesi için topun hasarlı bölgesinin ve markasının net bir fotoğrafını buradan gönderebilir misiniz?\nTeşekkürler, TiryakiSPOR.`;
+        }
+
+        if (metin && hedefTel) {
+          const link = `https://wa.me/${hedefTel}?text=${encodeURIComponent(metin)}`;
+          window.open(link, "_blank");
         }
       });
     });
@@ -371,6 +429,48 @@
     },
     hizmetler: JSON.parse(JSON.stringify(hizmetler)),
     paketler: JSON.parse(JSON.stringify(paketler)),
+    yorumlar: (window.TS && window.TS.yorumlar) ? JSON.parse(JSON.stringify(window.TS.yorumlar)) : [
+      {
+        id: 1,
+        isim: "Alperen K.",
+        puan: 5,
+        kaynak: "Google Haritalar",
+        rozet: "Doğrulanmış",
+        tur: "normal",
+        metin: "Molten basketbol topumun sibop kaçırma sorunu vardı, başka yerler tamir edemeyiz yenisini al demişti. Kemal Usta 1 günde orijinal sibop takıp sıfır gibi teslim etti. 40 yıllık tecrübe gerçekten fark yaratıyor.",
+        etiket: "🏀 Basketbol Topu Sibop Onarımı"
+      },
+      {
+        id: 2,
+        isim: "Murat H.",
+        puan: 5,
+        kaynak: "Kulüp Antrenörü",
+        rozet: "Kulüp",
+        tur: "kulup",
+        metin: "Takımımızın 8 adet maç topunun dikiş açılmalarını ve basınç kayıplarını getirdik. Fabrika dikişi kalitesinde el işçiliğiyle onardı. Kulüp bütçemizi kurtardı, eline sağlık Kemal Usta.",
+        etiket: "⚽ Çoklu Panel & El Dikişi Yenileme"
+      },
+      {
+        id: 3,
+        isim: "Burak D.",
+        puan: 5,
+        kaynak: "Google Haritalar",
+        rozet: "Doğrulanmış",
+        tur: "normal",
+        metin: "Orijinal Adidas Şampiyonlar Ligi topum patlamıştı, atmaya kıyamıyordum. Kemal Bey iç lastiğini değiştirip su altı basınç testini gözümün önünde yaptı. Ankara'da bu işin tek ustası.",
+        etiket: "🏆 İç Lastik Değişimi & Basınç Testi"
+      },
+      {
+        id: 4,
+        isim: "Selin Y.",
+        puan: 5,
+        kaynak: "Voleybolcu",
+        rozet: "Doğrulanmış",
+        tur: "normal",
+        metin: "Mikasa voleybol topumun soyulan ve kalkan deri panellerini pürüzsüz yapıştırdı. Topun ağırlık dengesi ve yumuşaklığı hiç bozulmadı, çok teşekkürler Tiryaki Spor!",
+        etiket: "🏐 Voleybol Deri Panel Onarımı"
+      }
+    ],
     sss: [
       { soru: "Tamir işlemi ne kadar sürer?", cevap: "Sibop değişimi ve basınç testi gibi basit işlemler genellikle aynı gün yapılır. Dikiş ve panel onarımları, hasarın durumuna göre 1–3 iş günü içinde tamamlanır." },
       { soru: "Hangi top markalarını tamir ediyorsunuz?", cevap: "Adidas, Nike, Puma, Select, Molten, Mikasa, Wilson, Spalding, Delta ve diğer tüm markaların futbol, basketbol ve voleybol toplarını onarıyoruz." },
@@ -403,6 +503,9 @@
     }
     if (window.TS && window.TS.paketler && window.TS.paketler.length) {
       cmsData.paketler = JSON.parse(JSON.stringify(window.TS.paketler));
+    }
+    if (window.TS && window.TS.yorumlar && window.TS.yorumlar.length) {
+      cmsData.yorumlar = JSON.parse(JSON.stringify(window.TS.yorumlar));
     }
   }
 
@@ -472,6 +575,70 @@
 
     // 4. SSS Listesi
     sssCiz();
+
+    // 5. Yorumlar Listesi
+    yorumlarCiz();
+  }
+
+  function yorumlarCiz() {
+    if (!yorumlarListesi) return;
+    yorumlarListesi.innerHTML = (cmsData.yorumlar || []).map((y, i) => `
+      <div class="cms-kart" data-index="${i}">
+        <div class="cms-kart-header">
+          <div class="cms-kart-baslik">⭐ Yorum ${i + 1}: ${esc ? esc(y.isim || "Müşteri") : (y.isim || "Müşteri")}</div>
+          <button class="btn-action temizle-btn btn-yorum-sil" data-index="${i}">🗑️ Sil</button>
+        </div>
+        <div class="cms-grid">
+          <div class="cms-form-grup">
+            <label>Müşteri / Kulüp Adı</label>
+            <input type="text" class="yorum-isim" value="${esc ? esc(y.isim || "") : (y.isim || "")}" />
+          </div>
+          <div class="cms-form-grup">
+            <label>Yıldız Puanı (1 - 5)</label>
+            <select class="yorum-puan">
+              <option value="5" ${y.puan === 5 ? "selected" : ""}>⭐⭐⭐⭐⭐ (5 Yıldız)</option>
+              <option value="4" ${y.puan === 4 ? "selected" : ""}>⭐⭐⭐⭐ (4 Yıldız)</option>
+              <option value="3" ${y.puan === 3 ? "selected" : ""}>⭐⭐⭐ (3 Yıldız)</option>
+              <option value="2" ${y.puan === 2 ? "selected" : ""}>⭐⭐ (2 Yıldız)</option>
+              <option value="1" ${y.puan === 1 ? "selected" : ""}>⭐ (1 Yıldız)</option>
+            </select>
+          </div>
+        </div>
+        <div class="cms-grid">
+          <div class="cms-form-grup">
+            <label>Kaynak / Unvan (Örn: Google Haritalar, Kulüp Antrenörü)</label>
+            <input type="text" class="yorum-kaynak" value="${esc ? esc(y.kaynak || "") : (y.kaynak || "")}" />
+          </div>
+          <div class="cms-form-grup">
+            <label>Rozet (Örn: Doğrulanmış, Kulüp)</label>
+            <input type="text" class="yorum-rozet" value="${esc ? esc(y.rozet || "Doğrulanmış") : (y.rozet || "Doğrulanmış")}" />
+          </div>
+          <div class="cms-form-grup">
+            <label>Müşteri Türü</label>
+            <select class="yorum-tur">
+              <option value="normal" ${y.tur !== "kulup" ? "selected" : ""}>Bireysel Müşteri</option>
+              <option value="kulup" ${y.tur === "kulup" ? "selected" : ""}>Kulüp / Takım</option>
+            </select>
+          </div>
+          <div class="cms-form-grup">
+            <label>İşlem Etiketi (Örn: 🏀 Basketbol Sibop Onarımı)</label>
+            <input type="text" class="yorum-etiket" value="${esc ? esc(y.etiket || "") : (y.etiket || "")}" />
+          </div>
+        </div>
+        <div class="cms-form-grup">
+          <label>Müşteri Yorum Metni</label>
+          <textarea class="yorum-metin" rows="3">${esc ? esc(y.metin || "") : (y.metin || "")}</textarea>
+        </div>
+      </div>
+    `).join("");
+
+    yorumlarListesi.querySelectorAll(".btn-yorum-sil").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const idx = parseInt(btn.getAttribute("data-index"), 10);
+        cmsData.yorumlar.splice(idx, 1);
+        yorumlarCiz();
+      });
+    });
   }
 
   function sssCiz() {
@@ -559,6 +726,25 @@
     });
     cmsData.sss = yeniSss;
 
+    // Yorumlar
+    if (yorumlarListesi) {
+      const yKartlar = yorumlarListesi.querySelectorAll(".cms-kart");
+      const yeniYorumlar = [];
+      yKartlar.forEach((k, idx) => {
+        const isim = k.querySelector(".yorum-isim").value.trim();
+        const puan = parseInt(k.querySelector(".yorum-puan").value, 10) || 5;
+        const kaynak = k.querySelector(".yorum-kaynak").value.trim();
+        const rozet = k.querySelector(".yorum-rozet").value.trim();
+        const tur = k.querySelector(".yorum-tur").value;
+        const etiket = k.querySelector(".yorum-etiket").value.trim();
+        const metin = k.querySelector(".yorum-metin").value.trim();
+        if (isim && metin) {
+          yeniYorumlar.push({ id: idx + 1, isim, puan, kaynak, rozet, tur, metin, etiket });
+        }
+      });
+      cmsData.yorumlar = yeniYorumlar;
+    }
+
     localStorage.setItem(CMS_KEY, JSON.stringify(cmsData));
   }
 
@@ -626,8 +812,9 @@
 
   const hizmetler = ${JSON.stringify(cmsData.hizmetler, null, 2)};
   const paketler = ${JSON.stringify(cmsData.paketler, null, 2)};
+  const yorumlar = ${JSON.stringify(cmsData.yorumlar || [], null, 2)};
 
-  Object.assign(TS, { ayar, CALISMA, KATEGORI_GORSEL, KATEGORI_EMOJI, KATEGORI_KISA, HASAR_IKON, hizmetler, paketler });
+  Object.assign(TS, { ayar, CALISMA, KATEGORI_GORSEL, KATEGORI_EMOJI, KATEGORI_KISA, HASAR_IKON, hizmetler, paketler, yorumlar });
 })(window.TS = window.TS || {});
 `;
 
