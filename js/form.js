@@ -60,6 +60,14 @@
 
     form.addEventListener("submit", async e => {
       e.preventDefault();
+
+      // Bot Koruması (Honeypot): Gizli alan doldurulmuşsa bot olduğunu anla ve işlemi sessizce yut
+      const tuzak = $("formWebsite");
+      if (tuzak && tuzak.value.trim() !== "") {
+        console.warn("Bot tespit edildi ve engellendi.");
+        return;
+      }
+
       const ad = $("musAd").value.trim();
       const tel = $("musTel").value.trim();
       const mesaj = $("musMesaj").value.trim();
