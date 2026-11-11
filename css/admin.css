@@ -238,13 +238,22 @@ body {
   transform: translateY(-50%);
   background: none;
   border: none;
+  outline: none;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 6px;
   color: #A1A1AA;
-  transition: color 0.2s, transform 0.2s;
+  border-radius: 8px;
+  transition: color 0.2s, transform 0.2s, filter 0.2s;
+}
+.goz-btn:focus,
+.goz-btn:focus-visible {
+  outline: none;
+  box-shadow: none;
+  color: #FFFFFF;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
 }
 .goz-btn:hover {
   color: #FFFFFF;
