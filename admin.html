@@ -10,21 +10,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css?v=2.7">
+  <link rel="stylesheet" href="css/admin.css?v=2.8">
 </head>
 <body>
 
-  <!-- ===== GİRİŞ EKRANI (CYBER / DARK INDUSTRIAL & MINIMALIST) ===== -->
+  <!-- ===== GİRİŞ EKRANI (APPLE VISION & OBSIDIAN GLASS) ===== -->
   <div class="giris-ekrani" id="girisEkrani">
     <div class="giris-kutu">
-      <!-- Üst Teknik Çip Etiketi -->
+      <!-- Üst Güvenli Oturum Rozeti -->
       <div class="giris-etiket">
         <span class="etiket-isik" aria-hidden="true"></span>
-        <span class="etiket-metin">GÜVENLİ ERİŞİM // CMS v2.6</span>
+        <span class="etiket-metin">CMS v2.7 // GÜVENLİ OTURUM</span>
       </div>
 
       <div class="giris-logo">Tiryaki<span>SPOR</span></div>
-      <p class="giris-alt">Yönetim Paneli <span class="ayrac">/</span> Atölye Yetkili Girişi</p>
+      <p class="giris-alt">Yönetim &amp; Yetkili Terminali</p>
 
       <div class="hata-mesaj" id="hataMesaj">❌ Yanlış şifre! Lütfen tekrar deneyin.</div>
 
@@ -33,7 +33,7 @@
           <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
           <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
         </svg>
-        Admin Şifresi
+        Yönetici Şifresi
       </label>
       <div class="sifre-wrap">
         <input type="password" id="sifreInput" placeholder="••••••••" maxlength="30" autocomplete="off" />
@@ -53,7 +53,22 @@
       </button>
       <p class="deneme-uyari" id="denemeUyari"></p>
 
-      <a href="/" class="giris-siteye-don">← Ana Siteye Dön</a>
+      <div class="giris-alt-linkler">
+        <a href="/" class="giris-siteye-don">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Ana Siteye Dön</span>
+        </a>
+      </div>
+
+      <div class="giris-guvenlik-bilgi">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span>256-Bit SSL Uçtan Uca Şifreli Oturum</span>
+      </div>
     </div>
   </div>
 
