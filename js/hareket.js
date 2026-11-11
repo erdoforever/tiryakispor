@@ -37,42 +37,28 @@
   gsap.registerPlugin(ScrollTrigger);
 
   /* ------------------------------------------------------------
-     1) AÇILIŞ ANİMASYONU  (sayfa başına yalnızca bir kez)
-     opacity 0→1 + hafif yukarı hareket (y 20→0), power3.out
-     Yalnızca transform/opacity kullanılır → yerleşim kayması olmaz.
+     1) AÇILIŞ ANİMASYONU  (Sayfa açılışında akıcı, tek parça Fade-In)
+     Tek tek eleman hesaplamak yerine bütünsel ve pürüzsüz görünüm sağlar.
      ------------------------------------------------------------ */
   function girisAnimasyonu() {
-    // [eleman, başlangıç y, başlangıç gecikmesi, süre]
-    const adimlar = [
-      [q("#navbar"),          -16, 0.00, 0.90],
-      [q(".hero-balls-bg"),     0, 0.10, 1.60],
-      [q(".hero-tag"),         20, 0.15, 1.00],
-      [q(".hero-isim-kutu"),   20, 0.25, 1.10],
-      [q(".hero-hakkinda"),    20, 0.35, 1.10],
-      [q(".hero-subtitle"),    20, 0.45, 1.00],
-      [q(".hero-btns"),        20, 0.55, 1.00],
-      [q(".hero-stats"),       20, 0.65, 1.00],
-      [q(".hero-dipnot"),      20, 0.72, 0.90],
-    ].filter(([el]) => el);
-
-    // Önce satır içi başlangıç durumunu ver, sonra CSS gizlemesini kaldır → titreme/FOUC yok
-    adimlar.forEach(([el, y]) => gsap.set(el, { opacity: 0, y }));
+    const hedefler = [q("#navbar"), q("#hero")].filter(Boolean);
     gorunurYap();
-
-    const tl = gsap.timeline({
-      defaults: { ease: "power3.out" },
-      delay: 0.1,
-      onComplete: () => gsap.set(adimlar.map(([el]) => el), { clearProps: "opacity,transform" }),
-    });
-    adimlar.forEach(([el, , gecikme, sure]) => tl.to(el, { opacity: 1, y: 0, duration: sure }, gecikme));
+    gsap.fromTo(
+      hedefler,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 0.6,
+        ease: "power2.out",
+        clearProps: "opacity",
+      }
+    );
   }
 
-  // Yazı tipleri gelmeden başlatma (yazı değişimi animasyon sırasında görünmesin); en çok 0,9 sn bekle
-  const fontBekle = (document.fonts && document.fonts.ready)
-    ? Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 900))])
-    : Promise.resolve();
-  // CSS yedeği (3 sn) devreye girmişse içerik zaten görünür; GSAP çok geç geldiyse giriş animasyonunu atla
-  fontBekle.then(() => (performance.now() < 2800 ? girisAnimasyonu() : gorunurYap())).catch(gorunurYap);
+  // En kısa sürede yumuşak fade-in ile başlat
+  requestAnimationFrame(() => {
+    girisAnimasyonu();
+  });
 
   /* ------------------------------------------------------------
      2) KATMAN GEÇİŞİ  (hero sabit, "Kategoriler" bölümü üstüne biner)
