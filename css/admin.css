@@ -36,7 +36,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ---- GİRİŞ EKRANI ---- */
+/* ---- GİRİŞ EKRANI (CYBER / DARK INDUSTRIAL & MINIMALIST) ---- */
 .giris-ekrani {
   min-height: 100vh;
   display: flex;
@@ -45,46 +45,108 @@ body {
   padding: 24px;
   position: relative;
   overflow: hidden;
+  background-color: #060910;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    radial-gradient(circle at 50% 45%, #0f1624 0%, #070b12 65%, #040609 100%);
+  background-size: 36px 36px, 36px 36px, 100% 100%;
 }
 
 .giris-kutu {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-lg);
-  padding: 44px 36px;
+  background: linear-gradient(165deg, rgba(18, 25, 38, 0.92) 0%, rgba(10, 14, 22, 0.96) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 38px 36px 32px;
   width: 100%;
-  max-width: 420px;
+  max-width: 410px;
   text-align: center;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  box-shadow: 
+    0 30px 70px -15px rgba(0, 0, 0, 0.85),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.20),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.45);
   position: relative;
   z-index: 10;
 }
 
-.giris-logo {
-  font-size: 2.1rem;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: -0.5px;
-  margin-bottom: 6px;
+/* Üst Kısım Cyber Turuncu LED İzi */
+.giris-kutu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 36px;
+  right: 36px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  box-shadow: 0 0 14px var(--accent);
 }
-.giris-logo span { color: var(--accent); }
+
+/* Üst Teknik Çip Etiketi */
+.giris-etiket {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 30px;
+  padding: 4px 13px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #9aa4b2;
+  letter-spacing: 0.8px;
+  margin-bottom: 20px;
+}
+.etiket-isik {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: isikNabiz 2s ease-in-out infinite;
+}
+@keyframes isikNabiz {
+  0%, 100% { opacity: 0.45; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+.giris-logo {
+  font-family: 'Barlow Condensed', 'Inter', sans-serif;
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.giris-logo span { color: var(--accent); font-weight: 900; }
 .giris-alt {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin-bottom: 28px;
+  color: #7b8798;
+  font-size: 0.84rem;
+  margin-bottom: 26px;
+}
+.giris-alt .ayrac {
+  color: var(--accent);
+  margin: 0 4px;
+  font-weight: 700;
 }
 
 .giris-kutu label {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   text-align: left;
-  font-size: 0.82rem;
+  font-size: 0.80rem;
   font-weight: 600;
-  color: var(--text-muted);
+  color: #9aa4b2;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
+}
+.label-kilit-svg {
+  color: var(--accent);
 }
 
 .sifre-wrap {
@@ -93,52 +155,106 @@ body {
 }
 .sifre-wrap input {
   width: 100%;
-  padding: 14px 48px 14px 16px;
-  background: rgba(10, 17, 30, 0.85);
-  border: 1.5px solid var(--card-border);
-  border-radius: var(--radius-md);
-  color: #fff;
-  font-size: 1rem;
-  font-family: inherit;
+  padding: 13px 46px 13px 16px;
+  background: rgba(7, 10, 16, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
   outline: none;
-  transition: all 0.25s ease;
-  letter-spacing: 3px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 4px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+.sifre-wrap input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 2px;
 }
 .sifre-wrap input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
+  background: rgba(10, 15, 24, 0.95);
+  box-shadow: 
+    0 0 0 3px rgba(255, 107, 0, 0.22),
+    0 0 16px rgba(255, 107, 0, 0.15),
+    inset 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .goz-btn {
   position: absolute;
-  right: 14px;
+  right: 12px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
-  opacity: 0.7;
-  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  color: #7b8798;
+  transition: color 0.2s, transform 0.2s;
 }
-.goz-btn:hover { opacity: 1; }
+.goz-btn:hover {
+  color: #ffffff;
+  transform: translateY(-50%) scale(1.1);
+}
+.goz-svg {
+  stroke-width: 2;
+}
 
 .giris-btn {
   width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, var(--accent) 0%, #E05300 100%);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-md);
-  font-size: 1rem;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, var(--accent) 0%, #D45000 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.96rem;
   font-weight: 700;
+  letter-spacing: 0.2px;
   cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 16px var(--accent-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 
+    0 6px 20px rgba(255, 107, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35);
 }
 .giris-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px var(--accent-glow);
+  background: linear-gradient(135deg, #FF7B1A 0%, #E05800 100%);
+  box-shadow: 
+    0 10px 28px rgba(255, 107, 0, 0.55),
+    inset 0 1px 1px rgba(255, 255, 255, 0.50);
+}
+.giris-btn:active {
+  transform: scale(0.97);
+}
+.giris-btn:hover .giris-ok-svg {
+  transform: translateX(4px);
+}
+.giris-ok-svg {
+  transition: transform 0.25s ease;
+}
+
+.giris-siteye-don {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 22px;
+  color: #7b8798;
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.giris-siteye-don:hover {
+  color: #ffffff;
+  transform: translateX(-3px);
 }
 
 .hata-mesaj {
