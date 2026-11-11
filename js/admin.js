@@ -44,40 +44,96 @@
 
   // DOM Elemanları
   const girisEkrani  = document.getElementById("girisEkrani");
-  const adminPanel   = document.getElementById("adminPanel");
   const sifreInput   = document.getElementById("sifreInput");
   const girisBtn     = document.getElementById("girisBtn");
   const gozBtn       = document.getElementById("gozBtn");
   const hataMesaj    = document.getElementById("hataMesaj");
   const denemeUyari  = document.getElementById("denemeUyari");
-  const cikisBtn     = document.getElementById("cikisBtn");
-  const yenileBtn    = document.getElementById("yenileBtn");
-  const mesajListesi = document.getElementById("mesajListesi");
-  const hepsiniSil   = document.getElementById("hepsiniSil");
-  const hepsiniOku   = document.getElementById("hepsiniOku");
+  let   mesajListesi = null;
   const onayKutu     = document.getElementById("onayKutu");
   const onayMetin    = document.getElementById("onayMetin");
 
-  // CMS DOM
-  const btnCanliyaYayinla = document.getElementById("btnCanliyaYayinla");
-  const btnGenelKaydet    = document.getElementById("btnGenelKaydet");
-  const btnHizmetKaydet   = document.getElementById("btnHizmetKaydet");
-  const btnPaketKaydet    = document.getElementById("btnPaketKaydet");
-  const btnSssKaydet      = document.getElementById("btnSssKaydet");
-  const btnSssEkle        = document.getElementById("btnSssEkle");
+  // CMS DOM Referansları (Panel enjekte edilince bağlanır)
+  let btnCanliyaYayinla, btnGenelKaydet, btnHizmetKaydet, btnPaketKaydet, btnSssKaydet, btnSssEkle;
+  let inpWaNumara, inpFormEndpoint, inpAdresSorgu, inpAdresMetin, inpHaritaLink, inpHaftaIci, inpCumartesi, inpPazar;
+  let hizmetlerListesi, paketlerListesi, sssListesi, cikisBtn, yenileBtn, hepsiniSil, hepsiniOku, adminPanel;
 
-  const inpWaNumara       = document.getElementById("inpWaNumara");
-  const inpFormEndpoint   = document.getElementById("inpFormEndpoint");
-  const inpAdresSorgu     = document.getElementById("inpAdresSorgu");
-  const inpAdresMetin     = document.getElementById("inpAdresMetin");
-  const inpHaritaLink     = document.getElementById("inpHaritaLink");
-  const inpHaftaIci       = document.getElementById("inpHaftaIci");
-  const inpCumartesi      = document.getElementById("inpCumartesi");
-  const inpPazar          = document.getElementById("inpPazar");
+  function domElemanlariniBagla() {
+    adminPanel        = document.getElementById("adminPanel");
+    btnCanliyaYayinla = document.getElementById("btnCanliyaYayinla");
+    btnGenelKaydet    = document.getElementById("btnGenelKaydet");
+    btnHizmetKaydet   = document.getElementById("btnHizmetKaydet");
+    btnPaketKaydet    = document.getElementById("btnPaketKaydet");
+    btnSssKaydet      = document.getElementById("btnSssKaydet");
+    btnSssEkle        = document.getElementById("btnSssEkle");
 
-  const hizmetlerListesi  = document.getElementById("hizmetlerListesi");
-  const paketlerListesi   = document.getElementById("paketlerListesi");
-  const sssListesi        = document.getElementById("sssListesi");
+    inpWaNumara       = document.getElementById("inpWaNumara");
+    inpFormEndpoint   = document.getElementById("inpFormEndpoint");
+    inpAdresSorgu     = document.getElementById("inpAdresSorgu");
+    inpAdresMetin     = document.getElementById("inpAdresMetin");
+    inpHaritaLink     = document.getElementById("inpHaritaLink");
+    inpHaftaIci       = document.getElementById("inpHaftaIci");
+    inpCumartesi      = document.getElementById("inpCumartesi");
+    inpPazar          = document.getElementById("inpPazar");
+
+    hizmetlerListesi  = document.getElementById("hizmetlerListesi");
+    paketlerListesi   = document.getElementById("paketlerListesi");
+    sssListesi        = document.getElementById("sssListesi");
+    cikisBtn          = document.getElementById("cikisBtn");
+    yenileBtn         = document.getElementById("yenileBtn");
+    hepsiniSil        = document.getElementById("hepsiniSil");
+    hepsiniOku        = document.getElementById("hepsiniOku");
+
+    // Sekme Değişimi
+    document.querySelectorAll(".cms-tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".cms-tab-btn").forEach(b => b.classList.remove("aktif"));
+        document.querySelectorAll(".tab-icerik").forEach(t => t.classList.remove("aktif"));
+        btn.classList.add("aktif");
+        const tabId = btn.getAttribute("data-tab");
+        const hedef = document.getElementById(tabId);
+        if (hedef) hedef.classList.add("aktif");
+      });
+    });
+
+    // Çıkış
+    if (cikisBtn) {
+      cikisBtn.addEventListener("click", () => {
+        sDel(OTURUM_KEY);
+        const konteyner = document.getElementById("panelKonteyner");
+        if (konteyner) konteyner.innerHTML = "";
+        girisEkrani.style.display = "flex";
+        sifreInput.value = "";
+      });
+    }
+
+    // Buton Dinleyicileri
+    btnGenelKaydet.addEventListener("click", () => { taslakKaydet(); toast("İletişim ve genel ayarlar kaydedildi."); });
+    btnHizmetKaydet.addEventListener("click", () => { taslakKaydet(); toast("Hizmet bilgileri kaydedildi."); });
+    btnPaketKaydet.addEventListener("click", () => { taslakKaydet(); toast("Paket bilgileri kaydedildi."); });
+    btnSssKaydet.addEventListener("click", () => { taslakKaydet(); toast("SSS içerikleri kaydedildi."); });
+    if (btnSssEkle) {
+      btnSssEkle.addEventListener("click", () => {
+        cmsData.sss.push({ soru: "Yeni Soru?", cevap: "Cevabınızı buraya yazın..." });
+        sssCiz();
+      });
+    }
+    yenileBtn.addEventListener("click", () => { mesajlariYukle(); toast("Mesaj listesi güncellendi."); });
+    hepsiniSil.addEventListener("click", async () => {
+      const onay = await onayIste("TÜM mesajları silmek istediğinize emin misiniz? Bu işlem geri alınamaz.");
+      if (onay) { mesajlariKaydet([]); mesajlariYukle(); toast("Tüm mesajlar silindi."); }
+    });
+    hepsiniOku.addEventListener("click", () => {
+      let list = mesajlariAl();
+      list = list.map(x => ({ ...x, okundu: true }));
+      mesajlariKaydet(list); mesajlariYukle();
+      toast("Tüm mesajlar okundu olarak işaretlendi.");
+    });
+    btnCanliyaYayinla.addEventListener("click", canliyaYayinlaHandler);
+  }
+
+  // Güvenlik: Sayfa yüklendiğinde F12 Console'dan içeriğe doğrudan erişimi engellemek için
+  // şablon doğrulamadan önce açılmaz
 
   let deneme = parseInt(sGet("sz_deneme") || "0", 10);
   let kilitli = deneme >= MAX_DENEME;
@@ -162,16 +218,16 @@
     }
   });
 
-  cikisBtn.addEventListener("click", () => {
-    sDel(OTURUM_KEY);
-    adminPanel.style.display = "none";
-    girisEkrani.style.display = "flex";
-    sifreInput.value = "";
-  });
-
   function panelGoster() {
     girisEkrani.style.display = "none";
-    adminPanel.style.display = "block";
+    const template = document.getElementById("panelSablonu");
+    const konteyner = document.getElementById("panelKonteyner");
+    if (template && konteyner) {
+      konteyner.innerHTML = "";
+      konteyner.appendChild(template.content.cloneNode(true));
+      domElemanlariniBagla();
+    }
+    if (adminPanel) adminPanel.style.display = "block";
     mesajlariYukle();
     cmsVerileriniYukle();
   }
@@ -521,7 +577,7 @@
   });
 
   // ================= CANLIYA YAYINLA (Seçenek A: GitHub API) =================
-  btnCanliyaYayinla.addEventListener("click", async () => {
+  async function canliyaYayinlaHandler() {
     taslakKaydet();
     const onay = await onayIste("Tüm CMS düzenlemeleriniz GitHub repository'nize işlenecek ve Cloudflare Pages otomatik olarak canlıya aktaracaktır. Onaylıyor musunuz?");
     if (!onay) return;
@@ -627,6 +683,6 @@
       btnCanliyaYayinla.textContent = "🚀 Değişiklikleri Canlıya Al";
       toast("Yayınlama sırasında bir hata oluştu: " + err.message, "hata");
     }
-  });
+  }
 
 })();
