@@ -267,23 +267,69 @@ body {
               box-shadow 0.3s ease;
 }
 
-.nav-actions { display: flex; align-items: center; gap: 10px; }
+.nav-actions { display: flex; align-items: center; gap: 12px; }
 
+/* ===== APPLE iOS ULTRA LIQUID GLASS: ARAMA & TEMA DÜĞMESİ ===== */
 .search-box {
-  position: relative; display: flex; align-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 .search-box input {
-  background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.15);
-  color: #fff; border-radius: 30px; padding: 8px 16px 8px 36px;
-  font-size: 0.88rem; width: 190px; transition: all var(--transition);
+  background: linear-gradient(180deg, rgba(20, 28, 48, 0.65) 0%, rgba(10, 15, 26, 0.78) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 8px 16px 8px 36px;
+  font-size: 0.88rem;
+  width: 185px;
+  backdrop-filter: blur(28px) saturate(210%) brightness(108%);
+  -webkit-backdrop-filter: blur(28px) saturate(210%) brightness(108%);
+  box-shadow: 
+    0 10px 30px -4px rgba(0, 0, 0, 0.50),
+    0 3px 10px rgba(0, 0, 0, 0.30),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.40);
   outline: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-font-smoothing: antialiased;
 }
-.search-box input::placeholder { color: rgba(255,255,255,0.45); }
-.search-box input:focus { background: rgba(255,255,255,0.18); width: 220px; border-color: var(--accent); }
+.search-box input::placeholder {
+  color: rgba(255, 255, 255, 0.48);
+}
+.search-box input:hover {
+  border-color: rgba(255, 255, 255, 0.30);
+  box-shadow: 
+    0 12px 34px -4px rgba(0, 0, 0, 0.60),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.45),
+    0 0 16px rgba(var(--accent-rgb), 0.25);
+}
+.search-box input:focus {
+  width: 220px;
+  border-color: rgba(var(--accent-rgb), 0.75);
+  background: linear-gradient(180deg, rgba(24, 34, 56, 0.75) 0%, rgba(12, 18, 32, 0.85) 100%);
+  box-shadow: 
+    0 14px 40px -4px rgba(0, 0, 0, 0.65),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.55),
+    0 0 24px rgba(var(--accent-rgb), 0.45);
+}
 .search-icon {
-  position: absolute; left: 10px; font-size: 0.9rem; pointer-events: none;
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
-
+.search-box input:focus + .search-icon,
+.search-box:hover .search-icon {
+  color: var(--accent);
+  transform: translateY(-50%) scale(1.08);
+}
 
 .hamburger {
   display: none; flex-direction: column; gap: 5px;
@@ -301,15 +347,45 @@ body {
    =========================== */
 .renk-secici { position: relative; }
 .renk-dugme {
-  display: flex; align-items: center; justify-content: center;
-  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
-  background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15);
-  cursor: pointer; font-size: 1.1rem; line-height: 1; transition: all var(--transition);
-  color: #fff; padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, rgba(20, 28, 48, 0.65) 0%, rgba(10, 15, 26, 0.78) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(28px) saturate(210%) brightness(108%);
+  -webkit-backdrop-filter: blur(28px) saturate(210%) brightness(108%);
+  box-shadow: 
+    0 10px 30px -4px rgba(0, 0, 0, 0.50),
+    0 3px 10px rgba(0, 0, 0, 0.30),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.40);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: rgba(255, 255, 255, 0.78);
+  padding: 0;
+  position: relative;
 }
 .renk-dugme:hover {
-  background: rgba(255,255,255,0.18); border-color: var(--accent);
-  transform: scale(1.05);
+  transform: translateY(-2px) scale(1.06);
+  border-color: rgba(var(--accent-rgb), 0.75);
+  color: #ffffff;
+  box-shadow: 
+    0 14px 36px -4px rgba(0, 0, 0, 0.65),
+    inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.60),
+    0 0 24px rgba(var(--accent-rgb), 0.50);
+}
+.renk-dugme:active {
+  transform: scale(0.94);
+}
+.renk-ikon-svg {
+  transition: transform 0.3s ease;
+}
+.renk-dugme:hover .renk-ikon-svg {
+  transform: rotate(15deg);
 }
 .renk-dugme:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 
