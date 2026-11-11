@@ -146,10 +146,30 @@
     });
   }
 
+  // ---- KAYAR NEON LED OPTİMİZASYONU ----
+  // İletişim bölümü ekrandan çıkınca animasyonu durdurur, ekrana girince başlatır (CPU/GPU tasarrufu)
+  function ledAnimasyonuBagla() {
+    const iletisimSec = $("iletisim");
+    const ledKapsayici = document.querySelector(".iletisim-led-kapsayici");
+    if (!iletisimSec || !ledKapsayici || !("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const state = entry.isIntersecting ? "running" : "paused";
+        ledKapsayici.querySelectorAll("path").forEach((p) => {
+          p.style.animationPlayState = state;
+        });
+      });
+    }, { rootMargin: "200px" });
+
+    observer.observe(iletisimSec);
+  }
+
   function bagla() {
     yolTarifiBagla();
     saatleriBagla();
     altCubukBagla();
+    ledAnimasyonuBagla();
   }
 
   TS.iletisim = { bagla };
