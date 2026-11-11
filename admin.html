@@ -10,14 +10,39 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css?v=3.4">
+  <link rel="stylesheet" href="css/admin.css?v=3.5">
 </head>
 <body>
 
-  <!-- ===== GİRİŞ EKRANI (APPLE VISION & OBSIDIAN GLASS) ===== -->
+  <!-- ===== GİRİŞ EKRANI (3D TS PARTICLE PORTAL & OBSIDIAN MONO) ===== -->
   <div class="giris-ekrani" id="girisEkrani">
     <canvas id="adminPartikulCanvas" class="admin-partikul-canvas" aria-hidden="true"></canvas>
-    <div class="giris-kutu">
+
+    <!-- 3D TS Başlangıç Portal Kontrolü (Amblem Modu) -->
+    <div class="ts-portal-kontrol" id="tsPortalKontrol">
+      <button class="ts-enter-btn" id="tsEnterBtn" type="button" aria-label="Giriş ekranına yakınlaş">
+        <span class="ts-enter-led" aria-hidden="true"></span>
+        <span class="ts-enter-text">ENTER // GİRİŞ EKRANI</span>
+        <svg class="ts-enter-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+      <div class="ts-ipucu">
+        <span>Yakınlaşmak için tıklayın veya kaydırın</span>
+        <span class="ts-ipucu-en">// SCROLL OR CLICK TO ENTER</span>
+      </div>
+    </div>
+
+    <!-- Giriş Kartı (Yakınlaşınca beliren Liquid Glass Kart) -->
+    <div class="giris-kutu" id="girisKutu">
+      <!-- 3D TS'e Geri Dön Butonu -->
+      <button class="ts-geri-btn" id="tsGeriBtn" type="button" title="3D TS Amblemine Geri Dön" aria-label="3D TS Amblemine Geri Dön">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>3D TS</span>
+      </button>
+
       <!-- Üst Güvenli Oturum Rozeti -->
       <div class="giris-etiket">
         <span class="etiket-isik" aria-hidden="true"></span>
@@ -259,8 +284,8 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="js/ortak.js"></script>
-  <script src="js/ayarlar.js?v=3.4"></script>
-  <script src="js/partikul.js?v=3.4"></script>
-  <script src="js/admin.js?v=3.4"></script>
+  <script src="js/ayarlar.js?v=3.5"></script>
+  <script src="js/partikul.js?v=3.5"></script>
+  <script src="js/admin.js?v=3.5"></script>
 </body>
 </html>
