@@ -496,6 +496,58 @@ body {
   border: 1px solid var(--card-border);
 }
 
+/* Hızlı WhatsApp Şablonları */
+.mk-sablonlar {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mk-sablon-baslik {
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+}
+.mk-sablon-butonlar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.sablon-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.sablon-btn:hover {
+  background: rgba(37, 211, 102, 0.18);
+  border-color: #25D366;
+  color: #fff;
+  transform: translateY(-1px);
+}
+.sablon-btn.sablon-hazir:hover {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: var(--green);
+}
+.sablon-btn.sablon-fiyat:hover {
+  background: rgba(255, 140, 0, 0.25);
+  border-color: var(--accent);
+}
+
 .mk-aksiyonlar { display: flex; gap: 10px; flex-wrap: wrap; }
 .mk-btn {
   border-radius: var(--radius-sm);
