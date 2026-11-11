@@ -39,6 +39,33 @@
     document.querySelectorAll("[data-paket]").forEach(a => { a.href = waLink(a.dataset.paket); });
   }
 
+  // ---- YORUMLAR (ayarlar.js → yorumlar) ----
+  function yorumlariDoldur() {
+    const grid = $("yorumGrid");
+    if (!grid || !TS.yorumlar || !TS.yorumlar.length) return;
+    grid.innerHTML = TS.yorumlar.map(y => {
+      const basHarfler = (y.isim || "").split(" ").map(w => w[0]).filter(Boolean).slice(0, 2).join("").toUpperCase() || "M";
+      const isKulup = y.tur === "kulup";
+      const avatarCls = isKulup ? "yk-avatar yk-avatar-kulup" : "yk-avatar";
+      const rozetCls = isKulup ? "yk-rozet yk-rozet-kulup" : "yk-rozet";
+      const yildizlar = "★".repeat(y.puan || 5);
+      return `
+        <div class="yorum-kart">
+          <div class="yk-ust">
+            <div class="${avatarCls}">${esc(basHarfler)}</div>
+            <div>
+              <strong class="yk-isim">${esc(y.isim)}</strong>
+              <div class="yk-yildiz">${yildizlar} <span class="yk-kaynak">${esc(y.kaynak || "Google Haritalar")}</span></div>
+            </div>
+            <span class="${rozetCls}">${esc(y.rozet || "Doğrulanmış")}</span>
+          </div>
+          <p class="yk-metin">"${esc(y.metin)}"</p>
+          ${y.etiket ? `<div class="yk-etiket">${esc(y.etiket)}</div>` : ""}
+        </div>
+      `;
+    }).join("");
+  }
+
   // ---- SAYILAR (kategori kartları + hero) ----
   function sayilariYaz() {
     document.querySelectorAll("[data-sayi]").forEach(el => {
@@ -180,5 +207,5 @@
   $("filtreTemizle").addEventListener("click", filtreTemizle);
   $("filtreTemizle2").addEventListener("click", filtreTemizle);
 
-  TS.liste = { sayilariYaz, paketleriDoldur, hizmetleriGoster };
+  TS.liste = { sayilariYaz, paketleriDoldur, yorumlariDoldur, hizmetleriGoster };
 })(window.TS = window.TS || {});
