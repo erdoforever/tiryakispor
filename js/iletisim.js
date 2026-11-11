@@ -13,10 +13,14 @@
   const INGILIZCE_GUN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const HAFTA = [1, 2, 3, 4, 5, 6, 0];                  // hafta Pazartesi'den başlar
 
-  // ---- YOL TARİFİ ----
+  // ---- YOL TARİFİ VE ADRES METNİ ----
   function yolTarifiBagla() {
     const link = ayar.HARITA_LINK || "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(ayar.ADRES_SORGU);
     document.querySelectorAll("[data-yol-tarifi]").forEach((a) => { a.href = link; });
+    const adresEl = document.getElementById("iletisimAdresMetin");
+    if (adresEl && ayar.ADRES_METIN) {
+      adresEl.innerHTML = ayar.ADRES_METIN.replace(/\n/g, "<br/>");
+    }
   }
 
   // ---- ÇALIŞMA SAATLERİ ----
