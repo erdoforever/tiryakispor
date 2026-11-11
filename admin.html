@@ -10,12 +10,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css?v=3.3">
+  <link rel="stylesheet" href="css/admin.css?v=3.4">
 </head>
 <body>
 
   <!-- ===== GİRİŞ EKRANI (APPLE VISION & OBSIDIAN GLASS) ===== -->
   <div class="giris-ekrani" id="girisEkrani">
+    <canvas id="adminPartikulCanvas" class="admin-partikul-canvas" aria-hidden="true"></canvas>
     <div class="giris-kutu">
       <!-- Üst Güvenli Oturum Rozeti -->
       <div class="giris-etiket">
@@ -256,8 +257,10 @@
   <!-- Bildirim Toast -->
   <div class="admin-toast" id="adminToast"></div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="js/ortak.js"></script>
-  <script src="js/ayarlar.js?v=3.3"></script>
-  <script src="js/admin.js?v=3.3"></script>
+  <script src="js/ayarlar.js?v=3.4"></script>
+  <script src="js/partikul.js?v=3.4"></script>
+  <script src="js/admin.js?v=3.4"></script>
 </body>
 </html>
