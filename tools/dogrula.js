@@ -70,7 +70,7 @@ const adminIdler = new Set([...admin.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1
 // Dinamik oluşturulan veya isteğe bağlı script id'leri
 const dinamikIdler = new Set(["turnstileScript"]);
 for (const f of jsDosyalari) {
-  const kod = oku("js/" + f), hedef = f === "admin.js" ? adminIdler : idler;
+  const kod = oku("js/" + f), hedef = (f === "admin.js" || f === "partikul.js") ? adminIdler : idler;
   for (const m of kod.matchAll(/(?:\$|getElementById)\("([\w-]+)"\)/g)) {
     if (!hedef.has(m[1]) && !dinamikIdler.has(m[1])) hata(`js/${f}: #${m[1]} sayfada yok`);
   }
