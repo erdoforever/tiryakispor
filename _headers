@@ -9,6 +9,12 @@
 /images/*
   Cache-Control: public, max-age=604800
 
+/css/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/js/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
 /site.webmanifest
   Content-Type: application/manifest+json; charset=utf-8
   Cache-Control: public, max-age=86400
