@@ -21,6 +21,10 @@
     if (adresEl && ayar.ADRES_METIN) {
       adresEl.innerHTML = ayar.ADRES_METIN.replace(/\n/g, "<br/>");
     }
+    const iframe = document.getElementById("googleHaritaIframe");
+    if (iframe && ayar.ADRES_SORGU) {
+      iframe.src = "https://maps.google.com/maps?q=" + encodeURIComponent(ayar.ADRES_SORGU) + "&t=&z=16&ie=UTF8&iwloc=&output=embed";
+    }
   }
 
   // ---- ÇALIŞMA SAATLERİ ----
