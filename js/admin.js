@@ -389,28 +389,6 @@
     });
   }
 
-  yenileBtn.addEventListener("click", () => {
-    mesajlariYukle();
-    toast("Mesaj listesi güncellendi.");
-  });
-
-  hepsiniSil.addEventListener("click", async () => {
-    const onay = await onayIste("TÜM mesajları silmek istediğinize emin misiniz? Bu işlem geri alınamaz.");
-    if (onay) {
-      mesajlariKaydet([]);
-      mesajlariYukle();
-      toast("Tüm mesajlar silindi.");
-    }
-  });
-
-  hepsiniOku.addEventListener("click", () => {
-    let list = mesajlariAl();
-    list = list.map(x => ({ ...x, okundu: true }));
-    mesajlariKaydet(list);
-    mesajlariYukle();
-    toast("Tüm mesajlar okundu olarak işaretlendi.");
-  });
-
   // ================= CMS BÖLÜMÜ =================
   let cmsData = {
     ayar: {
@@ -747,23 +725,6 @@
 
     localStorage.setItem(CMS_KEY, JSON.stringify(cmsData));
   }
-
-  btnGenelKaydet.addEventListener("click", () => {
-    taslakKaydet();
-    toast("İletişim ve genel ayarlar kaydedildi.");
-  });
-  btnHizmetKaydet.addEventListener("click", () => {
-    taslakKaydet();
-    toast("Hizmet bilgileri kaydedildi.");
-  });
-  btnPaketKaydet.addEventListener("click", () => {
-    taslakKaydet();
-    toast("Paket bilgileri kaydedildi.");
-  });
-  btnSssKaydet.addEventListener("click", () => {
-    taslakKaydet();
-    toast("SSS içerikleri kaydedildi.");
-  });
 
   // ================= CANLIYA YAYINLA (Seçenek A: GitHub API) =================
   async function canliyaYayinlaHandler() {
