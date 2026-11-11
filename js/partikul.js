@@ -315,7 +315,7 @@
   let isZoomed = azHareket;
   let zoomCurrent = azHareket ? 1 : 0;
   let zoomTarget = azHareket ? 1 : 0;
-  let sonGecisZamani = 0;
+  let focusTimer = null;
 
   if (azHareket && girisKutu) {
     girisKutu.classList.add("aktif");
@@ -323,70 +323,97 @@
   }
 
   function zoomGiris() {
-    if (isZoomed) return;
-    const simdi = Date.now();
-    if (simdi - sonGecisZamani < 400) return;
-    sonGecisZamani = simdi;
-
+    if (isZoomed && zoomTarget === 1) return;
     isZoomed = true;
     zoomTarget = 1;
+    wheelAccum = 0;
+
     if (portalKontrol) portalKontrol.classList.add("gizle");
     if (girisKutu) girisKutu.classList.add("aktif");
-    setTimeout(() => {
-      if (sifreInput && isZoomed) sifreInput.focus();
-    }, 400);
+
+    // Eski focus zamanlayıcısını iptal et
+    clearTimeout(focusTimer);
+    focusTimer = setTimeout(() => {
+      // Yalnızca hala login ekranındaysak focus ver
+      if (isZoomed && zoomTarget === 1 && sifreInput) {
+        sifreInput.focus();
+      }
+    }, 450);
   }
 
   function zoomCikis() {
-    if (!isZoomed) return;
-    const simdi = Date.now();
-    if (simdi - sonGecisZamani < 400) return;
-    sonGecisZamani = simdi;
-
+    if (!isZoomed && zoomTarget === 0) return;
     isZoomed = false;
     zoomTarget = 0;
-    if (sifreInput) sifreInput.blur();
+    wheelAccum = 0;
+
+    // Tüm bekleyen focus işlemlerini iptal et ve odağı kaldır
+    clearTimeout(focusTimer);
+    if (sifreInput) {
+      sifreInput.blur();
+    }
+
     if (girisKutu) girisKutu.classList.remove("aktif");
     if (portalKontrol) portalKontrol.classList.remove("gizle");
   }
 
   // Tıklama Olayları
-  if (enterBtn) enterBtn.addEventListener("click", zoomGiris);
+  if (enterBtn) enterBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    zoomGiris();
+  });
+
   if (geriBtn) geriBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     zoomCikis();
   });
 
-  // Canvas'a tıklandığında: Zoomed değilse giriş yap, zoomed ise TS'e geri dön
-  canvas.addEventListener("click", () => {
+  // Giriş kutusu dışındaki alana (Canvas veya arka plan) tıklandığında:
+  // Zoomed değilse giriş yap; zoomed ise doğrudan TS ekranına dön!
+  window.addEventListener("click", (e) => {
     if (!isZoomed) {
-      zoomGiris();
+      if (!girisKutu || !girisKutu.contains(e.target)) {
+        zoomGiris();
+      }
     } else {
-      zoomCikis();
+      if (girisKutu && !girisKutu.contains(e.target)) {
+        zoomCikis();
+      }
     }
   });
 
-  // Giriş kutusu dışına (arka plana) tıklandığında TS'e geri dön
-  if (girisEkrani) {
-    girisEkrani.addEventListener("click", (e) => {
-      if (isZoomed && girisKutu && !girisKutu.contains(e.target)) {
+  // Kararlı Fare Tekerleği Akümülatörü (Flick, Trackpad ve Hızlı Up/Down Emniyeti)
+  let wheelAccum = 0;
+  let wheelDecayTimer = null;
+
+  window.addEventListener("wheel", (e) => {
+    // 200ms hareketsizlikte birikimi sıfırla
+    clearTimeout(wheelDecayTimer);
+    wheelDecayTimer = setTimeout(() => {
+      wheelAccum = 0;
+    }, 200);
+
+    wheelAccum += e.deltaY;
+
+    // Aşağı kaydırma eşiği aşıldıysa -> Giriş yap
+    if (wheelAccum > 45) {
+      if (!isZoomed || zoomTarget !== 1) {
+        zoomGiris();
+      }
+      wheelAccum = 0;
+    }
+    // Yukarı kaydırma eşiği aşıldıysa -> TS ekranına geri dön
+    else if (wheelAccum < -45) {
+      if (isZoomed || zoomTarget !== 0) {
         zoomCikis();
       }
-    });
-  }
-
-  // Fare Tekerleği (Scroll): Aşağı = Giriş ekranına yakınlaş, Yukarı = TS ekranına geri dön
-  window.addEventListener("wheel", (e) => {
-    if (e.deltaY > 15) {
-      if (!isZoomed) zoomGiris();
-    } else if (e.deltaY < -15) {
-      if (isZoomed) zoomCikis();
+      wheelAccum = 0;
     }
   }, { passive: true });
 
-  // Klavye Kontrolleri
+  // Klavye Kontrolleri (Enter = Gir, Escape = TS'e Dön)
   window.addEventListener("keydown", (e) => {
-    if ((e.key === "Enter" || e.key === " ") && !isZoomed) {
+    if ((e.key === "Enter" || e.key === " ") && !isZoomed && document.activeElement !== sifreInput) {
       e.preventDefault();
       zoomGiris();
     } else if (e.key === "Escape" && isZoomed) {
