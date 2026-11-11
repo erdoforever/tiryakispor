@@ -55,7 +55,7 @@
 
   // CMS DOM Referansları (Panel enjekte edilince bağlanır)
   let btnCanliyaYayinla, btnGenelKaydet, btnHizmetKaydet, btnPaketKaydet, btnSssKaydet, btnSssEkle;
-  let inpWaNumara, inpFormEndpoint, inpAdresSorgu, inpAdresMetin, inpHaritaLink, inpHaftaIci, inpCumartesi, inpPazar;
+  let inpWaNumara, inpFormEndpoint, inpAdresSorgu, inpAdresMetin, inpHaritaLink, inpHaftaIci, inpCumartesi, inpPazar, inpTurnstileKey;
   let hizmetlerListesi, paketlerListesi, sssListesi, cikisBtn, yenileBtn, hepsiniSil, hepsiniOku, adminPanel;
 
   function domElemanlariniBagla() {
@@ -75,6 +75,7 @@
     inpHaftaIci       = document.getElementById("inpHaftaIci");
     inpCumartesi      = document.getElementById("inpCumartesi");
     inpPazar          = document.getElementById("inpPazar");
+    inpTurnstileKey   = document.getElementById("inpTurnstileKey");
 
     hizmetlerListesi  = document.getElementById("hizmetlerListesi");
     paketlerListesi   = document.getElementById("paketlerListesi");
@@ -414,6 +415,7 @@
     inpAdresSorgu.value      = cmsData.ayar.ADRES_SORGU || "";
     if (inpAdresMetin) inpAdresMetin.value = cmsData.ayar.ADRES_METIN || "";
     inpHaritaLink.value      = cmsData.ayar.HARITA_LINK || "";
+    if (inpTurnstileKey) inpTurnstileKey.value = cmsData.ayar.TURNSTILE_SITE_KEY || "";
 
     const gunler = cmsData.calismaGunler || {};
     inpHaftaIci.value  = saatleriCoz(gunler[1] || gunler[2]);
@@ -514,6 +516,7 @@
     cmsData.ayar.ADRES_SORGU      = inpAdresSorgu.value.trim();
     if (inpAdresMetin) cmsData.ayar.ADRES_METIN = inpAdresMetin.value.trim();
     cmsData.ayar.HARITA_LINK      = inpHaritaLink.value.trim();
+    if (inpTurnstileKey) cmsData.ayar.TURNSTILE_SITE_KEY = inpTurnstileKey.value.trim();
 
     // Çalışma saatleri
     const hSaat = saatAyraci(inpHaftaIci.value.trim()) || ["10:00", "18:00"];
