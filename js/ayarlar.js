@@ -1,34 +1,18 @@
 /* ============================================================
-   AYARLAR VE VERİ — TiryakiSPOR
-   Numara, form adresi, hizmet ve paket listeleri yalnızca burada değiştirilir.
-   (index.html'deki sabit WhatsApp/telefon bağlantıları da aynı numarayı içerir:
-    numarayı değiştirirseniz `node tools/dogrula.js` eksik kalan yerleri gösterir.)
+   AYARLAR VE VERİ — TiryakiSPOR (CMS Tarafından Otomatik Üretildi)
    ============================================================ */
 (function (TS) {
   "use strict";
 
   const ayar = {
-    WA_NUMARA: "905314315560", // WhatsApp numarası (başında 90, boşluksuz)
+  "WA_NUMARA": "905314315560",
+  "FORM_ENDPOINT": "",
+  "ADRES_SORGU": "Kızılay Mahallesi, İzmir 1 Caddesi, Sümer 1 Sokak, Menekşe Pasajı, No: 5, İç Kapı No: 46, Çankaya / Ankara",
+  "HARITA_LINK": "",
+  "calismaSaatleri": "Hafta içi 10:00 – 18:00 Cumartesi 10:00 - 16:00 | Pazar Kapalı",
+  "ADRES_METIN": "İzmir 1 Cad. Sümer 1 Sok. Menekşe Pasajı No: 5 D: 46 Çankaya / Ankara"
+};
 
-    // Formspree hazır olunca buraya adresi yapıştırın, örn: "https://formspree.io/f/abcdwxyz"
-    // Formspree hesabı bu e-posta ile açılacak: topcukemalozdemir0614@gmail.com (mesajlar bu adrese düşer)
-    // Boşken: form gönderilince hazır mesaj WhatsApp'ta açılır (mesaj yine size ulaşır).
-    FORM_ENDPOINT: "",
-
-    // "Yol tarifi" düğmeleri: bu adres metni Google Haritalar'da aratılır.
-    ADRES_SORGU: "Menekşe Pasajı, Kızılay, Ankara",
-    ADRES_METIN: "İzmir Cad. Menekşe Sok.\nMenekşe Pasajı Kızılay/ANKARA",
-    // Google Haritalar'da dükkânınızı açıp "Paylaş" ile aldığınız bağlantıyı buraya yapıştırırsanız düğmeler
-    // doğrudan o konumu açar (adres metninden daha kesin olur). Boşken yukarıdaki adres aranır.
-    HARITA_LINK: "",
-  };
-
-  // ---- ÇALIŞMA SAATLERİ ----
-  // Gün numarası: 0 Pazar, 1 Pazartesi, … 6 Cumartesi.  Değer: ["açılış", "kapanış"] (24 saat, "09:00" biçiminde) ya da null (kapalı).
-  // Yazılmayan gün kapalı sayılır. Gece yarısını aşan vardiya (ör. 18:00–02:00) desteklenmez.
-  // Saatler her zaman Türkiye saatine göre değerlendirilir; ziyaretçi nerede olursa olsun "şu an açık/kapalı" doğru çıkar.
-  // `gunler` boş ({}) bırakılırsa saat kartında index.html'deki yazı kalır ve "açık/kapalı" rozeti çıkmaz.
-  // Saati değiştirirseniz index.html'deki yedek yazıları da (#saatListe, #altbilgiSaat) güncelleyin; JS çalışırken yazılar buradan üretilir.
   const CALISMA = {
     saatDilimi: "Europe/Istanbul",
     gunler: {
@@ -37,7 +21,6 @@
     },
   };
 
-  // Onarım türüne göre kartlarda kullanılan top görselleri
   const KATEGORI_GORSEL = {
     futbol:      "images/ucl-ball.png",
     basketbol:   "images/delta-basketball.png",
@@ -57,80 +40,246 @@
     "Deri Soyulması": "🩹",
   };
 
-  // ---- HİZMET LİSTESİ ----
-  // markalar: "hepsi" => tüm markalara uygulanır
-  const FUTBOL_MARKALARI    = ["Adidas", "Nike", "Puma", "Select", "Diğer"];
-  const BASKETBOL_MARKALARI = ["Molten", "Spalding", "Wilson", "Delta", "Nike", "Diğer"];
-  const VOLEYBOL_MARKALARI  = ["Mikasa", "Molten", "Diğer"];
-
   const hizmetler = [
-    // FUTBOL TOPU TAMİRİ
-    { id: 1,  kategori: "futbol", ad: "Futbol Topu Panel Dikişi",
-      aciklama: "Açılmış veya kopmuş panel dikişlerinin el dikişiyle yeniden yapılması.",
-      hasarlar: ["Dikiş Patlağı"], markalar: FUTBOL_MARKALARI, sure: "1–2 gün" },
-    { id: 2,  kategori: "futbol", ad: "Futbol Topu İç Lastik Değişimi",
-      aciklama: "Delinen veya esneyen iç lastiğin yenisiyle değiştirilmesi.",
-      hasarlar: ["Hava Kaçırma"], markalar: FUTBOL_MARKALARI, sure: "1 gün" },
-    { id: 3,  kategori: "futbol", ad: "Futbol Topu Sibop Değişimi",
-      aciklama: "Hava kaçıran veya iğne girmeyen sibobun yenilenmesi.",
-      hasarlar: ["Hava Kaçırma"], markalar: FUTBOL_MARKALARI, sure: "Aynı gün" },
-    { id: 4,  kategori: "futbol", ad: "Futbol Topu Yüzey Yenileme",
-      aciklama: "Soyulan ve kabaran dış yüzey katmanlarının onarılması.",
-      hasarlar: ["Deri Soyulması"], markalar: FUTBOL_MARKALARI, sure: "2–3 gün" },
-
-    // BASKETBOL TOPU BAKIMI
-    { id: 5,  kategori: "basketbol", ad: "Basketbol Topu Sızdırmazlık Onarımı",
-      aciklama: "Yavaş yavaş hava kaçıran basketbol topunun kaçak noktasının kapatılması.",
-      hasarlar: ["Hava Kaçırma"], markalar: BASKETBOL_MARKALARI, sure: "1 gün" },
-    { id: 6,  kategori: "basketbol", ad: "Basketbol Topu Grip / Deri Yenileme",
-      aciklama: "Aşınan, kayganlaşan veya soyulan yüzeyin tutuşunun geri kazandırılması.",
-      hasarlar: ["Deri Soyulması"], markalar: BASKETBOL_MARKALARI, sure: "2 gün" },
-    { id: 7,  kategori: "basketbol", ad: "Basketbol Topu Kanal Onarımı",
-      aciklama: "Açılan kanal (dikiş hattı) birleşimlerinin yeniden sabitlenmesi.",
-      hasarlar: ["Dikiş Patlağı"], markalar: BASKETBOL_MARKALARI, sure: "1–2 gün" },
-
-    // VOLEYBOL TOPU PANELİ DEĞİŞİMİ
-    { id: 8,  kategori: "voleybol", ad: "Voleybol Topu Panel Değişimi",
-      aciklama: "Yırtılan veya soyulan panelin sökülüp yenisiyle değiştirilmesi.",
-      hasarlar: ["Deri Soyulması", "Dikiş Patlağı"], markalar: VOLEYBOL_MARKALARI, sure: "2–3 gün" },
-    { id: 9,  kategori: "voleybol", ad: "Voleybol Topu İç Lastik Değişimi",
-      aciklama: "Hava tutmayan voleybol topunun iç lastiğinin yenilenmesi.",
-      hasarlar: ["Hava Kaçırma"], markalar: VOLEYBOL_MARKALARI, sure: "1 gün" },
-
-    // ÖZEL / PROFESYONEL MAÇ TOPU ONARIMI
-    { id: 10, kategori: "profesyonel", ad: "Maç Topu Komple Revizyon",
-      aciklama: "Dikiş, iç lastik, yüzey ve basınç kontrolünü kapsayan tam bakım.",
-      hasarlar: ["Dikiş Patlağı", "Hava Kaçırma", "Deri Soyulması"],
-      markalar: ["Adidas", "Nike", "Molten", "Mikasa", "Wilson", "Select"], sure: "3–4 gün" },
-    { id: 11, kategori: "profesyonel", ad: "Termo-Bonded Panel Onarımı",
-      aciklama: "Dikişsiz, ısıl yapıştırmalı maç toplarında ayrılan panellerin onarımı.",
-      hasarlar: ["Deri Soyulması", "Dikiş Patlağı"], markalar: ["Adidas", "Nike", "Puma"], sure: "2–3 gün" },
-    { id: 12, kategori: "profesyonel", ad: "Basınç ve Sızdırmazlık Testi",
-      aciklama: "Maç standardına göre basınç ayarı ve su altı kaçak testi.",
-      hasarlar: ["Hava Kaçırma"], markalar: "hepsi", sure: "Aynı gün" },
-  ];
-
-  // ---- POPÜLER TAMİR PAKETLERİ ----
+  {
+    "id": 1,
+    "kategori": "futbol",
+    "ad": "Futbol Topu Panel Dikişi",
+    "aciklama": "Açılmış veya kopmuş panel dikişlerinin el dikişiyle yeniden yapılması.",
+    "hasarlar": [
+      "Dikiş Patlağı"
+    ],
+    "markalar": [
+      "Adidas",
+      "Nike",
+      "Puma",
+      "Select",
+      "Diğer"
+    ],
+    "sure": "1–2 gün"
+  },
+  {
+    "id": 2,
+    "kategori": "futbol",
+    "ad": "Futbol Topu İç Lastik Değişimi",
+    "aciklama": "Delinen veya esneyen iç lastiğin yenisiyle değiştirilmesi.",
+    "hasarlar": [
+      "Hava Kaçırma"
+    ],
+    "markalar": [
+      "Adidas",
+      "Nike",
+      "Puma",
+      "Select",
+      "Diğer"
+    ],
+    "sure": "1 gün"
+  },
+  {
+    "id": 3,
+    "kategori": "futbol",
+    "ad": "Futbol Topu Sibop Değişimi",
+    "aciklama": "Hava kaçıran veya iğne girmeyen sibobun yenilenmesi.",
+    "hasarlar": [
+      "Hava Kaçırma"
+    ],
+    "markalar": [
+      "Adidas",
+      "Nike",
+      "Puma",
+      "Select",
+      "Diğer"
+    ],
+    "sure": "Aynı gün"
+  },
+  {
+    "id": 4,
+    "kategori": "futbol",
+    "ad": "Futbol Topu Yüzey Yenileme",
+    "aciklama": "Soyulan ve kabaran dış yüzey katmanlarının onarılması.",
+    "hasarlar": [
+      "Deri Soyulması"
+    ],
+    "markalar": [
+      "Adidas",
+      "Nike",
+      "Puma",
+      "Select",
+      "Diğer"
+    ],
+    "sure": "2–3 gün"
+  },
+  {
+    "id": 5,
+    "kategori": "basketbol",
+    "ad": "Basketbol Topu Sızdırmazlık Onarımı",
+    "aciklama": "Yavaş yavaş hava kaçıran basketbol topunun kaçak noktasının kapatılması.",
+    "hasarlar": [
+      "Hava Kaçırma"
+    ],
+    "markalar": [
+      "Molten",
+      "Spalding",
+      "Wilson",
+      "Delta",
+      "Nike",
+      "Diğer"
+    ],
+    "sure": "1 gün"
+  },
+  {
+    "id": 6,
+    "kategori": "basketbol",
+    "ad": "Basketbol Topu Grip / Deri Yenileme",
+    "aciklama": "Aşınan, kayganlaşan veya soyulan yüzeyin tutuşunun geri kazandırılması.",
+    "hasarlar": [
+      "Deri Soyulması"
+    ],
+    "markalar": [
+      "Molten",
+      "Spalding",
+      "Wilson",
+      "Delta",
+      "Nike",
+      "Diğer"
+    ],
+    "sure": "2 gün"
+  },
+  {
+    "id": 7,
+    "kategori": "basketbol",
+    "ad": "Basketbol Topu Kanal Onarımı",
+    "aciklama": "Açılan kanal (dikiş hattı) birleşimlerinin yeniden sabitlenmesi.",
+    "hasarlar": [
+      "Dikiş Patlağı"
+    ],
+    "markalar": [
+      "Molten",
+      "Spalding",
+      "Wilson",
+      "Delta",
+      "Nike",
+      "Diğer"
+    ],
+    "sure": "1–2 gün"
+  },
+  {
+    "id": 8,
+    "kategori": "voleybol",
+    "ad": "Voleybol Topu Panel Değişimi",
+    "aciklama": "Yırtılan veya soyulan panelin sökülüp yenisiyle değiştirilmesi.",
+    "hasarlar": [
+      "Deri Soyulması",
+      "Dikiş Patlağı"
+    ],
+    "markalar": [
+      "Mikasa",
+      "Molten",
+      "Diğer"
+    ],
+    "sure": "2–3 gün"
+  },
+  {
+    "id": 9,
+    "kategori": "voleybol",
+    "ad": "Voleybol Topu İç Lastik Değişimi",
+    "aciklama": "Hava tutmayan voleybol topunun iç lastiğinin yenilenmesi.",
+    "hasarlar": [
+      "Hava Kaçırma"
+    ],
+    "markalar": [
+      "Mikasa",
+      "Molten",
+      "Diğer"
+    ],
+    "sure": "1 gün"
+  },
+  {
+    "id": 10,
+    "kategori": "profesyonel",
+    "ad": "Maç Topu Komple Revizyon",
+    "aciklama": "Dikiş, iç lastik, yüzey ve basınç kontrolünü kapsayan tam bakım.",
+    "hasarlar": [
+      "Dikiş Patlağı",
+      "Hava Kaçırma",
+      "Deri Soyulması"
+    ],
+    "markalar": [
+      "Adidas",
+      "Nike",
+      "Molten",
+      "Mikasa",
+      "Wilson",
+      "Select"
+    ],
+    "sure": "3–4 gün"
+  },
+  {
+    "id": 11,
+    "kategori": "profesyonel",
+    "ad": "Termo-Bonded Panel Onarımı",
+    "aciklama": "Dikişsiz, ısıl yapıştırmalı maç toplarında ayrılan panellerin onarımı.",
+    "hasarlar": [
+      "Deri Soyulması",
+      "Dikiş Patlağı"
+    ],
+    "markalar": [
+      "Adidas",
+      "Nike",
+      "Puma"
+    ],
+    "sure": "2–3 gün"
+  },
+  {
+    "id": 12,
+    "kategori": "profesyonel",
+    "ad": "Basınç ve Sızdırmazlık Testi",
+    "aciklama": "Maç standardına göre basınç ayarı ve su altı kaçak testi.",
+    "hasarlar": [
+      "Hava Kaçırma"
+    ],
+    "markalar": "hepsi",
+    "sure": "Aynı gün"
+  }
+];
   const paketler = [
-    {
-      no: "01", ikon: "🧵", etiket: "EN ÇOK TERCİH EDİLEN",
-      ad: "Panel Dikiş Onarımı",
-      aciklama: "Açılan veya patlayan panel dikişleri, topun orijinal formunu bozmadan el dikişiyle onarılır.",
-      ozellikler: ["El dikişi ile sağlam onarım", "Dayanıklı, su itici iplik", "Futbol · Voleybol · Basketbol"],
-    },
-    {
-      no: "02", ikon: "🔧", etiket: null,
-      ad: "İç Lastik / Sibop Değişimi",
-      aciklama: "Hava kaçıran topların iç lastiği (mesane) veya sibobu yenilenir, top ilk günkü sertliğine kavuşur.",
-      ozellikler: ["Kaçak noktası tespiti", "Yeni iç lastik veya sibop", "Değişim sonrası hava testi"],
-    },
-    {
-      no: "03", ikon: "📏", etiket: null,
-      ad: "Profesyonel Basınç ve Sızdırmazlık Testi",
-      aciklama: "Topun iç basıncı resmi maç değerlerine göre ayarlanır ve gizli hava kaçakları test edilir.",
-      ozellikler: ["Hassas manometre ölçümü", "Su altı sızdırmazlık testi", "Maç standardına ayar"],
-    },
-  ];
+  {
+    "no": "01",
+    "ikon": "🧵",
+    "etiket": "EN ÇOK TERCİH EDİLEN",
+    "ad": "Panel Dikiş Onarımı",
+    "aciklama": "Açılan veya patlayan panel dikişleri, topun orijinal formunu bozmadan el dikişiyle onarılır.",
+    "ozellikler": [
+      "El dikişi ile sağlam onarım",
+      "Dayanıklı, su itici iplik",
+      "Futbol · Voleybol · Basketbol"
+    ]
+  },
+  {
+    "no": "02",
+    "ikon": "🔧",
+    "etiket": null,
+    "ad": "İç Lastik / Sibop Değişimi",
+    "aciklama": "Hava kaçıran topların iç lastiği (mesane) veya sibobu yenilenir, top ilk günkü sertliğine kavuşur.",
+    "ozellikler": [
+      "Kaçak noktası tespiti",
+      "Yeni iç lastik veya sibop",
+      "Değişim sonrası hava testi"
+    ]
+  },
+  {
+    "no": "03",
+    "ikon": "📏",
+    "etiket": null,
+    "ad": "Profesyonel Basınç ve Sızdırmazlık Testi",
+    "aciklama": "Topun iç basıncı resmi maç değerlerine göre ayarlanır ve gizli hava kaçakları test edilir.",
+    "ozellikler": [
+      "Hassas manometre ölçümü",
+      "Su altı sızdırmazlık testi",
+      "Maç standardına ayar"
+    ]
+  }
+];
 
   Object.assign(TS, { ayar, CALISMA, KATEGORI_GORSEL, KATEGORI_EMOJI, KATEGORI_KISA, HASAR_IKON, hizmetler, paketler });
 })(window.TS = window.TS || {});
