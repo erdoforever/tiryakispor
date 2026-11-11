@@ -29,13 +29,18 @@
   }
 
   function stilUygula(stil) {
-    if (stil === "minimal") document.documentElement.setAttribute("data-stil", "minimal");
-    else document.documentElement.removeAttribute("data-stil");
+    if (stil === "minimal") {
+      document.documentElement.setAttribute("data-stil", "minimal");
+    } else {
+      document.documentElement.removeAttribute("data-stil");
+    }
     stilGuncelle(stil);
   }
 
   function menuAc(menu, dugme, ac) {
     menu.hidden = !ac;
+    menu.classList.toggle("acik", ac);
+    menu.style.display = ac ? "flex" : "none";
     dugme.setAttribute("aria-expanded", ac ? "true" : "false");
   }
 
@@ -44,31 +49,50 @@
     const menu = document.getElementById("renkMenu");
     if (!dugme || !menu) return;
 
+    // Sayfa her açıldığında kesin olarak kapalı başlat (varsayılan: Turuncu + Modern)
+    menu.hidden = true;
+    menu.style.display = "none";
+    menu.classList.remove("acik");
+    dugme.setAttribute("aria-expanded", "false");
+    document.documentElement.removeAttribute("data-renk");
+    document.documentElement.removeAttribute("data-stil");
+    stilGuncelle("modern");
+    isaretleriGuncelle("");
+
     dugme.addEventListener("click", (e) => {
       e.stopPropagation();
-      menuAc(menu, dugme, menu.hidden);
+      const acilacak = menu.hidden;
+      menuAc(menu, dugme, acilacak);
     });
 
     menu.addEventListener("click", (e) => {
       const stilBtn = e.target.closest("[data-stil]");
       if (stilBtn) {
+        e.preventDefault();
+        e.stopPropagation();
         stilUygula(stilBtn.dataset.stil);
         return;
       }
 
       const renkBtn = e.target.closest("[data-renk]");
       if (!renkBtn) return;
+      e.preventDefault();
       uygula(renkBtn.dataset.renk);
       menuAc(menu, dugme, false);
       dugme.focus();
     });
 
     document.addEventListener("click", (e) => {
-      if (!menu.hidden && !menu.contains(e.target) && e.target !== dugme) menuAc(menu, dugme, false);
+      if (!menu.hidden && !menu.contains(e.target) && e.target !== dugme) {
+        menuAc(menu, dugme, false);
+      }
     });
 
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !menu.hidden) { menuAc(menu, dugme, false); dugme.focus(); }
+      if (e.key === "Escape" && !menu.hidden) {
+        menuAc(menu, dugme, false);
+        dugme.focus();
+      }
     });
   }
 
