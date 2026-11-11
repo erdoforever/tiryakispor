@@ -292,7 +292,14 @@
       <div class="iletisim-grid">
 
         <!-- Sol: Form -->
-        <div class="iletisim-form-kutu">
+        <div class="iletisim-form-kutu led-cerceve">
+          <!-- LED çerçeve: üzerine gelince üst-ortadan başlayıp iki yandan kayan ışık, alt-ortada buluşur.
+               pathLength="200" ile köşeleri yuvarlatılmış dörtgenin çevresi 200 birime normalize edilir,
+               böylece kutu boyutu değişse de ışığın konumu ve hızı bozulmaz. -->
+          <svg class="led-cerceve-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <rect class="led-isik led-isik-sag" x="1" y="1" width="98" height="98" rx="3.5" ry="4.5" pathLength="200"/>
+            <rect class="led-isik led-isik-sol" x="1" y="1" width="98" height="98" rx="3.5" ry="4.5" pathLength="200"/>
+          </svg>
           <form id="iletisimForm" novalidate>
             <div class="form-grup">
               <label for="musAd">👤 Adınız Soyadınız</label>

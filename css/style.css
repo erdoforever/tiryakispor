@@ -654,6 +654,39 @@ body {
   box-shadow: var(--shadow);
 }
 
+/* ===========================
+   LED ÇERÇEVE: üzerine gelince üst-ortadan başlayıp iki yandan kayan, alt-ortada buluşan ışık.
+   Yalnızca transform/opacity değil "stroke-dashoffset" animasyonu kullanır (SVG), ama sabit ince bir
+   çizgi olduğu ve yalnızca hover'da çalıştığı için maliyeti ihmal edilebilir düzeydedir.
+   =========================== */
+.led-cerceve { position: relative; }
+.led-cerceve-svg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 1; overflow: visible;
+}
+.led-isik {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 2px var(--accent)) drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.85));
+  stroke-dasharray: 14 186;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.led-cerceve:hover .led-isik { opacity: 1; }
+.led-cerceve:hover .led-isik-sag { animation: ledSag 1.7s ease-in-out; }
+.led-cerceve:hover .led-isik-sol { animation: ledSol 1.7s ease-in-out; }
+
+@keyframes ledSag {
+  from { stroke-dashoffset: 175; }
+  to   { stroke-dashoffset: 75; }
+}
+@keyframes ledSol {
+  from { stroke-dashoffset: 175; }
+  to   { stroke-dashoffset: 275; }
+}
+
 .form-grup { margin-bottom: 20px; }
 .form-grup label {
   display: block; font-size: 0.85rem; font-weight: 700;
