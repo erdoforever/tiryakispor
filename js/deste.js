@@ -62,6 +62,10 @@
   const YIGIN_AC_KART   = 1000;     // tek kartın uçuş süresi (ms)
   const YIGIN_KP_TOPLAM = 1300;     // toplanma süresi (ms)
   const YIGIN_KP_KART   = 800;
+  // Çok sayıda kart varken (12 hizmet gibi) hepsi aynı anda uçarsa düşük güçlü cihazlarda kasma olabilir.
+  // Yalnızca ilk YIGIN_GORKEMLI kart "uçuşlu" (Web Animations API) açılır/kapanır; geri kalanı
+  // .hizmet-kart'ın zaten var olan, çok daha ucuz olan düz CSS transform geçişiyle (0.3s) yerine gider.
+  const YIGIN_GORKEMLI = 6;
 
   const yiginVar = (k, ad) => parseFloat(k.style.getPropertyValue(ad)) || 0;
   const yiginTr = (x, y, r, sc = 1) => `translate(${x}px, ${y}px) rotate(${r}deg) scale(${sc})`;
@@ -119,7 +123,7 @@
 
     kartlar.forEach((k, i) => {
       k.style.zIndex = 30 - i;                              // bekleyenler deste sırasında kalır (en üstte ilk kart)
-      if (azHareket) { k.style.zIndex = ""; return; }
+      if (azHareket || i >= YIGIN_GORKEMLI) { k.style.zIndex = ""; return; }
       const anim = k.animate(yiginFirlatKare(bas[i], i), {
         duration: YIGIN_AC_KART, delay: i * adim, easing: "cubic-bezier(0.3, 0.1, 0.3, 1)", fill: "backwards",
       });
@@ -146,7 +150,7 @@
     void yiginEl.offsetHeight;
     yiginKapaliPozisyon();                                  // son (deste) konum + z-sırası
     kartlar.forEach((k, i) => {
-      if (azHareket) return;
+      if (azHareket || i >= YIGIN_GORKEMLI) return;
       const b = { dx: yiginVar(k, "--dx"), dy: yiginVar(k, "--dy"), rot: yiginVar(k, "--rot") };
       const bekle = (n - 1 - i) * adim;                     // sondaki kart önce toplanır
       const anim = k.animate(yiginToplaKare(b, i), {
