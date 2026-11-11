@@ -106,14 +106,56 @@
           <span class="search-icon">🔍</span>
         </div>
 
-        <!-- Renk teması seçici: turuncu (varsayılan) / beyaz / mor. Hatırlanmaz, sayfa yenilenince turuncuya döner. -->
+        <!-- Renk & Görünüm Teması Seçici (Modern / Minimal + 8 Renk) -->
         <div class="renk-secici" id="renkSecici">
-          <button class="renk-dugme" id="renkDugme" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Renk teması seç" title="Renk teması">🎨</button>
-          <ul class="renk-menu" id="renkMenu" role="menu" hidden>
-            <li role="none"><button type="button" role="menuitemradio" data-renk="" aria-current="true"><span class="renk-ornek renk-ornek-turuncu" aria-hidden="true"></span>Turuncu (varsayılan)</button></li>
-            <li role="none"><button type="button" role="menuitemradio" data-renk="beyaz" aria-current="false"><span class="renk-ornek renk-ornek-beyaz" aria-hidden="true"></span>Beyaz</button></li>
-            <li role="none"><button type="button" role="menuitemradio" data-renk="mor" aria-current="false"><span class="renk-ornek renk-ornek-mor" aria-hidden="true"></span>Mor</button></li>
-          </ul>
+          <button class="renk-dugme" id="renkDugme" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Görünüm ve Tema Seç" title="Tema Seçici">🎨</button>
+          
+          <div class="renk-menu" id="renkMenu" role="dialog" aria-label="Görünüm ve Tema Seçici" hidden>
+            <!-- Üst Stil Segmenti: Modern vs Minimal -->
+            <div class="tema-stil-secici" role="tablist">
+              <button type="button" class="stil-btn aktif" data-stil="modern" role="tab" aria-selected="true">Modern</button>
+              <button type="button" class="stil-btn" data-stil="minimal" role="tab" aria-selected="false">Minimal</button>
+            </div>
+
+            <!-- Alt Başlık -->
+            <div class="tema-alt-baslik">THEME</div>
+
+            <!-- 8'li Renk Grid'i -->
+            <div class="tema-renk-grid" role="radiogroup">
+              <button type="button" class="tema-renk-btn" data-renk="" aria-current="true" title="Turuncu (Orijinal)">
+                <span class="tema-cember tema-cember-turuncu" aria-hidden="true"></span>
+                <span class="tema-ad">Turuncu</span>
+              </button>
+              <button type="button" class="tema-renk-btn" data-renk="mono" aria-current="false" title="Mono (Siyah - Beyaz)">
+                <span class="tema-cember tema-cember-mono" aria-hidden="true"></span>
+                <span class="tema-ad">Mono</span>
+              </button>
+              <button type="button" class="tema-renk-btn" data-renk="yesil" aria-current="false" title="Yeşil (Saha)">
+                <span class="tema-cember tema-cember-yesil" aria-hidden="true"></span>
+                <span class="tema-ad">Yeşil</span>
+              </button>
+              <button type="button" class="tema-renk-btn" data-renk="mavi" aria-current="false" title="Mavi (UCL)">
+                <span class="tema-cember tema-cember-mavi" aria-hidden="true"></span>
+                <span class="tema-ad">Mavi</span>
+              </button>
+              <button type="button" class="tema-renk-btn" data-renk="kirmizi" aria-current="false" title="Kırmızı (Dinamik)">
+                <span class="tema-cember tema-cember-kirmizi" aria-hidden="true"></span>
+                <span class="tema-ad">Kırmızı</span>
+              </button>
+              <button type="button" class="tema-renk-btn" data-renk="sari" aria-current="false" title="Sarı (Altın)">
+                <span class="tema-cember tema-cember-sari" aria-hidden="true"></span>
+                <span class="tema-ad">Sarı</span>
+              </button>
+              <button type="button" class="tema-renk-btn" data-renk="mor" aria-current="false" title="Mor (Neon)">
+                <span class="tema-cember tema-cember-mor" aria-hidden="true"></span>
+                <span class="tema-ad">Mor</span>
+              </button>
+              <button type="button" class="tema-renk-btn" data-renk="turkuaz" aria-current="false" title="Turkuaz (Teal)">
+                <span class="tema-cember tema-cember-turkuaz" aria-hidden="true"></span>
+                <span class="tema-ad">Turkuaz</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
