@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="ballGlow" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FFE4A0"/>
+      <stop offset="35%" stop-color="#FFB300"/>
+      <stop offset="70%" stop-color="#FF8C00"/>
+      <stop offset="100%" stop-color="#B24700"/>
+    </radialGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  <circle cx="256" cy="256" r="236" fill="url(#ballGlow)" filter="url(#shadow)"/>
+  <!-- Futbol topu dikiş ve petek desenleri -->
+  <polygon points="256,160 320,206 296,280 216,280 192,206" fill="#803300" opacity="0.35"/>
+  <circle cx="256" cy="256" r="236" fill="none" stroke="#FFE7BA" stroke-width="8" opacity="0.4"/>
+  <!-- Dikiş çizgileri -->
+  <path d="M256,160 L256,70 M320,206 L396,170 M296,280 L360,340 M216,280 L152,340 M192,206 L116,170" stroke="#FFE4A0" stroke-width="6" stroke-linecap="round" opacity="0.6"/>
+  <!-- Spor Vurgusu: TS Harfleri -->
+  <text x="256" y="270" font-family="'Inter', sans-serif" font-weight="900" font-size="96" fill="#FFFFFF" text-anchor="middle" letter-spacing="-2">TS</text>
+  <text x="256" y="325" font-family="'Inter', sans-serif" font-weight="800" font-size="28" fill="#FFE8D6" text-anchor="middle" letter-spacing="4">TİRYAKİ</text>
+</svg>
