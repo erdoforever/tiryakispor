@@ -47,40 +47,14 @@ body {
   padding: 32px 24px;
   position: relative;
   overflow: hidden;
-  background-color: #030407;
-  background-image: 
-    radial-gradient(1000px 600px at 50% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 70%),
-    linear-gradient(180deg, #05060A 0%, #020204 100%);
+  background-color: #000000 !important;
+  background-image: none !important;
 }
 
-/* Arka plan saf mono nokta matrisi */
-.giris-ekrani::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
-  background-size: 28px 28px;
-  opacity: 0.22;
-  mask-image: radial-gradient(ellipse 65% 60% at 50% 50%, #000 35%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 65% 60% at 50% 50%, #000 35%, transparent 80%);
-  pointer-events: none;
-}
-
-/* ÇERÇEVEYE VE ARKA PLANINA BEYAZ LED HALESİ (Ambient White LED Backlight) */
+/* Arka plan nokta matrisi ve arka plan halesi tamamen kaldırıldı (Simsiyah Zemin) */
+.giris-ekrani::before,
 .giris-ekrani::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 480px;
-  height: 580px;
-  border-radius: 38px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 45%, transparent 70%);
-  filter: blur(55px);
-  pointer-events: none;
-  z-index: 1;
+  display: none !important;
 }
 
 /* ---- 3D INTERACTIVE THREE.JS PARTICLE CANVAS ---- */
