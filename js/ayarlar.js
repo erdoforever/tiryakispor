@@ -1,5 +1,5 @@
 /* ============================================================
-   AYARLAR VE VERİ — TiryakiSPOR (CMS Tarafından Otomatik Üretildi)
+   AYARLAR VE VERİ — Top Tamiri (CMS Tarafından Otomatik Üretildi)
    ============================================================ */
 (function (TS) {
   "use strict";
@@ -345,7 +345,7 @@
       "kaynak": "Voleybolcu",
       "rozet": "Doğrulanmış",
       "tur": "normal",
-      "metin": "Mikasa voleybol topumun soyulan ve kalkan deri panellerini pürüzsüz yapıştırdı. Topun ağırlık dengesi ve yumuşaklığı hiç bozulmadı, çok teşekkürler Tiryaki Spor!",
+      "metin": "Mikasa voleybol topumun soyulan ve kalkan deri panellerini pürüzsüz yapıştırdı. Topun ağırlık dengesi ve yumuşaklığı hiç bozulmadı, çok teşekkürler Top Tamiri!",
       "etiket": "🏐 Voleybol Deri Panel Onarımı"
     }
   ];
