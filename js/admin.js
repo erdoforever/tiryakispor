@@ -1,5 +1,5 @@
 /* ============================================================
-   ADMİN & CMS PANELİ — TiryakiSPOR
+   ADMİN & CMS PANELİ — Top Tamiri
    Şifre doğrulaması + Mesaj Yönetimi + CMS İçerik Editörü
    Değişiklikleri Doğrudan Canlıya (GitHub API / Cloudflare Pages) Gönderme
    ============================================================ */
@@ -393,15 +393,15 @@
         let metin = "";
 
         if (sablon === "hazir") {
-          metin = `Merhaba ${ad}, TiryakiSPOR'dan Kemal Usta. Topunuzun onarım ve bakımı başarıyla tamamlandı, testleri yapıldı. Atölyemizden teslim alabilirsiniz.\n📍 Adresimiz: Menekşe Pasajı Kızılay/Ankara.\n📞 İletişim: 0531 431 55 60`;
+          metin = `Merhaba ${ad}, Top Tamiri'nden Kemal Usta. Topunuzun onarım ve bakımı başarıyla tamamlandı, testleri yapıldı. Atölyemizden teslim alabilirsiniz.\n📍 Adresimiz: Menekşe Pasajı Kızılay/Ankara.\n📞 İletişim: 0531 431 55 60`;
         } else if (sablon === "fiyat") {
           const girilen = prompt(`${ad} için yapılacak işlem ve fiyat bilgisini yazınız (Örn: İç lastik değişimi ve sibop onarımı 400 TL):`);
           if (!girilen) return;
-          metin = `Merhaba ${ad}, topunuz Kemal Usta tarafından incelenmiştir. Yapılacak işlem ve fiyat bilgisi:\n👉 ${girilen}\n\nOnayınız doğrultusunda hemen tamir işlemine başlıyoruz. Teşekkürler, TiryakiSPOR.`;
+          metin = `Merhaba ${ad}, topunuz Kemal Usta tarafından incelenmiştir. Yapılacak işlem ve fiyat bilgisi:\n👉 ${girilen}\n\nOnayınız doğrultusunda hemen tamir işlemine başlıyoruz. Teşekkürler, Top Tamiri.`;
         } else if (sablon === "basladi") {
-          metin = `Merhaba ${ad}, topunuzun onarım işlemine Kemal Usta tarafından başlanmıştır. Tahmini 1-2 iş günü içerisinde hazır olduğunda size bilgi verilecektir.\nTeşekkürler, TiryakiSPOR.`;
+          metin = `Merhaba ${ad}, topunuzun onarım işlemine Kemal Usta tarafından başlanmıştır. Tahmini 1-2 iş günü içerisinde hazır olduğunda size bilgi verilecektir.\nTeşekkürler, Top Tamiri.`;
         } else if (sablon === "foto") {
-          metin = `Merhaba ${ad}, mesajınız için teşekkür ederiz. Kemal Usta'nın hasar tespiti yapabilmesi ve net fiyat verebilmesi için topun hasarlı bölgesinin ve markasının net bir fotoğrafını buradan gönderebilir misiniz?\nTeşekkürler, TiryakiSPOR.`;
+          metin = `Merhaba ${ad}, mesajınız için teşekkür ederiz. Kemal Usta'nın hasar tespiti yapabilmesi ve net fiyat verebilmesi için topun hasarlı bölgesinin ve markasının net bir fotoğrafını buradan gönderebilir misiniz?\nTeşekkürler, Top Tamiri.`;
         }
 
         if (metin && hedefTel) {
@@ -468,7 +468,7 @@
         kaynak: "Voleybolcu",
         rozet: "Doğrulanmış",
         tur: "normal",
-        metin: "Mikasa voleybol topumun soyulan ve kalkan deri panellerini pürüzsüz yapıştırdı. Topun ağırlık dengesi ve yumuşaklığı hiç bozulmadı, çok teşekkürler Tiryaki Spor!",
+        metin: "Mikasa voleybol topumun soyulan ve kalkan deri panellerini pürüzsüz yapıştırdı. Topun ağırlık dengesi ve yumuşaklığı hiç bozulmadı, çok teşekkürler Top Tamiri!",
         etiket: "🏐 Voleybol Deri Panel Onarımı"
       }
     ],
@@ -783,7 +783,7 @@
 
       // ayarlar.js içeriğini üret
       const yeniAyarlarJs = `/* ============================================================
-   AYARLAR VE VERİ — TiryakiSPOR (CMS Tarafından Otomatik Üretildi)
+   AYARLAR VE VERİ — Top Tamiri (CMS Tarafından Otomatik Üretildi)
    ============================================================ */
 (function (TS) {
   "use strict";
