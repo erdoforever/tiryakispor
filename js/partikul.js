@@ -1,5 +1,5 @@
 /* ============================================================
-   TiryakiSPOR — Admin 3D Pure Black Interactive "TS" Point Particle System
+   Top Tamiri — Admin 3D Pure Black Interactive "TT" Point Particle System
    Simsiyah arka plan, sadece noktalardan oluşan "T" ve "S" gövdeleri,
    fare üzerine gelince o noktayı belirginleştiren (büyüten ve parlatan)
    interaktif 3D hover sistemi ve warp zoom oturum terminali
@@ -139,43 +139,37 @@
   }
 
   function geometrikTsNoktalariUret() {
-    // KESKİN GEOMETRİK "T" VE "S" POLİGONLARI
-    const polyT = [
-      [-190, 125],
-      [-15,  125],
-      [-15,   75],
-      [-75,   75],
-      [-75, -125],
-      [-130,-125],
-      [-130,  75],
-      [-190,  75]
+    // KESKİN GEOMETRİK "TT" (TOP TAMİRİ) POLİGONLARI
+    const polyT1 = [
+      [-195,  125],
+      [-15,   125],
+      [-15,    75],
+      [-75,    75],
+      [-75,  -125],
+      [-135, -125],
+      [-135,   75],
+      [-195,   75]
     ];
 
-    const polyS = [
-      [20,   125],
-      [175,  125],
-      [190,  110],
-      [190,   30],
-      [85,    30],
-      [85,   -10],
-      [190,  -10],
-      [190, -125],
-      [35,  -125],
-      [20,  -110],
-      [20,   -30],
-      [125,  -30],
-      [125,   10],
-      [20,    10]
+    const polyT2 = [
+      [15,   125],
+      [195,  125],
+      [195,   75],
+      [135,   75],
+      [135, -125],
+      [75,  -125],
+      [75,    75],
+      [15,    75]
     ];
 
-    // Nokta Örnekleme (T ve S sadece noktalardan oluşur)
-    const tIc = poligonIciOrnekle(polyT, 1500);
-    const tKenar = poligonCevresiOrnekle(polyT, 3.0);
+    // Nokta Örnekleme (İkili 'TT' sadece saf beyaz noktalardan oluşur)
+    const t1Ic = poligonIciOrnekle(polyT1, 1600);
+    const t1Kenar = poligonCevresiOrnekle(polyT1, 3.0);
 
-    const sIc = poligonIciOrnekle(polyS, 1700);
-    const sKenar = poligonCevresiOrnekle(polyS, 3.0);
+    const t2Ic = poligonIciOrnekle(polyT2, 1600);
+    const t2Kenar = poligonCevresiOrnekle(polyT2, 3.0);
 
-    const ham2D = [...tIc, ...tKenar, ...sIc, ...sKenar];
+    const ham2D = [...t1Ic, ...t1Kenar, ...t2Ic, ...t2Kenar];
     tsCount = ham2D.length / 2;
 
     const tumNoktalar3D = new Float32Array(tsCount * 3);
