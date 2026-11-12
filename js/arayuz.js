@@ -141,5 +141,104 @@
     elemanlar.forEach((el) => { el.classList.add("belir"); gozlemci.observe(el); });
   }
 
-  Object.assign(TS, { toast, escEkle, gorunurlukGozle });
+  // ---- ELEGANT PENCERE / SEKME MOTORU (APPLE TARZI DUAL EXPERIENCE) ----
+  const sekmeBar = $("sekmeBar");
+  const sekmeKapsul = $("sekmeKayanKapsul");
+  const sekmeBtnler = sekmeBar ? [...sekmeBar.querySelectorAll(".sekme-btn")] : [];
+  const paneller = [...document.querySelectorAll(".pencere-panel")];
+
+  function sekmeKapsulGuncelle(btn, animasyonlu = true) {
+    if (!sekmeKapsul || !btn || !sekmeBar || window.innerWidth <= 768) {
+      if (sekmeKapsul) sekmeKapsul.style.opacity = "0";
+      return;
+    }
+    const barRect = btn.parentElement.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    const sol = btnRect.left - barRect.left;
+    const genislik = btnRect.width;
+    if (genislik === 0) return;
+
+    sekmeKapsul.style.transition = animasyonlu && !TS.azHareket
+      ? "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease"
+      : "none";
+    sekmeKapsul.style.transform = `translate3d(${sol}px, 0, 0)`;
+    sekmeKapsul.style.width = `${genislik}px`;
+    sekmeKapsul.style.opacity = "1";
+  }
+
+  function sekmeAc(hedefAd, kaydir = true) {
+    const seciliBtn = sekmeBtnler.find((b) => b.getAttribute("data-sekme") === hedefAd) || sekmeBtnler[0];
+    if (!seciliBtn) return;
+
+    sekmeBtnler.forEach((b) => {
+      const aktif = b === seciliBtn;
+      b.classList.toggle("aktif", aktif);
+      b.setAttribute("aria-selected", aktif ? "true" : "false");
+    });
+
+    sekmeKapsulGuncelle(seciliBtn, true);
+
+    paneller.forEach((p) => {
+      const eslesiyor = p.getAttribute("data-sekme-panel") === hedefAd;
+      p.classList.toggle("aktif", eslesiyor);
+      if (eslesiyor) {
+        gorunurlukGozle(p.querySelectorAll(".kategori-kart, .sss-item"));
+      }
+    });
+
+    // Katalog açıldığında hizmet destesini tazele
+    if (hedefAd === "katalog" && TS.deste && TS.deste.kur) {
+      setTimeout(() => TS.deste.kur(), 60);
+    }
+
+    // Üst navbar linkini de eşzamanla
+    const eslesenNavA = navA.find((a) => a.getAttribute("data-sekme-hedef") === hedefAd);
+    if (eslesenNavA) kapsulGuncelle(eslesenNavA, true);
+
+    // Kullanıcı Hero bölümündeyse veya sekme barının üzerindeyse sekme çubuğuna yumuşakça odakla
+    if (kaydir && sekmeBar) {
+      const r = sekmeBar.getBoundingClientRect();
+      if (r.top < 65 || window.scrollY < 400) {
+        const hedefY = window.scrollY + r.top - 72;
+        window.scrollTo({ top: Math.max(0, hedefY), behavior: TS.azHareket ? "auto" : "smooth" });
+      }
+    }
+  }
+
+  sekmeBtnler.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const hedef = btn.getAttribute("data-sekme");
+      sekmeAc(hedef, true);
+    });
+  });
+
+  // Sayfadaki tüm data-sekme-hedef bağlantıları (navbar, hero, footer)
+  document.querySelectorAll("[data-sekme-hedef]").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      const hedef = el.getAttribute("data-sekme-hedef");
+      sekmeAc(hedef, true);
+    });
+  });
+
+  // URL hash kontrolü (#galeri, #paketler, #katalog, #iletisim)
+  function hashSekmeKontrol() {
+    const h = (window.location.hash || "").replace("#", "");
+    if (h && ["galeri", "paketler", "katalog", "iletisim"].includes(h)) {
+      sekmeAc(h, false);
+    }
+  }
+  hashSekmeKontrol();
+  window.addEventListener("hashchange", hashSekmeKontrol);
+
+  window.addEventListener("resize", () => {
+    const aktifBtn = sekmeBtnler.find((b) => b.classList.contains("aktif"));
+    if (aktifBtn) sekmeKapsulGuncelle(aktifBtn, false);
+  }, { passive: true });
+
+  if (sekmeBtnler[0]) {
+    setTimeout(() => sekmeKapsulGuncelle(sekmeBtnler[0], false), 200);
+  }
+
+  Object.assign(TS, { toast, escEkle, gorunurlukGozle, sekmeAc });
 })(window.TS = window.TS || {});
