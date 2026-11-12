@@ -2150,3 +2150,430 @@ body > footer { position: relative; z-index: 2; }
     0 0 18px rgba(var(--accent-rgb), 0.35),
     0 8px 24px rgba(0, 0, 0, 0.4);
 }
+
+/* ==========================================================
+   CANLI ATÖLYE ÖRNEKLERİ: ÖNCESİ & SONRASI (GALERİ)
+   ========================================================== */
+.oncesi-sonrasi {
+  position: relative;
+}
+
+.os-kart {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: border-color var(--transition), box-shadow 0.3s ease;
+}
+
+.os-kart:hover {
+  border-color: var(--accent);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(var(--accent-rgb), 0.18);
+}
+
+.os-gorsel-wrap {
+  position: relative;
+  background: #0b111a;
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+}
+
+.os-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.os-kart:hover .os-img {
+  transform: scale(1.02);
+}
+
+.os-rozetler {
+  position: absolute;
+  bottom: 16px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.os-rozet {
+  background: rgba(10, 18, 30, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.os-rozet-sol {
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, 0.35);
+}
+
+.os-rozet-sag {
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.35);
+}
+
+.os-detay {
+  padding: 38px 42px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.os-etiket-satir {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.os-sure {
+  font-size: 0.82rem;
+  color: var(--accent2);
+  background: rgba(var(--accent2-rgb), 0.1);
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+
+.os-baslik {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+
+.os-aciklama {
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+.os-maddeler {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.os-maddeler li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.os-maddeler strong {
+  color: var(--text);
+}
+
+.os-tik {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+  font-weight: 800;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.os-cta-satir {
+  margin-top: 4px;
+}
+
+/* ==========================================================
+   KULÜPLER & SPOR OKULLARI TOPLU BAKIM BANNER'I
+   ========================================================== */
+.kulup-banner {
+  margin-top: 48px;
+  background: linear-gradient(135deg, rgba(16, 26, 42, 0.95), rgba(11, 15, 20, 0.95));
+  border: 1.5px solid rgba(var(--accent-rgb), 0.35);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.kulup-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
+}
+
+.kulup-banner-sol {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.kb-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.12);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.kb-baslik {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+
+.kb-metin {
+  font-size: 0.93rem;
+  color: var(--text-soft);
+  line-height: 1.65;
+  margin-bottom: 22px;
+}
+
+.kb-avantajlar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.kb-av-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.kb-av-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.kb-av-item strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.kb-av-item p {
+  font-size: 0.82rem;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+.kb-btn {
+  align-self: flex-start;
+}
+
+.kulup-banner-sag {
+  position: relative;
+  background: #090e16;
+  display: flex;
+}
+
+.kb-img-kapsayici {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+}
+
+.kb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.kb-img-etiket {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: rgba(10, 18, 30, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+/* ==========================================================
+   ATÖLYE DÜKKÂNI & HARİTA VİTRİNİ (İLETİŞİM)
+   ========================================================== */
+.atolye-lokasyon-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 28px;
+  margin-top: 36px;
+}
+
+.dukkan-kart {
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition);
+}
+
+.dukkan-kart:hover {
+  border-color: var(--accent);
+}
+
+.dukkan-img-wrap {
+  position: relative;
+  height: 250px;
+  background: #090e16;
+  overflow: hidden;
+}
+
+.dukkan-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.dukkan-kart:hover .dukkan-img {
+  transform: scale(1.03);
+}
+
+.dukkan-img-rozet {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(10, 18, 30, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(var(--accent-rgb), 0.4);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.dukkan-bilgi {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.dukkan-bilgi h4 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.dukkan-bilgi p {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.dukkan-ozellikler {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.dukkan-ozellikler span {
+  font-size: 0.78rem;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--steel-line);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.atolye-lokasyon-grid .harita-kapsayici {
+  margin-top: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.atolye-lokasyon-grid .harita-cerceve {
+  flex: 1;
+  min-height: 270px;
+  height: auto;
+}
+
+/* ==========================================================
+   RESPONSIVE UYARLAMALARI (GALERİ, BANNER & DÜKKÂN)
+   ========================================================== */
+@media (max-width: 900px) {
+  .os-kart {
+    grid-template-columns: 1fr;
+  }
+  .os-gorsel-wrap {
+    min-height: 320px;
+  }
+  .os-detay {
+    padding: 28px 24px;
+  }
+  .kulup-banner {
+    grid-template-columns: 1fr;
+  }
+  .kulup-banner-sol {
+    padding: 28px 24px;
+  }
+  .kb-img-kapsayici {
+    min-height: 280px;
+  }
+  .atolye-lokasyon-grid {
+    grid-template-columns: 1fr;
+  }
+}
