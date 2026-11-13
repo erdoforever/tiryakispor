@@ -205,23 +205,30 @@
     }
   }
 
-  // Tıklama yakalama (hem delegation hem doğrudan element)
+  // Tıklama yakalama (delegation + debounce koruması)
+  let toggleKilit = false;
   document.addEventListener("click", (e) => {
     const toggleBtn = e.target.closest("#katalogToggleBtn");
     if (toggleBtn) {
       e.preventDefault();
+      e.stopPropagation();
+      if (toggleKilit) return;
+      toggleKilit = true;
+      setTimeout(() => { toggleKilit = false; }, 300);
       katalogToggle();
       return;
     }
     const kapatBtn = e.target.closest("#katalogKapatBtn");
     if (kapatBtn) {
       e.preventDefault();
+      e.stopPropagation();
       katalogKapat();
       return;
     }
     const heroBtn = e.target.closest("#heroKatalogBtn, #navKatalogLink");
     if (heroBtn) {
       e.preventDefault();
+      e.stopPropagation();
       katalogAc(true);
       return;
     }

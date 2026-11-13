@@ -74,7 +74,7 @@
     }
   }
   </script>
-  <link rel="stylesheet" href="css/style.css?v=3.5" />
+  <link rel="stylesheet" href="css/style.css?v=3.6" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -320,7 +320,7 @@
           <p>Futbol, basketbol ve voleybol toplarınız için dikiş, sibop, iç lastik ve deri yapıştırma dahil tüm tamir listesini açıp inceleyebilirsiniz.</p>
         </div>
         <div class="kav-sag">
-          <button type="button" class="btn btn-primary kav-btn" id="katalogToggleBtn" aria-expanded="false" aria-controls="katalogGovde" onclick="window.TS&&window.TS.katalogToggle?window.TS.katalogToggle():(function(g){if(!g)return;var c=g.hidden||g.classList.contains('kapali')||g.style.display==='none';g.hidden=!c;g.classList.toggle('kapali',!c);g.style.display=c?'block':'none';})(document.getElementById('katalogGovde'))">
+          <button type="button" class="btn btn-primary kav-btn" id="katalogToggleBtn" aria-expanded="false" aria-controls="katalogGovde">
             <span class="kav-btn-icon">🔍</span>
             <span class="kav-btn-metin">Tüm Hizmetleri &amp; Fiyatları Gör</span>
             <span class="kav-btn-ok">▼</span>
@@ -447,7 +447,7 @@
           </div>
 
           <div class="katalog-kapat-satir">
-            <button type="button" class="btn btn-outline" id="katalogKapatBtn" onclick="window.TS&&window.TS.katalogKapat?window.TS.katalogKapat():(function(g){if(!g)return;g.hidden=true;g.classList.add('kapali');g.style.display='none';})(document.getElementById('katalogGovde'))">✕ Kataloğu Kapat ▲</button>
+            <button type="button" class="btn btn-outline" id="katalogKapatBtn">✕ Kataloğu Kapat ▲</button>
           </div>
         </section>
       </div>
@@ -772,7 +772,7 @@
   <!-- Site kodu: sıra önemlidir (her dosya öncekilerin hazırladığı TS ad alanını kullanır) -->
   <script src="js/ortak.js"></script>
   <script src="js/ayarlar.js"></script>
-  <script src="js/arayuz.js?v=3.5"></script>
+  <script src="js/arayuz.js?v=3.6"></script>
   <script src="js/liste.js"></script>
   <script src="js/kaydirma.js?v=2.5"></script>
   <script src="js/deste.js"></script>
