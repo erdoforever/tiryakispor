@@ -2617,7 +2617,7 @@ body > footer { position: relative; z-index: 2; }
   pointer-events: none;
   opacity: 0;
   z-index: 1;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+  transition: transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), width 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.15s ease;
 }
 
 .sekme-btn {
@@ -2683,22 +2683,22 @@ body > footer { position: relative; z-index: 2; }
 .pencere-panel {
   display: none;
   opacity: 0;
-  transform: translateY(16px) scale(0.992);
+  transform: translateY(8px);
 }
 
 .pencere-panel.aktif {
   display: block;
-  animation: pencereAcil 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: pencereAcil 0.24s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
 }
 
 @keyframes pencereAcil {
   0% {
     opacity: 0;
-    transform: translateY(16px) scale(0.992);
+    transform: translateY(8px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 

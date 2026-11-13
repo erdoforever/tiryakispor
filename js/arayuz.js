@@ -159,7 +159,7 @@
     if (genislik === 0) return;
 
     sekmeKapsul.style.transition = animasyonlu && !TS.azHareket
-      ? "transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), width 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease"
+      ? "transform 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), width 0.22s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.15s ease"
       : "none";
     sekmeKapsul.style.transform = `translate3d(${sol}px, 0, 0)`;
     sekmeKapsul.style.width = `${genislik}px`;
