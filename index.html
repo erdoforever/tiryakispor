@@ -74,7 +74,7 @@
     }
   }
   </script>
-  <link rel="stylesheet" href="css/style.css?v=3.3" />
+  <link rel="stylesheet" href="css/style.css?v=3.4" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -94,10 +94,10 @@
 
       <ul class="nav-links" id="navLinks">
         <span class="nav-kayan-kapsul" id="navKayanKapsul" aria-hidden="true"></span>
-        <li><a href="#galeri" data-sekme-hedef="galeri" class="aktif">Öncesi &amp; Sonrası</a></li>
-        <li><a href="#paketler" data-sekme-hedef="paketler">Paketler &amp; Kulüpler</a></li>
-        <li><a href="#katalog" data-sekme-hedef="katalog">Hizmet Kataloğu</a></li>
-        <li><a href="#iletisim" data-sekme-hedef="iletisim">Atölye &amp; İletişim</a></li>
+        <li><a href="#galeri" class="aktif">Öncesi &amp; Sonrası</a></li>
+        <li><a href="#one-cikanlar">Paketler &amp; Kulüpler</a></li>
+        <li><a href="#katalog" id="navKatalogLink">Tüm Hizmetler</a></li>
+        <li><a href="#iletisim">Atölye &amp; İletişim</a></li>
       </ul>
 
       <div class="nav-actions">
@@ -204,7 +204,7 @@
 
       <p class="hero-subtitle">Her nevi top tamiri yapılır.</p>
       <div class="hero-btns">
-        <a href="#katalog" data-sekme-hedef="katalog" class="btn btn-primary">Hizmetleri Gör</a>
+        <a href="#katalog" id="heroKatalogBtn" class="btn btn-primary">Hizmetleri Gör</a>
         <a href="https://wa.me/905314315560?text=Merhaba%20Top%20Tamiri%2C%20top%20tamiri%20i%C3%A7in%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" class="btn btn-secondary">💬 WhatsApp'tan Sor</a>
       </div>
       <div class="hero-stats">
@@ -237,136 +237,102 @@
     </div>
   </section>
 
-  <!-- ===== ELEGANT PENCERE / SEKME SEÇİCİ (STICKY BAR) ===== -->
-  <div class="sekme-bar-kapsayici" id="sekmeBar">
+  <!-- ===== CANLI ATÖLYE ÖRNEKLERİ (ÖNCESİ / SONRASI) ===== -->
+  <section class="oncesi-sonrasi atolye-bolum" id="galeri">
     <div class="container">
-      <div class="sekme-bar" role="tablist" aria-label="Atölye Pencereleri">
-        <span class="sekme-kayan-kapsul" id="sekmeKayanKapsul" aria-hidden="true"></span>
-        <button type="button" class="sekme-btn aktif" role="tab" id="tabBtnGaleri" aria-selected="true" aria-controls="panelGaleri" data-sekme="galeri">
-          <span class="sekme-icon">🧵</span>
-          <span class="sekme-metin-wrap">
-            <span class="sekme-baslik">Öncesi &amp; Sonrası</span>
-            <small class="sekme-ipucu">Canlı Cerrahi Dikiş</small>
-          </span>
-        </button>
-        <button type="button" class="sekme-btn" role="tab" id="tabBtnPaketler" aria-selected="false" aria-controls="panelPaketler" data-sekme="paketler">
-          <span class="sekme-icon">📦</span>
-          <span class="sekme-metin-wrap">
-            <span class="sekme-baslik">Paketler &amp; Kulüpler</span>
-            <small class="sekme-ipucu">Popüler &amp; 50+ Top</small>
-          </span>
-        </button>
-        <button type="button" class="sekme-btn" role="tab" id="tabBtnKatalog" aria-selected="false" aria-controls="panelKatalog" data-sekme="katalog">
-          <span class="sekme-icon">🔍</span>
-          <span class="sekme-metin-wrap">
-            <span class="sekme-baslik">Hizmet Kataloğu</span>
-            <small class="sekme-ipucu">12 Hizmet &amp; Filtre</small>
-          </span>
-        </button>
-        <button type="button" class="sekme-btn" role="tab" id="tabBtnIletisim" aria-selected="false" aria-controls="panelIletisim" data-sekme="iletisim">
-          <span class="sekme-icon">🏢</span>
-          <span class="sekme-metin-wrap">
-            <span class="sekme-baslik">Atölye &amp; İletişim</span>
-            <small class="sekme-ipucu">Kızılay / Harita / SSS</small>
-          </span>
-        </button>
+      <div class="bolum-baslik">
+        <span class="bolum-etiket">01 — Canlı Atölye Örnekleri</span>
+        <h2 class="section-title">Öncesi &amp; Sonrası: Cerrahi El Dikişi</h2>
+        <p class="section-sub">Patlamış, dikişi atmış ve kullanılamaz hale gelen topları orijinal fabrika mukavemetine kavuşturuyoruz.</p>
+      </div>
+
+      <div class="os-kart">
+        <div class="os-gorsel-wrap">
+          <img src="images/oncesi-sonrasi-dikis.jpg" alt="Voleybol topu dikiş onarımı öncesi ve sonrası karşılaştırması" class="os-img" width="800" height="800" loading="lazy" decoding="async" />
+          <div class="os-rozetler">
+            <span class="os-rozet os-rozet-sol">⚠️ Onarım Öncesi (Ayrılmış Dikiş)</span>
+            <span class="os-rozet os-rozet-sag">✅ Onarım Sonrası (Cerrahi Çapraz Dikiş)</span>
+          </div>
+        </div>
+        <div class="os-detay">
+          <div class="os-etiket-satir">
+            <span class="badge badge-populer">CANLI ATÖLYE İŞÇİLİĞİ</span>
+            <span class="os-sure">⏱️ 1 İş Gününde Teslim</span>
+          </div>
+          <h3 class="os-baslik">Mikasa Voleybol Topu Panel &amp; Dikiş Kurtarma</h3>
+          <p class="os-aciklama">Fotoğrafta görüldüğü gibi, dikiş hattından patlayarak açılan profesyonel voleybol topu; özel balmumlu mukavemet ipiyle, panel altı destek astarı yerleştirilerek çift çapraz cerrahi el dikişi ile sıfır bombe ve kusursuz aerodinamik dengede dikilmiştir.</p>
+          <ul class="os-maddeler">
+            <li><span class="os-tik">✓</span> <strong>Kopmaz Balmumu İp:</strong> Neme, tere ve sert smaç darbelerine karşı tam mukavemet.</li>
+            <li><span class="os-tik">✓</span> <strong>İç Lastik Emniyeti:</strong> İğne ve dikiş iç lastiğe temas etmez, delinme riski sıfırlanır.</li>
+            <li><span class="os-tik">✓</span> <strong>Orijinal Balans:</strong> Dikiş ağırlığı ve esnekliği maç standartlarına birebir uygundur.</li>
+          </ul>
+          <div class="os-cta-satir">
+            <a href="https://wa.me/905314315560?text=Merhaba%20Top%20Tamiri%2C%20topumun%20diki%C5%9Fi%20patlad%C4%B1%2C%20foto%C4%9Fraf%C4%B1n%C4%B1%20g%C3%B6nderiyorum." target="_blank" rel="noopener" class="btn btn-primary">📸 Topunuzun Fotoğrafını Atın, İnceleyelim</a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- ===== PENCERELER KAPSAYICISI (DUAL EXPERIENCE MOTORU) ===== -->
-  <main class="pencereler-kapsayici" id="pencereler">
+  <!-- ===== POPÜLER TAMİR PAKETLERİ ===== -->
+  <section class="one-cikanlar atolye-bolum" id="one-cikanlar">
+    <div class="container">
+      <div class="bolum-baslik">
+        <span class="bolum-etiket">02 — Popüler Paketler</span>
+        <h2 class="section-title">Popüler Tamir Paketlerimiz</h2>
+        <p class="section-sub">En çok tercih edilen bakım hizmetlerimiz.</p>
+      </div>
+      <div class="paket-grid" id="paketGrid">
+        <!-- JS ile doldurulur -->
+      </div>
 
-    <!-- ====================================================
-         PENCERE 1: CANLI ATÖLYE ÖRNEKLERİ (ÖNCESİ / SONRASI)
-         ==================================================== -->
-    <div class="pencere-panel aktif" id="panelGaleri" data-sekme-panel="galeri" role="tabpanel" aria-labelledby="tabBtnGaleri">
-      <!-- ===== CANLI ATÖLYE ÖRNEKLERİ (ÖNCESİ / SONRASI) ===== -->
-      <section class="oncesi-sonrasi atolye-bolum" id="galeri">
-        <div class="container">
-          <div class="bolum-baslik">
-            <span class="bolum-etiket">01 — Canlı Atölye Örnekleri</span>
-            <h2 class="section-title">Öncesi &amp; Sonrası: Cerrahi El Dikişi</h2>
-            <p class="section-sub">Patlamış, dikişi atmış ve kullanılamaz hale gelen topları orijinal fabrika mukavemetine kavuşturuyoruz.</p>
+      <!-- Kulüpler & Spor Okulları Toplu Bakım Banner'ı -->
+      <div class="kulup-banner">
+        <div class="kulup-banner-sol">
+          <span class="kb-badge">⚽ 🏐 🏀 KULÜPLER &amp; SPOR OKULLARI</span>
+          <h3 class="kb-baslik">50+ Topluk Sezon Öncesi &amp; Dönem Ortası Toplu Bakım</h3>
+          <p class="kb-metin">Kulüpler, okul takımları ve spor salonları için aynı anda onlarca topun sibop kontrolü, dikiş onarımı, iç lastik yenilemesi ve basınç dengelemesini tek elden yapıyoruz. Sezonu yeni top masrafına girmeden kurtarın.</p>
+          <div class="kb-avantajlar">
+            <div class="kb-av-item"><span class="kb-av-icon">📦</span> <div><strong>Toplu İşçilik İndirimi</strong><p>10 adet ve üzeri toplarda özel paket fiyatlandırması</p></div></div>
+            <div class="kb-av-item"><span class="kb-av-icon">⚡</span> <div><strong>Öncelikli Hızlı Teslimat</strong><p>Antrenman takviminizi aksatmadan planlı teslim</p></div></div>
+            <div class="kb-av-item"><span class="kb-av-icon">🔍</span> <div><strong>Su Altı Kaçak &amp; Basınç Testi</strong><p>Tüm toplar tek tek test edilip standart basınçla teslim edilir</p></div></div>
           </div>
-
-          <div class="os-kart">
-            <div class="os-gorsel-wrap">
-              <img src="images/oncesi-sonrasi-dikis.jpg" alt="Voleybol topu dikiş onarımı öncesi ve sonrası karşılaştırması" class="os-img" width="800" height="800" loading="lazy" decoding="async" />
-              <div class="os-rozetler">
-                <span class="os-rozet os-rozet-sol">⚠️ Onarım Öncesi (Ayrılmış Dikiş)</span>
-                <span class="os-rozet os-rozet-sag">✅ Onarım Sonrası (Cerrahi Çapraz Dikiş)</span>
-              </div>
-            </div>
-            <div class="os-detay">
-              <div class="os-etiket-satir">
-                <span class="badge badge-populer">CANLI ATÖLYE İŞÇİLİĞİ</span>
-                <span class="os-sure">⏱️ 1 İş Gününde Teslim</span>
-              </div>
-              <h3 class="os-baslik">Mikasa Voleybol Topu Panel &amp; Dikiş Kurtarma</h3>
-              <p class="os-aciklama">Fotoğrafta görüldüğü gibi, dikiş hattından patlayarak açılan profesyonel voleybol topu; özel balmumlu mukavemet ipiyle, panel altı destek astarı yerleştirilerek çift çapraz cerrahi el dikişi ile sıfır bombe ve kusursuz aerodinamik dengede dikilmiştir.</p>
-              <ul class="os-maddeler">
-                <li><span class="os-tik">✓</span> <strong>Kopmaz Balmumu İp:</strong> Neme, tere ve sert smaç darbelerine karşı tam mukavemet.</li>
-                <li><span class="os-tik">✓</span> <strong>İç Lastik Emniyeti:</strong> İğne ve dikiş iç lastiğe temas etmez, delinme riski sıfırlanır.</li>
-                <li><span class="os-tik">✓</span> <strong>Orijinal Balans:</strong> Dikiş ağırlığı ve esnekliği maç standartlarına birebir uygundur.</li>
-              </ul>
-              <div class="os-cta-satir">
-                <a href="https://wa.me/905314315560?text=Merhaba%20Top%20Tamiri%2C%20topumun%20diki%C5%9Fi%20patlad%C4%B1%2C%20foto%C4%9Fraf%C4%B1n%C4%B1%20g%C3%B6nderiyorum." target="_blank" rel="noopener" class="btn btn-primary">📸 Topunuzun Fotoğrafını Atın, İnceleyelim</a>
-              </div>
-            </div>
+          <a href="https://wa.me/905314315560?text=Merhaba%20Top%20Tamiri%2C%20kul%C3%BCb%C3%BCm%C3%BCz%2Fokulumuz%20i%C3%A7in%20toplu%20top%20onar%C4%B1m%C4%B1%20hakk%C4%B1nda%20g%C3%B6r%C3%BC%C5%9Fmek%20istiyoruz." target="_blank" rel="noopener" class="btn btn-primary kb-btn">🏆 Kulüp / Okul Toplu Fiyatı Alın</a>
+        </div>
+        <div class="kulup-banner-sag">
+          <div class="kb-img-kapsayici">
+            <img src="images/kulup-toplu-tamir.jpg" alt="Kulüp ve spor okulu toplu top bakım ve onarım partisi" class="kb-img" width="700" height="525" loading="lazy" decoding="async" />
+            <div class="kb-img-etiket">Atölyeden Canlı: 50+ Topluk Toplu Onarım Sezonu</div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
+  </section>
 
-    <!-- ====================================================
-         PENCERE 2: POPÜLER PAKETLER & KULÜPLER
-         ==================================================== -->
-    <div class="pencere-panel" id="panelPaketler" data-sekme-panel="paketler" role="tabpanel" aria-labelledby="tabBtnPaketler">
-      <!-- ===== POPÜLER TAMİR PAKETLERİ ===== -->
-      <section class="one-cikanlar atolye-bolum" id="one-cikanlar">
-        <div class="container">
-          <div class="bolum-baslik">
-            <span class="bolum-etiket">02 — Popüler Paketler</span>
-            <h2 class="section-title">Popüler Tamir Paketlerimiz</h2>
-            <p class="section-sub">En çok tercih edilen bakım hizmetlerimiz.</p>
-          </div>
-          <div class="paket-grid" id="paketGrid">
-            <!-- JS ile doldurulur -->
-          </div>
-
-          <!-- Kulüpler & Spor Okulları Toplu Bakım Banner'ı -->
-          <div class="kulup-banner">
-            <div class="kulup-banner-sol">
-              <span class="kb-badge">⚽ 🏐 🏀 KULÜPLER &amp; SPOR OKULLARI</span>
-              <h3 class="kb-baslik">50+ Topluk Sezon Öncesi &amp; Dönem Ortası Toplu Bakım</h3>
-              <p class="kb-metin">Kulüpler, okul takımları ve spor salonları için aynı anda onlarca topun sibop kontrolü, dikiş onarımı, iç lastik yenilemesi ve basınç dengelemesini tek elden yapıyoruz. Sezonu yeni top masrafına girmeden kurtarın.</p>
-              <div class="kb-avantajlar">
-                <div class="kb-av-item"><span class="kb-av-icon">📦</span> <div><strong>Toplu İşçilik İndirimi</strong><p>10 adet ve üzeri toplarda özel paket fiyatlandırması</p></div></div>
-                <div class="kb-av-item"><span class="kb-av-icon">⚡</span> <div><strong>Öncelikli Hızlı Teslimat</strong><p>Antrenman takviminizi aksatmadan planlı teslim</p></div></div>
-                <div class="kb-av-item"><span class="kb-av-icon">🔍</span> <div><strong>Su Altı Kaçak &amp; Basınç Testi</strong><p>Tüm toplar tek tek test edilip standart basınçla teslim edilir</p></div></div>
-              </div>
-              <a href="https://wa.me/905314315560?text=Merhaba%20Top%20Tamiri%2C%20kul%C3%BCb%C3%BCm%C3%BCz%2Fokulumuz%20i%C3%A7in%20toplu%20top%20onar%C4%B1m%C4%B1%20hakk%C4%B1nda%20g%C3%B6r%C3%BC%C5%9Fmek%20istiyoruz." target="_blank" rel="noopener" class="btn btn-primary kb-btn">🏆 Kulüp / Okul Toplu Fiyatı Alın</a>
-            </div>
-            <div class="kulup-banner-sag">
-              <div class="kb-img-kapsayici">
-                <img src="images/kulup-toplu-tamir.jpg" alt="Kulüp ve spor okulu toplu top bakım ve onarım partisi" class="kb-img" width="700" height="525" loading="lazy" decoding="async" />
-                <div class="kb-img-etiket">Atölyeden Canlı: 50+ Topluk Toplu Onarım Sezonu</div>
-              </div>
-            </div>
-          </div>
+  <!-- ===== İKİNCİ PENCERE: GENİŞLEYEBİLİR HİZMET KATALOĞU (DRAWER) ===== -->
+  <section class="katalog-bolum atolye-bolum" id="katalog">
+    <div class="container">
+      <!-- Vitrin Kartı -->
+      <div class="katalog-vitrin-kutu">
+        <div class="kav-sol">
+          <span class="kav-etiket">🛠️ 12 HİZMET &amp; DETAYLI FİLTRELER</span>
+          <h3>Tüm Onarım Kataloğu &amp; Fiyat Listesi</h3>
+          <p>Futbol, basketbol ve voleybol toplarınız için dikiş, sibop, iç lastik ve deri yapıştırma dahil tüm tamir listesini açıp inceleyebilirsiniz.</p>
         </div>
-      </section>
-    </div>
+        <div class="kav-sag">
+          <button type="button" class="btn btn-primary kav-btn" id="katalogToggleBtn" aria-expanded="false" aria-controls="katalogGovde">
+            <span class="kav-btn-icon">🔍</span>
+            <span class="kav-btn-metin">Tüm Hizmetleri &amp; Fiyatları Gör</span>
+            <span class="kav-btn-ok">▼</span>
+          </button>
+        </div>
+      </div>
 
-    <!-- ====================================================
-         PENCERE 3: HİZMET KATALOĞU & FİLTRELER
-         ==================================================== -->
-    <div class="pencere-panel" id="panelKatalog" data-sekme-panel="katalog" role="tabpanel" aria-labelledby="tabBtnKatalog">
-      <!-- ===== ONARIM TÜRLERİ (KATEGORİLER) ===== -->
-      <section class="kategoriler atolye-bolum" id="kategoriler">
-        <div class="hazard-serit"></div>
-        <div class="container">
+      <!-- Açılır İkinci Pencere Gövdesi (Varsayılan olarak kapalıdır) -->
+      <div class="katalog-govde kapali" id="katalogGovde" hidden>
+        <!-- Onarım Türleri (Kategoriler) -->
+        <section class="kategoriler" id="kategoriler">
+          <div class="hazard-serit"></div>
           <div class="bolum-baslik">
             <span class="bolum-etiket">03 — Onarım Türleri</span>
             <h2 class="section-title">Topunuz İçin Doğru Servisi Seçin</h2>
@@ -404,353 +370,349 @@
               <small>MERAK EDİLENLER →</small>
             </button>
           </div>
-        </div>
-      </section>
+        </section>
 
-  <!-- ===== HİZMET LİSTESİ ===== -->
-  <section class="urunler atolye-bolum" id="urunler">
+        <!-- Hizmet Listesi -->
+        <section class="urunler" id="urunler">
+          <div class="bolum-baslik">
+            <span class="bolum-etiket">04 — Hizmet Listesi</span>
+            <h2 class="section-title">Topunuza Uygun Onarımı Bulun</h2>
+            <p class="section-sub">Topunuzun markasını ve hasar durumunu seçin, size uygun hizmetleri anında listeleyelim.</p>
+          </div>
+
+          <!-- Filtreler -->
+          <div class="filtre-panel">
+            <div class="filtre-satir">
+              <div class="filtre-grup filtre-arama">
+                <label for="searchInput2">🔍 Hizmet Ara</label>
+                <input type="text" id="searchInput2" placeholder="Örn: dikiş, sibop, basketbol..." />
+              </div>
+              <div class="filtre-grup">
+                <label for="onarimSelect">🔧 Onarım Türü</label>
+                <select id="onarimSelect">
+                  <option value="tumu">Tüm Onarım Türleri</option>
+                  <option value="futbol">Futbol Topu Tamiri</option>
+                  <option value="basketbol">Basketbol Topu Bakımı</option>
+                  <option value="voleybol">Voleybol Topu Paneli Değişimi</option>
+                  <option value="profesyonel">Özel / Profesyonel Maç Topu</option>
+                </select>
+              </div>
+              <div class="filtre-grup">
+                <label for="markaSelect">🏷️ Top Markası</label>
+                <select id="markaSelect">
+                  <option value="tumu">Tüm Markalar</option>
+                  <option value="Adidas">Adidas</option>
+                  <option value="Nike">Nike</option>
+                  <option value="Puma">Puma</option>
+                  <option value="Select">Select</option>
+                  <option value="Molten">Molten</option>
+                  <option value="Mikasa">Mikasa</option>
+                  <option value="Wilson">Wilson</option>
+                  <option value="Spalding">Spalding</option>
+                  <option value="Delta">Delta</option>
+                  <option value="Diğer">Diğer / Bilmiyorum</option>
+                </select>
+              </div>
+              <button class="btn btn-outline" id="filtreTemizle">✕ Temizle</button>
+            </div>
+            <div class="hasar-satir">
+              <span class="hasar-baslik">⚠️ Hasar Durumu</span>
+              <div class="hasar-chipler" id="hasarChipler">
+                <button class="hasar-chip aktif" data-hasar="tumu">Tümü</button>
+                <button class="hasar-chip" data-hasar="Dikiş Patlağı">🧵 Dikiş Patlağı</button>
+                <button class="hasar-chip" data-hasar="Hava Kaçırma">💨 Hava Kaçırma</button>
+                <button class="hasar-chip" data-hasar="Deri Soyulması">🩹 Deri Soyulması</button>
+              </div>
+            </div>
+          </div>
+
+          <p class="urun-sayisi" id="urunSayisi"></p>
+
+          <!-- Hizmet Grid -->
+          <div class="hizmet-yigin yigin-acik" id="hizmetYigin">
+            <div class="hizmet-grid" id="hizmetGrid">
+              <!-- JS ile doldurulur -->
+            </div>
+            <div class="yigin-ipucu" id="yiginIpucu" aria-hidden="true">
+              👆 <b data-n>12</b> hizmeti görmek için üzerine gelin
+            </div>
+          </div>
+          <div class="bos-mesaj" id="bosMesaj" style="display:none;">
+            <div class="bos-icon">🔍</div>
+            <p>Seçtiğiniz kriterlere uygun hizmet bulunamadı.<br/>Topunuzun durumunu WhatsApp'tan yazın, size özel çözüm üretelim.</p>
+            <div class="bos-btnler">
+              <button class="btn btn-outline" id="filtreTemizle2">Filtreleri Temizle</button>
+              <a class="tamir-btn" id="bosWaBtn" href="#" target="_blank" rel="noopener">💬 WhatsApp'tan Sor</a>
+            </div>
+          </div>
+
+          <div class="katalog-kapat-satir">
+            <button type="button" class="btn btn-outline" id="katalogKapatBtn">✕ Kataloğu Kapat ▲</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== İLETİŞİM BÖLÜMÜ ===== -->
+  <section class="iletisim" id="iletisim">
+    <!-- Kayar Neon LED Çubuğu (Sitenin tema rengiyle senkron, soldan sağa dalga) -->
+    <div class="iletisim-led-kapsayici" aria-hidden="true">
+      <svg class="iletisim-led-svg" viewBox="0 0 1600 900" preserveAspectRatio="none" fill="none">
+        <path class="led-cubuk-iz" d="M 0 390 C 50 310, 80 260, 120 260 C 190 260, 260 580, 380 580 C 530 580, 680 40, 830 40 C 980 40, 1060 540, 1180 540 C 1300 540, 1370 260, 1450 260 C 1510 260, 1550 340, 1600 420" />
+        <path class="led-cubuk-halo" pathLength="1000" d="M 0 390 C 50 310, 80 260, 120 260 C 190 260, 260 580, 380 580 C 530 580, 680 40, 830 40 C 980 40, 1060 540, 1180 540 C 1300 540, 1370 260, 1450 260 C 1510 260, 1550 340, 1600 420" />
+        <path class="led-cubuk-orta" pathLength="1000" d="M 0 390 C 50 310, 80 260, 120 260 C 190 260, 260 580, 380 580 C 530 580, 680 40, 830 40 C 980 40, 1060 540, 1180 540 C 1300 540, 1370 260, 1450 260 C 1510 260, 1550 340, 1600 420" />
+        <path class="led-cubuk-isik" pathLength="1000" d="M 0 390 C 50 310, 80 260, 120 260 C 190 260, 260 580, 380 580 C 530 580, 680 40, 830 40 C 980 40, 1060 540, 1180 540 C 1300 540, 1370 260, 1450 260 C 1510 260, 1550 340, 1600 420" />
+        <path class="led-cubuk-kor" pathLength="1000" d="M 0 390 C 50 310, 80 260, 120 260 C 190 260, 260 580, 380 580 C 530 580, 680 40, 830 40 C 980 40, 1060 540, 1180 540 C 1300 540, 1370 260, 1450 260 C 1510 260, 1550 340, 1600 420" />
+      </svg>
+    </div>
+
     <div class="container">
-      <div class="bolum-baslik">
-        <span class="bolum-etiket">04 — Hizmet Listesi</span>
-        <h2 class="section-title">Topunuza Uygun Onarımı Bulun</h2>
-        <p class="section-sub">Topunuzun markasını ve hasar durumunu seçin, size uygun hizmetleri anında listeleyelim.</p>
+      <div class="section-header">
+        <h2 class="section-title">📬 Bizimle İletişime Geçin &amp; Atölye Vitrini</h2>
+        <p class="section-sub">Sorularınız için formu doldurun veya WhatsApp'tan ulaşın — en kısa sürede dönüş yaparız!</p>
       </div>
 
-      <!-- Filtreler -->
-      <div class="filtre-panel">
-        <div class="filtre-satir">
-          <div class="filtre-grup filtre-arama">
-            <label for="searchInput2">🔍 Hizmet Ara</label>
-            <input type="text" id="searchInput2" placeholder="Örn: dikiş, sibop, basketbol..." />
+      <div class="iletisim-grid">
+        <!-- Sol: Form -->
+        <div class="iletisim-form-kutu">
+          <form id="iletisimForm" novalidate>
+            <div class="form-grup">
+              <label for="musAd">👤 Adınız Soyadınız</label>
+              <input type="text" id="musAd" placeholder="Örn: Ahmet Yılmaz" maxlength="80" required />
+            </div>
+            <div class="form-grup">
+              <label for="musTel">📞 Telefon Numaranız</label>
+              <input type="tel" id="musTel" placeholder="05XX XXX XX XX" maxlength="20" required />
+            </div>
+            <div class="form-grup">
+              <label for="musMesaj">💬 Mesajınız</label>
+              <textarea id="musMesaj" rows="5" maxlength="1000" placeholder="Topunuzun markası, hasarı ve hangi hizmeti istediğinizi yazabilirsiniz..." required></textarea>
+            </div>
+            <div class="turnstile-kutu" id="turnstileKutu" hidden></div>
+            <div class="form-grup" style="display:none;" aria-hidden="true">
+              <label for="formWebsite">Web Sitesi</label>
+              <input type="text" id="formWebsite" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              ✉️ Mesaj Gönder
+            </button>
+          </form>
+          <div class="form-basari" id="formBasari" style="display:none;">
+            <div class="basari-icon">✅</div>
+            <h3 id="basariBaslik">Mesajınız İletildi!</h3>
+            <p id="basariMetin">En kısa sürede sizinle iletişime geçeceğiz.</p>
+            <a class="btn btn-secondary" id="waGonderLink" href="#" target="_blank" rel="noopener" style="display:none">💬 WhatsApp'ta Gönder</a>
+            <button class="btn btn-outline" id="yeniMesaj">Yeni Mesaj Gönder</button>
           </div>
-          <div class="filtre-grup">
-            <label for="onarimSelect">🔧 Onarım Türü</label>
-            <select id="onarimSelect">
-              <option value="tumu">Tüm Onarım Türleri</option>
-              <option value="futbol">Futbol Topu Tamiri</option>
-              <option value="basketbol">Basketbol Topu Bakımı</option>
-              <option value="voleybol">Voleybol Topu Paneli Değişimi</option>
-              <option value="profesyonel">Özel / Profesyonel Maç Topu</option>
-            </select>
-          </div>
-          <div class="filtre-grup">
-            <label for="markaSelect">🏷️ Top Markası</label>
-            <select id="markaSelect">
-              <option value="tumu">Tüm Markalar</option>
-              <option value="Adidas">Adidas</option>
-              <option value="Nike">Nike</option>
-              <option value="Puma">Puma</option>
-              <option value="Select">Select</option>
-              <option value="Molten">Molten</option>
-              <option value="Mikasa">Mikasa</option>
-              <option value="Wilson">Wilson</option>
-              <option value="Spalding">Spalding</option>
-              <option value="Delta">Delta</option>
-              <option value="Diğer">Diğer / Bilmiyorum</option>
-            </select>
-          </div>
-          <button class="btn btn-outline" id="filtreTemizle">✕ Temizle</button>
         </div>
-        <div class="hasar-satir">
-          <span class="hasar-baslik">⚠️ Hasar Durumu</span>
-          <div class="hasar-chipler" id="hasarChipler">
-            <button class="hasar-chip aktif" data-hasar="tumu">Tümü</button>
-            <button class="hasar-chip" data-hasar="Dikiş Patlağı">🧵 Dikiş Patlağı</button>
-            <button class="hasar-chip" data-hasar="Hava Kaçırma">💨 Hava Kaçırma</button>
-            <button class="hasar-chip" data-hasar="Deri Soyulması">🩹 Deri Soyulması</button>
+
+        <!-- Sağ: İletişim Bilgileri + WA -->
+        <div class="iletisim-bilgi">
+          <div class="iletisim-kart">
+            <div class="ik-icon">📍</div>
+            <div>
+              <h4>Adres</h4>
+              <p id="iletisimAdresMetin">İzmir Cad. Menekşe Sok.<br/>Menekşe Pasajı Kızılay/ANKARA</p>
+              <a class="btn btn-outline yol-tarifi" data-yol-tarifi href="https://www.google.com/maps/dir/?api=1&amp;destination=Menek%C5%9Fe%20Pasaj%C4%B1%2C%20K%C4%B1z%C4%B1lay%2C%20Ankara" target="_blank" rel="noopener">🧭 Yol tarifi al</a>
+            </div>
           </div>
+          <div class="iletisim-kart">
+            <div class="ik-icon">🕐</div>
+            <div>
+              <h4>Çalışma Saatleri</h4>
+              <div id="saatListe"><p>Hafta içi 10:00 – 18:00</p></div>
+              <span class="acik-rozet" id="acikRozet" hidden></span>
+            </div>
+          </div>
+          <div class="iletisim-kart">
+            <div class="ik-icon">📞</div>
+            <div>
+              <h4>Telefon</h4>
+              <p><a class="tel-link" href="tel:+905314315560">0531 431 55 60</a></p>
+            </div>
+          </div>
+
+          <!-- WhatsApp Butonu -->
+          <a
+            class="wa-btn"
+            href="https://wa.me/905314315560?text=Merhaba%2C%20Top%20Tamiri%27nden%20bilgi%20almak%20istiyorum."
+            target="_blank"
+            rel="noopener">
+            <span class="wa-icon">💬</span>
+            <div>
+              <strong>WhatsApp ile Yaz</strong>
+              <small>Hızlı yanıt için WhatsApp'ı tercih edin</small>
+            </div>
+          </a>
         </div>
       </div>
 
-      <p class="urun-sayisi" id="urunSayisi"></p>
+      <!-- Atölye Dükkânı & Harita Vitrini -->
+      <div class="atolye-lokasyon-grid">
+        <!-- Dükkân Teslim Masası & Raf Düzeni Görseli -->
+        <div class="dukkan-kart">
+          <div class="dukkan-img-wrap">
+            <img src="images/atolye-dukkan.jpg" alt="Top Tamiri Kızılay Menekşe Pasajı atölye teslim masası ve tamir edilen toplar" class="dukkan-img" width="700" height="700" loading="lazy" decoding="async" />
+            <div class="dukkan-img-rozet">📍 Kızılay Menekşe Pasajı / ANKARA</div>
+          </div>
+          <div class="dukkan-bilgi">
+            <h4>🏢 Atölyemize Doğrudan Uğrayın</h4>
+            <p>Kemal Usta'nın bizzat çalıştığı Kızılay Menekşe Pasajı'ndaki dükkânımıza topunuzu doğrudan getirebilir, teslim masasında hasar tespitini birlikte yapabilirsiniz.</p>
+            <div class="dukkan-ozellikler">
+              <span>✓ Yüz Yüze Ekspertiz</span>
+              <span>✓ Güvenli Raf Teslimatı</span>
+              <span>✓ Anında Sibop &amp; Kaçak Kontrolü</span>
+            </div>
+          </div>
+        </div>
 
-      <!-- Hizmet Grid -->
-      <div class="hizmet-yigin yigin-acik" id="hizmetYigin">
-        <div class="hizmet-grid" id="hizmetGrid">
-          <!-- JS ile doldurulur -->
-        </div>
-        <div class="yigin-ipucu" id="yiginIpucu" aria-hidden="true">
-          👆 <b data-n>12</b> hizmeti görmek için üzerine gelin
-        </div>
-      </div>
-<div class="bos-mesaj" id="bosMesaj" style="display:none;">
-        <div class="bos-icon">🔍</div>
-        <p>Seçtiğiniz kriterlere uygun hizmet bulunamadı.<br/>Topunuzun durumunu WhatsApp'tan yazın, size özel çözüm üretelim.</p>
-        <div class="bos-btnler">
-          <button class="btn btn-outline" id="filtreTemizle2">Filtreleri Temizle</button>
-          <a class="tamir-btn" id="bosWaBtn" href="#" target="_blank" rel="noopener">💬 WhatsApp'tan Sor</a>
+        <!-- Canlı Google Harita Çerçevesi -->
+        <div class="harita-kapsayici">
+          <div class="harita-ust-bilgi">
+            <div class="harita-baslik">
+              <span class="harita-pin">📍</span>
+              <div>
+                <strong>Atölye Konumu: Top Tamiri</strong>
+                <p>İzmir caddesi, Menekşe-1 Sk. No:5 D:46, 06440 Çankaya/Ankara (Menekşe Pasajı)</p>
+              </div>
+            </div>
+            <a class="btn btn-outline yol-tarifi" data-yol-tarifi href="https://www.google.com/maps/dir/?api=1&amp;destination=Menek%C5%9Fe%20Pasaj%C4%B1%2C%20K%C4%B1z%C4%B1lay%2C%20Ankara" target="_blank" rel="noopener">🧭 Haritada Aç &amp; Yol Tarifi</a>
+          </div>
+          <div class="harita-cerceve">
+            <iframe
+              id="googleHaritaIframe"
+              title="Top Tamiri Konumu"
+              src="https://maps.google.com/maps?q=Menek%C5%9Fe%20Pasaj%C4%B1%2C%20K%C4%B1z%C4%B1lay%2C%20Ankara&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+              width="100%"
+              height="360"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
         </div>
       </div>
     </div>
   </section>
-    </div><!-- /panelKatalog -->
 
-    <!-- ====================================================
-         PENCERE 4: ATÖLYE DÜKKÂNI, İLETİŞİM, YORUMLAR & SSS
-         ==================================================== -->
-    <div class="pencere-panel" id="panelIletisim" data-sekme-panel="iletisim" role="tabpanel" aria-labelledby="tabBtnIletisim">
+  <!-- ===== MÜŞTERİ YORUMLARI & GOOGLE PUANI ===== -->
+  <section class="yorumlar atolye-bolum" id="yorumlar">
+    <div class="container">
+      <div class="bolum-baslik">
+        <span class="bolum-etiket">05 — Müşteri Deneyimleri</span>
+        <h2 class="section-title">Google'da %100 Memnuniyet</h2>
+        <p class="section-sub">40 yıllık tecrübeyle sporcuların, kulüplerin ve ailelerin top tamirindeki ilk tercihi.</p>
+      </div>
 
-      <!-- ===== İLETİŞİM BÖLÜMÜ ===== -->
-      <section class="iletisim" id="iletisim">
-        <!-- Kayar Neon LED Çubuğu (Sitenin tema rengiyle senkron, soldan sağa dalga) -->
-        <div class="iletisim-led-kapsayici" aria-hidden="true">
-          <svg class="iletisim-led-svg" viewBox="0 0 1600 900" preserveAspectRatio="none" fill="none">
-            <path class="led-cubuk-iz" d="M 0 390 C 50 310, 80 260, 120 260 C 190 260, 260 580, 380 580 C 530 580, 680 40, 830 40 C 980 40, 1060 540, 1180 540 C 1300 540, 1370 260, 1450 260 C 1510 260, 1550 340, 1600 420" />
-            <path class="led-cubuk-halo" pathLength="1000" d="M 0 390 C 50 310, 80 260, 120 260 C 190 260, 260 580, 380 580 C 530 580, 680 40, 830 40 C 980 40, 1060 540, 1180 540 C 1300 540, 1370 260, 1450 260 C 1510 260, 1550 340, 1600 420" />
-            <path class="led-cubuk-orta" pathLength="1000" d="M 0 390 C 50 310, 80 260, 120 260 C 190 260, 260 580, 380 580 C 530 580, 680 40, 830 40 C 980 40, 1060 540, 1180 540 C 1300 540, 1370 260, 1450 260 C 1510 260, 1550 340, 1600 420" />
-            <path class="led-cubuk-isik" pathLength="1000" d="M 0 390 C 50 310, 80 260, 120 260 C 190 260, 260 580, 380 580 C 530 580, 680 40, 830 40 C 980 40, 1060 540, 1180 540 C 1300 540, 1370 260, 1450 260 C 1510 260, 1550 340, 1600 420" />
-            <path class="led-cubuk-kor" pathLength="1000" d="M 0 390 C 50 310, 80 260, 120 260 C 190 260, 260 580, 380 580 C 530 580, 680 40, 830 40 C 980 40, 1060 540, 1180 540 C 1300 540, 1370 260, 1450 260 C 1510 260, 1550 340, 1600 420" />
-          </svg>
-        </div>
-
-        <div class="container">
-          <div class="section-header">
-            <h2 class="section-title">📬 Bizimle İletişime Geçin &amp; Atölye Vitrini</h2>
-            <p class="section-sub">Sorularınız için formu doldurun veya WhatsApp'tan ulaşın — en kısa sürede dönüş yaparız!</p>
+      <!-- Google Puanı & Güven Rozeti Vitrini -->
+      <div class="google-puan-karti">
+        <div class="gpk-sol">
+          <div class="gpk-rozet">
+            <span class="gpk-yildiz-b">⭐</span>
+            <div class="gpk-puan-rakam">5.0</div>
           </div>
-
-          <div class="iletisim-grid">
-            <!-- Sol: Form -->
-            <div class="iletisim-form-kutu">
-              <form id="iletisimForm" novalidate>
-                <div class="form-grup">
-                  <label for="musAd">👤 Adınız Soyadınız</label>
-                  <input type="text" id="musAd" placeholder="Örn: Ahmet Yılmaz" maxlength="80" required />
-                </div>
-                <div class="form-grup">
-                  <label for="musTel">📞 Telefon Numaranız</label>
-                  <input type="tel" id="musTel" placeholder="05XX XXX XX XX" maxlength="20" required />
-                </div>
-                <div class="form-grup">
-                  <label for="musMesaj">💬 Mesajınız</label>
-                  <textarea id="musMesaj" rows="5" maxlength="1000" placeholder="Topunuzun markası, hasarı ve hangi hizmeti istediğinizi yazabilirsiniz..." required></textarea>
-                </div>
-                <div class="turnstile-kutu" id="turnstileKutu" hidden></div>
-                <div class="form-grup" style="display:none;" aria-hidden="true">
-                  <label for="formWebsite">Web Sitesi</label>
-                  <input type="text" id="formWebsite" name="website" tabindex="-1" autocomplete="off" />
-                </div>
-                <button type="submit" class="btn btn-primary btn-block">
-                  ✉️ Mesaj Gönder
-                </button>
-              </form>
-              <div class="form-basari" id="formBasari" style="display:none;">
-                <div class="basari-icon">✅</div>
-                <h3 id="basariBaslik">Mesajınız İletildi!</h3>
-                <p id="basariMetin">En kısa sürede sizinle iletişime geçeceğiz.</p>
-                <a class="btn btn-secondary" id="waGonderLink" href="#" target="_blank" rel="noopener" style="display:none">💬 WhatsApp'ta Gönder</a>
-                <button class="btn btn-outline" id="yeniMesaj">Yeni Mesaj Gönder</button>
-              </div>
-            </div>
-
-            <!-- Sağ: İletişim Bilgileri + WA -->
-            <div class="iletisim-bilgi">
-              <div class="iletisim-kart">
-                <div class="ik-icon">📍</div>
-                <div>
-                  <h4>Adres</h4>
-                  <p id="iletisimAdresMetin">İzmir Cad. Menekşe Sok.<br/>Menekşe Pasajı Kızılay/ANKARA</p>
-                  <a class="btn btn-outline yol-tarifi" data-yol-tarifi href="https://www.google.com/maps/dir/?api=1&amp;destination=Menek%C5%9Fe%20Pasaj%C4%B1%2C%20K%C4%B1z%C4%B1lay%2C%20Ankara" target="_blank" rel="noopener">🧭 Yol tarifi al</a>
-                </div>
-              </div>
-              <div class="iletisim-kart">
-                <div class="ik-icon">🕐</div>
-                <div>
-                  <h4>Çalışma Saatleri</h4>
-                  <div id="saatListe"><p>Hafta içi 10:00 – 18:00</p></div>
-                  <span class="acik-rozet" id="acikRozet" hidden></span>
-                </div>
-              </div>
-              <div class="iletisim-kart">
-                <div class="ik-icon">📞</div>
-                <div>
-                  <h4>Telefon</h4>
-                  <p><a class="tel-link" href="tel:+905314315560">0531 431 55 60</a></p>
-                </div>
-              </div>
-
-              <!-- WhatsApp Butonu -->
-              <a
-                class="wa-btn"
-                href="https://wa.me/905314315560?text=Merhaba%2C%20Top%20Tamiri%27nden%20bilgi%20almak%20istiyorum."
-                target="_blank"
-                rel="noopener">
-                <span class="wa-icon">💬</span>
-                <div>
-                  <strong>WhatsApp ile Yaz</strong>
-                  <small>Hızlı yanıt için WhatsApp'ı tercih edin</small>
-                </div>
-              </a>
-            </div>
-          </div>
-
-          <!-- Atölye Dükkânı & Harita Vitrini -->
-          <div class="atolye-lokasyon-grid">
-            <!-- Dükkân Teslim Masası & Raf Düzeni Görseli -->
-            <div class="dukkan-kart">
-              <div class="dukkan-img-wrap">
-                <img src="images/atolye-dukkan.jpg" alt="Top Tamiri Kızılay Menekşe Pasajı atölye teslim masası ve tamir edilen toplar" class="dukkan-img" width="700" height="700" loading="lazy" decoding="async" />
-                <div class="dukkan-img-rozet">📍 Kızılay Menekşe Pasajı / ANKARA</div>
-              </div>
-              <div class="dukkan-bilgi">
-                <h4>🏢 Atölyemize Doğrudan Uğrayın</h4>
-                <p>Kemal Usta'nın bizzat çalıştığı Kızılay Menekşe Pasajı'ndaki dükkânımıza topunuzu doğrudan getirebilir, teslim masasında hasar tespitini birlikte yapabilirsiniz.</p>
-                <div class="dukkan-ozellikler">
-                  <span>✓ Yüz Yüze Ekspertiz</span>
-                  <span>✓ Güvenli Raf Teslimatı</span>
-                  <span>✓ Anında Sibop &amp; Kaçak Kontrolü</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Canlı Google Harita Çerçevesi -->
-            <div class="harita-kapsayici">
-              <div class="harita-ust-bilgi">
-                <div class="harita-baslik">
-                  <span class="harita-pin">📍</span>
-                  <div>
-                    <strong>Atölye Konumu: Top Tamiri</strong>
-                    <p>İzmir caddesi, Menekşe-1 Sk. No:5 D:46, 06440 Çankaya/Ankara (Menekşe Pasajı)</p>
-                  </div>
-                </div>
-                <a class="btn btn-outline yol-tarifi" data-yol-tarifi href="https://www.google.com/maps/dir/?api=1&amp;destination=Menek%C5%9Fe%20Pasaj%C4%B1%2C%20K%C4%B1z%C4%B1lay%2C%20Ankara" target="_blank" rel="noopener">🧭 Haritada Aç &amp; Yol Tarifi</a>
-              </div>
-              <div class="harita-cerceve">
-                <iframe
-                  id="googleHaritaIframe"
-                  title="Top Tamiri Konumu"
-                  src="https://maps.google.com/maps?q=Menek%C5%9Fe%20Pasaj%C4%B1%2C%20K%C4%B1z%C4%B1lay%2C%20Ankara&amp;t=&amp;z=16&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
-                  width="100%"
-                  height="360"
-                  allowfullscreen=""
-                  loading="lazy"
-                  referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-              </div>
-            </div>
+          <div class="gpk-metin">
+            <div class="gpk-yildizlar">★★★★★</div>
+            <strong>Google Doğrulanmış İşletme</strong>
+            <p>Top Tamiri · Top Onarım &amp; Bakım Servisi (Kızılay/Ankara)</p>
           </div>
         </div>
-      </section>
-
-      <!-- ===== MÜŞTERİ YORUMLARI & GOOGLE PUANI ===== -->
-      <section class="yorumlar atolye-bolum" id="yorumlar">
-        <div class="container">
-          <div class="bolum-baslik">
-            <span class="bolum-etiket">05 — Müşteri Deneyimleri</span>
-            <h2 class="section-title">Google'da %100 Memnuniyet</h2>
-            <p class="section-sub">40 yıllık tecrübeyle sporcuların, kulüplerin ve ailelerin top tamirindeki ilk tercihi.</p>
-          </div>
-
-          <!-- Google Puanı & Güven Rozeti Vitrini -->
-          <div class="google-puan-karti">
-            <div class="gpk-sol">
-              <div class="gpk-rozet">
-                <span class="gpk-yildiz-b">⭐</span>
-                <div class="gpk-puan-rakam">5.0</div>
-              </div>
-              <div class="gpk-metin">
-                <div class="gpk-yildizlar">★★★★★</div>
-                <strong>Google Doğrulanmış İşletme</strong>
-                <p>Top Tamiri · Top Onarım &amp; Bakım Servisi (Kızılay/Ankara)</p>
-              </div>
-            </div>
-            <div class="gpk-sag">
-              <a class="btn btn-outline yol-tarifi" data-yol-tarifi href="https://www.google.com/maps/dir/?api=1&amp;destination=Menek%C5%9Fe%20Pasaj%C4%B1%2C%20K%C4%B1z%C4%B1lay%2C%20Ankara" target="_blank" rel="noopener">📍 Google Haritalar'da Gör</a>
-              <a class="btn btn-primary" href="https://wa.me/905314315560?text=Merhaba%20Kemal%20Usta%2C%20topumun%20onar%C4%B1m%C4%B1%20i%C3%A7in%20yaz%C4%B1yorum." target="_blank" rel="noopener">💬 WhatsApp ile Ulaş</a>
-            </div>
-          </div>
-
-          <!-- Yorum Kartları Grid -->
-          <div class="yorum-grid" id="yorumGrid">
-            <div class="yorum-kart">
-              <div class="yk-ust">
-                <div class="yk-avatar">AK</div>
-                <div>
-                  <strong class="yk-isim">Alperen K.</strong>
-                  <div class="yk-yildiz">★★★★★ <span class="yk-kaynak">Google Haritalar</span></div>
-                </div>
-                <span class="yk-rozet">Doğrulanmış</span>
-              </div>
-              <p class="yk-metin">"Molten basketbol topumun sibop kaçırma sorunu vardı, başka yerler tamir edemeyiz yenisini al demişti. Kemal Usta 1 günde orijinal sibop takıp sıfır gibi teslim etti. 40 yıllık tecrübe gerçekten fark yaratıyor."</p>
-              <div class="yk-etiket">🏀 Basketbol Topu Sibop Onarımı</div>
-            </div>
-
-            <div class="yorum-kart">
-              <div class="yk-ust">
-                <div class="yk-avatar yk-avatar-kulup">MH</div>
-                <div>
-                  <strong class="yk-isim">Murat H.</strong>
-                  <div class="yk-yildiz">★★★★★ <span class="yk-kaynak">Kulüp Antrenörü</span></div>
-                </div>
-                <span class="yk-rozet yk-rozet-kulup">Kulüp</span>
-              </div>
-              <p class="yk-metin">"Takımımızın 8 adet maç topunun dikiş açılmalarını ve basınç kayıplarını getirdik. Fabrika dikişi kalitesinde el işçiliğiyle onardı. Kulüp bütçemizi kurtardı, eline sağlık Kemal Usta."</p>
-              <div class="yk-etiket">⚽ Çoklu Panel &amp; El Dikişi Yenileme</div>
-            </div>
-
-            <div class="yorum-kart">
-              <div class="yk-ust">
-                <div class="yk-avatar">BD</div>
-                <div>
-                  <strong class="yk-isim">Burak D.</strong>
-                  <div class="yk-yildiz">★★★★★ <span class="yk-kaynak">Google Haritalar</span></div>
-                </div>
-                <span class="yk-rozet">Doğrulanmış</span>
-              </div>
-              <p class="yk-metin">"Orijinal Adidas Şampiyonlar Ligi topum patlamıştı, atmaya kıyamıyordum. Kemal Bey iç lastiğini değiştirip su altı basınç testini gözümün önünde yaptı. Ankara'da bu işin tek ustası."</p>
-              <div class="yk-etiket">🏆 İç Lastik Değişimi &amp; Basınç Testi</div>
-            </div>
-
-            <div class="yorum-kart">
-              <div class="yk-ust">
-                <div class="yk-avatar">SY</div>
-                <div>
-                  <strong class="yk-isim">Selin Y.</strong>
-                  <div class="yk-yildiz">★★★★★ <span class="yk-kaynak">Voleybolcu</span></div>
-                </div>
-                <span class="yk-rozet">Doğrulanmış</span>
-              </div>
-              <p class="yk-metin">"Mikasa voleybol topumun soyulan ve kalkan deri panellerini pürüzsüz yapıştırdı. Topun ağırlık dengesi ve yumuşaklığı hiç bozulmadı, çok teşekkürler Top Tamiri!"</p>
-              <div class="yk-etiket">🏐 Voleybol Deri Panel Onarımı</div>
-            </div>
-          </div>
+        <div class="gpk-sag">
+          <a class="btn btn-outline yol-tarifi" data-yol-tarifi href="https://www.google.com/maps/dir/?api=1&amp;destination=Menek%C5%9Fe%20Pasaj%C4%B1%2C%20K%C4%B1z%C4%B1lay%2C%20Ankara" target="_blank" rel="noopener">📍 Google Haritalar'da Gör</a>
+          <a class="btn btn-primary" href="https://wa.me/905314315560?text=Merhaba%20Kemal%20Usta%2C%20topumun%20onar%C4%B1m%C4%B1%20i%C3%A7in%20yaz%C4%B1yorum." target="_blank" rel="noopener">💬 WhatsApp ile Ulaş</a>
         </div>
-      </section>
+      </div>
 
-      <!-- ===== SIKÇA SORULAN SORULAR ===== -->
-      <section class="sss atolye-bolum" id="sss">
-        <div class="container">
-          <div class="bolum-baslik">
-            <span class="bolum-etiket">06 — SSS</span>
-            <h2 class="section-title">Sıkça Sorulan Sorular</h2>
-            <p class="section-sub">Tamir süreciyle ilgili merak ettikleriniz.</p>
+      <!-- Yorum Kartları Grid -->
+      <div class="yorum-grid" id="yorumGrid">
+        <div class="yorum-kart">
+          <div class="yk-ust">
+            <div class="yk-avatar">AK</div>
+            <div>
+              <strong class="yk-isim">Alperen K.</strong>
+              <div class="yk-yildiz">★★★★★ <span class="yk-kaynak">Google Haritalar</span></div>
+            </div>
+            <span class="yk-rozet">Doğrulanmış</span>
           </div>
-          <div class="sss-liste">
-            <details class="sss-item" open>
-              <summary>Tamir işlemi ne kadar sürer?</summary>
-              <p>Sibop değişimi ve basınç testi gibi basit işlemler genellikle aynı gün yapılır. Dikiş ve panel onarımları, hasarın durumuna göre 1–3 iş günü içinde tamamlanır.</p>
-            </details>
-            <details class="sss-item">
-              <summary>Fiyatı nasıl öğrenirim?</summary>
-              <p>Topunuzun veya hasarlı bölgenin fotoğrafını WhatsApp'tan gönderin ya da dükkânımıza getirin; inceleyip size bilgi verelim. Onayınız olmadan işleme başlamayız.</p>
-            </details>
-            <details class="sss-item">
-              <summary>Hangi marka topları tamir ediyorsunuz?</summary>
-              <p>Adidas, Nike, Puma, Select, Molten, Mikasa, Wilson, Spalding, Delta ve diğer markaların futbol, basketbol ve voleybol toplarını onarıyoruz.</p>
-            </details>
-            <details class="sss-item">
-              <summary>Topumu nasıl teslim ederim?</summary>
-              <p>Topunuzu dükkânımıza getirebilirsiniz: İzmir Cad. Menekşe Sok. Menekşe Pasajı Kızılay/ANKARA. Gelmeden önce WhatsApp'tan bilgi alabilirsiniz.</p>
-            </details>
-            <details class="sss-item">
-              <summary>Topumun tamir edilip edilemeyeceğini nasıl anlarım?</summary>
-              <p>Topunuzun hasarlı bölgesinin fotoğrafını WhatsApp'tan gönderin; inceleyip size en kısa sürede dönüş yapalım.</p>
-            </details>
-          </div>
+          <p class="yk-metin">"Molten basketbol topumun sibop kaçırma sorunu vardı, başka yerler tamir edemeyiz yenisini al demişti. Kemal Usta 1 günde orijinal sibop takıp sıfır gibi teslim etti. 40 yıllık tecrübe gerçekten fark yaratıyor."</p>
+          <div class="yk-etiket">🏀 Basketbol Topu Sibop Onarımı</div>
         </div>
-      </section>
-    </div><!-- /panelIletisim -->
-  </main><!-- /pencereler -->
+
+        <div class="yorum-kart">
+          <div class="yk-ust">
+            <div class="yk-avatar yk-avatar-kulup">MH</div>
+            <div>
+              <strong class="yk-isim">Murat H.</strong>
+              <div class="yk-yildiz">★★★★★ <span class="yk-kaynak">Kulüp Antrenörü</span></div>
+            </div>
+            <span class="yk-rozet yk-rozet-kulup">Kulüp</span>
+          </div>
+          <p class="yk-metin">"Takımımızın 8 adet maç topunun dikiş açılmalarını ve basınç kayıplarını getirdik. Fabrika dikişi kalitesinde el işçiliğiyle onardı. Kulüp bütçemizi kurtardı, eline sağlık Kemal Usta."</p>
+          <div class="yk-etiket">⚽ Çoklu Panel &amp; El Dikişi Yenileme</div>
+        </div>
+
+        <div class="yorum-kart">
+          <div class="yk-ust">
+            <div class="yk-avatar">BD</div>
+            <div>
+              <strong class="yk-isim">Burak D.</strong>
+              <div class="yk-yildiz">★★★★★ <span class="yk-kaynak">Google Haritalar</span></div>
+            </div>
+            <span class="yk-rozet">Doğrulanmış</span>
+          </div>
+          <p class="yk-metin">"Orijinal Adidas Şampiyonlar Ligi topum patlamıştı, atmaya kıyamıyordum. Kemal Bey iç lastiğini değiştirip su altı basınç testini gözümün önünde yaptı. Ankara'da bu işin tek ustası."</p>
+          <div class="yk-etiket">🏆 İç Lastik Değişimi &amp; Basınç Testi</div>
+        </div>
+
+        <div class="yorum-kart">
+          <div class="yk-ust">
+            <div class="yk-avatar">SY</div>
+            <div>
+              <strong class="yk-isim">Selin Y.</strong>
+              <div class="yk-yildiz">★★★★★ <span class="yk-kaynak">Voleybolcu</span></div>
+            </div>
+            <span class="yk-rozet">Doğrulanmış</span>
+          </div>
+          <p class="yk-metin">"Mikasa voleybol topumun soyulan ve kalkan deri panellerini pürüzsüz yapıştırdı. Topun ağırlık dengesi ve yumuşaklığı hiç bozulmadı, çok teşekkürler Top Tamiri!"</p>
+          <div class="yk-etiket">🏐 Voleybol Deri Panel Onarımı</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SIKÇA SORULAN SORULAR ===== -->
+  <section class="sss atolye-bolum" id="sss">
+    <div class="container">
+      <div class="bolum-baslik">
+        <span class="bolum-etiket">06 — SSS</span>
+        <h2 class="section-title">Sıkça Sorulan Sorular</h2>
+        <p class="section-sub">Tamir süreciyle ilgili merak ettikleriniz.</p>
+      </div>
+      <div class="sss-liste">
+        <details class="sss-item" open>
+          <summary>Tamir işlemi ne kadar sürer?</summary>
+          <p>Sibop değişimi ve basınç testi gibi basit işlemler genellikle aynı gün yapılır. Dikiş ve panel onarımları, hasarın durumuna göre 1–3 iş günü içinde tamamlanır.</p>
+        </details>
+        <details class="sss-item">
+          <summary>Fiyatı nasıl öğrenirim?</summary>
+          <p>Topunuzun veya hasarlı bölgenin fotoğrafını WhatsApp'tan gönderin ya da dükkânımıza getirin; inceleyip size bilgi verelim. Onayınız olmadan işleme başlamayız.</p>
+        </details>
+        <details class="sss-item">
+          <summary>Hangi marka topları tamir ediyorsunuz?</summary>
+          <p>Adidas, Nike, Puma, Select, Molten, Mikasa, Wilson, Spalding, Delta ve diğer markaların futbol, basketbol ve voleybol toplarını onarıyoruz.</p>
+        </details>
+        <details class="sss-item">
+          <summary>Topumu nasıl teslim ederim?</summary>
+          <p>Topunuzu dükkânımıza getirebilirsiniz: İzmir Cad. Menekşe Sok. Menekşe Pasajı Kızılay/ANKARA. Gelmeden önce WhatsApp'tan bilgi alabilirsiniz.</p>
+        </details>
+        <details class="sss-item">
+          <summary>Topumun tamir edilip edilemeyeceğini nasıl anlarım?</summary>
+          <p>Topunuzun hasarlı bölgesinin fotoğrafını WhatsApp'tan gönderin; inceleyip size en kısa sürede dönüş yapalım.</p>
+        </details>
+      </div>
+    </div>
+  </section>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
