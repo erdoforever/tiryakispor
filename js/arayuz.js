@@ -142,29 +142,28 @@
   }
 
   // ---- İKİNCİ PENCERE: HİZMET KATALOĞU (DRAWER CONTROLLER) ----
-  const katalogGovde = $("katalogGovde");
-  const katalogToggleBtn = $("katalogToggleBtn");
-  const katalogKapatBtn = $("katalogKapatBtn");
-  const heroKatalogBtn = $("heroKatalogBtn");
-  const navKatalogLink = $("navKatalogLink");
-
   function katalogAc(kaydir = true) {
-    if (!katalogGovde) return;
-    katalogGovde.hidden = false;
-    katalogGovde.classList.remove("kapali");
-    if (katalogToggleBtn) {
-      katalogToggleBtn.setAttribute("aria-expanded", "true");
-      const ok = katalogToggleBtn.querySelector(".kav-btn-ok");
+    const govde = $("katalogGovde") || document.getElementById("katalogGovde");
+    if (!govde) return;
+    govde.hidden = false;
+    govde.removeAttribute("hidden");
+    govde.classList.remove("kapali");
+    govde.style.display = "block";
+
+    const btn = $("katalogToggleBtn") || document.getElementById("katalogToggleBtn");
+    if (btn) {
+      btn.setAttribute("aria-expanded", "true");
+      const ok = btn.querySelector(".kav-btn-ok");
       if (ok) ok.style.transform = "rotate(180deg)";
-      const metin = katalogToggleBtn.querySelector(".kav-btn-metin");
+      const metin = btn.querySelector(".kav-btn-metin");
       if (metin) metin.textContent = "Kataloğu Kapat";
     }
-    gorunurlukGozle(katalogGovde.querySelectorAll(".kategori-kart, .urun-karti"));
+    gorunurlukGozle(govde.querySelectorAll(".kategori-kart, .urun-karti"));
     if (TS.deste && TS.deste.kur) {
       setTimeout(() => TS.deste.kur(), 60);
     }
     if (kaydir) {
-      const el = $("kategoriler") || katalogGovde;
+      const el = $("kategoriler") || document.getElementById("kategoriler") || govde;
       const r = el.getBoundingClientRect();
       const hedefY = window.scrollY + r.top - 80;
       window.scrollTo({ top: Math.max(0, hedefY), behavior: TS.azHareket ? "auto" : "smooth" });
@@ -172,17 +171,22 @@
   }
 
   function katalogKapat() {
-    if (!katalogGovde) return;
-    katalogGovde.hidden = true;
-    katalogGovde.classList.add("kapali");
-    if (katalogToggleBtn) {
-      katalogToggleBtn.setAttribute("aria-expanded", "false");
-      const ok = katalogToggleBtn.querySelector(".kav-btn-ok");
+    const govde = $("katalogGovde") || document.getElementById("katalogGovde");
+    if (!govde) return;
+    govde.hidden = true;
+    govde.setAttribute("hidden", "");
+    govde.classList.add("kapali");
+    govde.style.display = "none";
+
+    const btn = $("katalogToggleBtn") || document.getElementById("katalogToggleBtn");
+    if (btn) {
+      btn.setAttribute("aria-expanded", "false");
+      const ok = btn.querySelector(".kav-btn-ok");
       if (ok) ok.style.transform = "none";
-      const metin = katalogToggleBtn.querySelector(".kav-btn-metin");
+      const metin = btn.querySelector(".kav-btn-metin");
       if (metin) metin.textContent = "Tüm Hizmetleri & Fiyatları Gör";
     }
-    const katalogBolum = $("katalog");
+    const katalogBolum = $("katalog") || document.getElementById("katalog");
     if (katalogBolum) {
       const r = katalogBolum.getBoundingClientRect();
       const hedefY = window.scrollY + r.top - 80;
@@ -191,32 +195,37 @@
   }
 
   function katalogToggle() {
-    if (!katalogGovde) return;
-    if (katalogGovde.hidden || katalogGovde.classList.contains("kapali")) {
+    const govde = $("katalogGovde") || document.getElementById("katalogGovde");
+    if (!govde) return;
+    const kapali = govde.hidden || govde.classList.contains("kapali") || govde.style.display === "none";
+    if (kapali) {
       katalogAc(true);
     } else {
       katalogKapat();
     }
   }
 
-  if (katalogToggleBtn) {
-    katalogToggleBtn.addEventListener("click", () => katalogToggle());
-  }
-  if (katalogKapatBtn) {
-    katalogKapatBtn.addEventListener("click", () => katalogKapat());
-  }
-  if (heroKatalogBtn) {
-    heroKatalogBtn.addEventListener("click", (e) => {
+  // Tıklama yakalama (hem delegation hem doğrudan element)
+  document.addEventListener("click", (e) => {
+    const toggleBtn = e.target.closest("#katalogToggleBtn");
+    if (toggleBtn) {
+      e.preventDefault();
+      katalogToggle();
+      return;
+    }
+    const kapatBtn = e.target.closest("#katalogKapatBtn");
+    if (kapatBtn) {
+      e.preventDefault();
+      katalogKapat();
+      return;
+    }
+    const heroBtn = e.target.closest("#heroKatalogBtn, #navKatalogLink");
+    if (heroBtn) {
       e.preventDefault();
       katalogAc(true);
-    });
-  }
-  if (navKatalogLink) {
-    navKatalogLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      katalogAc(true);
-    });
-  }
+      return;
+    }
+  });
 
   // URL hash kontrolü (#katalog, #urunler, #kategoriler)
   function hashKontrol() {

@@ -646,25 +646,27 @@ body {
 }
 
 .hero-isim {
+  display: inline-block;
   font-size: clamp(3.5rem, 8vw, 7.5rem);
   font-weight: 900;
-  color: #fff;
   line-height: 0.92;
   letter-spacing: -3px;
   text-transform: uppercase;
-  /* Torch-style: gölgeli, güçlü metin */
-  text-shadow:
-    0 0 60px rgba(var(--accent2-rgb), 0.25),
-    0 4px 30px rgba(0,0,0,0.7);
+  /* Çapraz geçiş: sol taraf beyaz, kesim hattından sağa doğru akıcı renk geçişi (harflerin yarısı renkli) */
+  background: linear-gradient(108deg, #ffffff 0%, #ffffff 36%, var(--accent) 56%, var(--accent2) 85%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 4px 28px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 40px rgba(var(--accent-rgb), 0.35));
 }
 
 .hero-isim span {
-  /* İkinci satır → altın/turuncu (Torch Construction stilinde) */
-  color: var(--accent2);
-  display: inline-block;
-  text-shadow:
-    0 0 40px rgba(var(--accent2-rgb), 0.50),
-    0 2px 20px rgba(0,0,0,0.6);
+  display: inline;
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+  background: none;
+  text-shadow: none;
 }
 
 .hero-isim-cizgi {
@@ -2659,13 +2661,14 @@ body > footer { position: relative; z-index: 2; }
   transition: opacity 0.3s ease;
 }
 
-.katalog-govde:not([hidden]) {
-  display: block;
+.katalog-govde:not([hidden]):not(.kapali) {
+  display: block !important;
   animation: drawerAcil 0.35s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
 }
 
-.katalog-govde.kapali {
-  display: none;
+.katalog-govde.kapali,
+.katalog-govde[hidden] {
+  display: none !important;
 }
 
 @keyframes drawerAcil {
