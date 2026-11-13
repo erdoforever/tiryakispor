@@ -393,7 +393,7 @@
         let metin = "";
 
         if (sablon === "hazir") {
-          metin = `Merhaba ${ad}, Top Tamiri'nden Kemal Usta. Topunuzun onarım ve bakımı başarıyla tamamlandı, testleri yapıldı. Atölyemizden teslim alabilirsiniz.\n📍 Adresimiz: Menekşe Pasajı Kızılay/Ankara.\n📞 İletişim: 0531 431 55 60`;
+          metin = `Merhaba ${ad}, Top Tamiri'nden Kemal Usta. Topunuzun onarım ve bakımı başarıyla tamamlandı, testleri yapıldı. Atölyemizden teslim alabilirsiniz.\n📍 Adresimiz: İzmir Caddesi, Sümer 1 Sok. No: 5/46, Menekşe Pasajı, Kızılay/Ankara.\n📞 İletişim: 0531 431 55 60`;
         } else if (sablon === "fiyat") {
           const girilen = prompt(`${ad} için yapılacak işlem ve fiyat bilgisini yazınız (Örn: İç lastik değişimi ve sibop onarımı 400 TL):`);
           if (!girilen) return;
@@ -417,8 +417,8 @@
     ayar: {
       WA_NUMARA: ayar.WA_NUMARA || "905314315560",
       FORM_ENDPOINT: ayar.FORM_ENDPOINT || "",
-      ADRES_SORGU: ayar.ADRES_SORGU || "Menekşe Pasajı, Kızılay, Ankara",
-      ADRES_METIN: ayar.ADRES_METIN || "İzmir Cad. Menekşe Sok.\nMenekşe Pasajı Kızılay/ANKARA",
+      ADRES_SORGU: ayar.ADRES_SORGU || "Menekşe Pasajı, Sümer 1 Sokak No: 5/46, Kızılay, Ankara",
+      ADRES_METIN: ayar.ADRES_METIN || "İzmir Caddesi, Sümer 1 Sok. No: 5/46\nMenekşe Pasajı, Kızılay / ANKARA",
       HARITA_LINK: ayar.HARITA_LINK || "",
       haftaIci: "10:00 – 18:00",
       cumartesi: "Kapalı",

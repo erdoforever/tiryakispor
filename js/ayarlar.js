@@ -7,13 +7,13 @@
   const ayar = {
   "WA_NUMARA": "905314315560",
   "FORM_ENDPOINT": "",
-  "ADRES_SORGU": "Menekşe Pasajı, Kızılay, Ankara",
-  "ADRES_METIN": "İzmir caddesi Sümer 1 sokak 5/46 Menekşe pasajı Kızılay/ANKARA",
+  "ADRES_SORGU": "Menekşe Pasajı, Sümer 1 Sokak No: 5/46, Kızılay, Ankara",
+  "ADRES_METIN": "İzmir Caddesi, Sümer 1 Sok. No: 5/46\nMenekşe Pasajı, Kızılay / ANKARA",
   "HARITA_LINK": "",
+  "TURNSTILE_SITE_KEY": "",
   "haftaIci": "10:00 – 18:00",
   "cumartesi": "Kapalı",
-  "pazar": "Kapalı",
-  "TURNSTILE_SITE_KEY": ""
+  "pazar": "Kapalı"
 };
 
   const CALISMA = {
@@ -306,48 +306,49 @@
     ]
   }
 ];
+
   const yorumlar = [
-  {
-    "id": 1,
-    "isim": "Alperen K.",
-    "puan": 5,
-    "kaynak": "Google Haritalar",
-    "rozet": "Doğrulanmış",
-    "tur": "normal",
-    "metin": "Molten basketbol topumun sibop kaçırma sorunu vardı, başka yerler tamir edemeyiz yenisini al demişti. Kemal Usta 1 günde orijinal sibop takıp sıfır gibi teslim etti. 40 yıllık tecrübe gerçekten fark yaratıyor.",
-    "etiket": "🏀 Basketbol Topu Sibop Onarımı"
-  },
-  {
-    "id": 2,
-    "isim": "Murat H.",
-    "puan": 5,
-    "kaynak": "Kulüp Antrenörü",
-    "rozet": "Kulüp",
-    "tur": "kulup",
-    "metin": "Takımımızın 8 adet maç topunun dikiş açılmalarını ve basınç kayıplarını getirdik. Fabrika dikişi kalitesinde el işçiliğiyle onardı. Kulüp bütçemizi kurtardı, eline sağlık Kemal Usta.",
-    "etiket": "⚽ Çoklu Panel & El Dikişi Yenileme"
-  },
-  {
-    "id": 3,
-    "isim": "Burak D.",
-    "puan": 5,
-    "kaynak": "Google Haritalar",
-    "rozet": "Doğrulanmış",
-    "tur": "normal",
-    "metin": "Orijinal Adidas Şampiyonlar Ligi topum patlamıştı, atmaya kıyamıyordum. Kemal Bey iç lastiğini değiştirip su altı basınç testini gözümün önünde yaptı. Ankara'da bu işin tek ustası.",
-    "etiket": "🏆 İç Lastik Değişimi & Basınç Testi"
-  },
-  {
-    "id": 4,
-    "isim": "Selin Y.",
-    "puan": 5,
-    "kaynak": "Voleybolcu",
-    "rozet": "Doğrulanmış",
-    "tur": "normal",
-    "metin": "Mikasa voleybol topumun soyulan ve kalkan deri panellerini pürüzsüz yapıştırdı. Topun ağırlık dengesi ve yumuşaklığı hiç bozulmadı, çok teşekkürler Top Tamiri!",
-    "etiket": "🏐 Voleybol Deri Panel Onarımı"
-  }
-];
+    {
+      "id": 1,
+      "isim": "Alperen K.",
+      "puan": 5,
+      "kaynak": "Google Haritalar",
+      "rozet": "Doğrulanmış",
+      "tur": "normal",
+      "metin": "Molten basketbol topumun sibop kaçırma sorunu vardı, başka yerler tamir edemeyiz yenisini al demişti. Kemal Usta 1 günde orijinal sibop takıp sıfır gibi teslim etti. 40 yıllık tecrübe gerçekten fark yaratıyor.",
+      "etiket": "🏀 Basketbol Topu Sibop Onarımı"
+    },
+    {
+      "id": 2,
+      "isim": "Murat H.",
+      "puan": 5,
+      "kaynak": "Kulüp Antrenörü",
+      "rozet": "Kulüp",
+      "tur": "kulup",
+      "metin": "Takımımızın 8 adet maç topunun dikiş açılmalarını ve basınç kayıplarını getirdik. Fabrika dikişi kalitesinde el işçiliğiyle onardı. Kulüp bütçemizi kurtardı, eline sağlık Kemal Usta.",
+      "etiket": "⚽ Çoklu Panel & El Dikişi Yenileme"
+    },
+    {
+      "id": 3,
+      "isim": "Burak D.",
+      "puan": 5,
+      "kaynak": "Google Haritalar",
+      "rozet": "Doğrulanmış",
+      "tur": "normal",
+      "metin": "Orijinal Adidas Şampiyonlar Ligi topum patlamıştı, atmaya kıyamıyordum. Kemal Bey iç lastiğini değiştirip su altı basınç testini gözümün önünde yaptı. Ankara'da bu işin tek ustası.",
+      "etiket": "🏆 İç Lastik Değişimi & Basınç Testi"
+    },
+    {
+      "id": 4,
+      "isim": "Selin Y.",
+      "puan": 5,
+      "kaynak": "Voleybolcu",
+      "rozet": "Doğrulanmış",
+      "tur": "normal",
+      "metin": "Mikasa voleybol topumun soyulan ve kalkan deri panellerini pürüzsüz yapıştırdı. Topun ağırlık dengesi ve yumuşaklığı hiç bozulmadı, çok teşekkürler Top Tamiri!",
+      "etiket": "🏐 Voleybol Deri Panel Onarımı"
+    }
+  ];
 
   Object.assign(TS, { ayar, CALISMA, KATEGORI_GORSEL, KATEGORI_EMOJI, KATEGORI_KISA, HASAR_IKON, hizmetler, paketler, yorumlar });
 })(window.TS = window.TS || {});
